@@ -99,7 +99,7 @@ img {
     /* color de fondo blanco*/
     border-bottom: 1px solid #ddd;
     /* borde inferior de 1px solido #eaeaea*/
-    position: relative;
+    position: fixed;
     /* posicion relativa*/
     left: 0;
     /* margen izquierdo 0*/
@@ -109,6 +109,104 @@ img {
     /* margen superior 0*/
     width: 100%;
     /* ancho 100%*/
-    z-index: 999;
+    z-index: 1000;
     /* orden de apilamiento 999*/
+    padding-top: 5px;
+    
+}
+.navbar-brand {
+    padding-top: 10px;
+    font-weight: 500;
+    color: #004225;
+    font-size: 32px;
+    transition: 0.3s color;
+}
+
+.login-button{
+    background-color: #004225;
+    color: blanchedalmond;
+    font-size: 18px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+}
+
+.login-button:hover{
+    background-color: rgb(19, 111, 47);
+}
+
+.navbar-toggler{
+    border: none;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus, .btn-close:focus{
+    box-shadow: none;
+    outline: none;
+}
+
+.navlink {
+    color: #666777;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: black;
+}
+
+@media (min-width: 991px){
+    .nav-link::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: #004225;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+    }
+    
+    .nav-link:hover::before, .nav-link.active::before{
+        width: 0%;
+        visibility: visible;
+    }
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 1000;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+
+/*----------------
+. Footer Styles
+------------------*/
+footer {
+/* Estilos del footer */
+    position: fixed;
+    /* posicion  */
+    left: 0;
+    /* margen izquierdo 0 */
+    bottom: 0;
+    /* margen inferior 0 */
+    width: 100%;
+    /* ancho 100% */
+    background-color: #333333;
+    /* color de fondo #333333 */
+    color: #ffffff;
+    /* color #ffffff */
+    padding: 20px;
+    /* relleno 20px */
+    text-align: center;
+    /* alineacion de texto al centro */
 }
