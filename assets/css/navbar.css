@@ -1,0 +1,172 @@
+#navbar-Container {
+/* Estilos del id que contiene al navbar */
+        
+    position: fixed;
+    /* posicion relativa*/
+    left: 0;
+    /* margen izquierdo 0*/
+    right: 0;
+    /* margen derecho 0*/
+    top: 0;
+    /* margen superior 0*/
+    width: 100%;
+    /* ancho 100%*/
+    z-index: 1000;
+    /* orden de apilamiento 1000, es lo mas importante dado que esto permite que se superponga a los demas elementos*/
+        
+}
+
+
+.navbar {
+/* Estilos del navbar */
+    position: absolute;
+    /* posicion absoluta*/
+    top: 0;
+    /* margen superior 0*/
+    left: 0;
+    /* margen izquierdo 0*/
+    right: 0;
+    /* margen derecho 0*/
+    padding: 0.5rem;
+    /* relleno 0.5rem*/
+    background-color: #fff;
+    /* color de fondo blanco*/
+    border-bottom: 1px solid #ddd;
+    /* borde inferior 1px solido #ddd*/
+    height: 80px;
+    /* altura 80px*/
+    margin: 20px;
+    /* margen 20px*/
+    border-radius: 16px;
+    /* radio de borde 16px*/
+}
+
+
+@media (min-width: 991px){
+/* cuando el ancho minimo es de 991px */
+    .nav-link::before{
+    /* antes de la clase navlink */
+        content: "";
+        /* contenido vacio*/
+        position: absolute;
+        /* posicion absoluta*/
+        bottom: 0;
+        /* margen inferior 0*/
+        left: 50%;
+        /* margen izquierdo 50%*/
+        transform: translateX(-50%);
+        /* transformacion de traslacion en x -50%*/
+        width: 0;
+        /* ancho 0*/
+        height: 2px;
+        /* altura 2px*/
+        background-color: #004225;
+        /* color de fondo #004225*/
+        visibility: hidden;
+        /* visibilidad oculto: se ocultan los links */
+        transition: 0.3s ease-in-out;
+        /* transicion 0.3s ease-in-out*/
+    }
+    
+    .offcanvas-body{
+    /* Estilos del cuerpo del navbar */
+        overflow-x: hidden;
+        /* desbordamiento en x oculto*/
+        padding-left: 20px;
+        /* relleno izquierdo 20px*/
+        margin-left: 20px;
+        /* margen izquierdo 20px*/
+    }
+    
+}
+
+
+.offcanvas-body{
+/* Estilos del cuerpo del navbar */
+    overflow-x: hidden;
+    /* desbordamiento en x oculto*/
+    padding-left: 15px;
+    /* relleno izquierdo 15px*/
+}
+
+
+.navbar-brand {
+/* Estilos del navbar-brand (logo) */
+    padding-top: 15px; 
+    /* relleno superior 15px*/
+    font-weight: 500;
+    /* peso de la fuente 500*/
+    color: #004225;
+    /* color #004225*/
+    font-size: 32px;
+    /* tamaño de la fuente 32px*/
+    transition: 0.3s color;
+    /* transicion de color 0.3s*/
+}
+
+
+.login-button{
+/* Estilos del boton de login */
+    background-color: #004225;
+    /* color de fondo #004225*/
+    color: blanchedalmond;
+    /* color blanco*/
+    font-size: 18px;
+    /* tamaño de fuente 18px*/
+    padding: 8px 20px;
+    /* relleno 8px 20px*/
+    border-radius: 50px;
+    /* radio de borde 50px*/
+    text-decoration: none;
+    /* decoracion de texto ninguna*/
+    transition: 0.3s background-color;
+    /* transicion de color de fondo 0.3s*/
+}
+
+.login-button:hover{ 
+/* cuando el cursor esta sobre el boton */
+    background-color: rgb(19, 111, 47);
+    /* cambio de color a rgb*/
+}
+
+
+.navbar-toggler{
+/* Estilos del boton de hamburguesa */
+    border: none;
+    /* borde ninguno*/
+    font-size: 2rem;
+    /* tamaño de fuente 2rem*/
+}
+
+.navbar-toggler:focus, .btn-close:focus{
+/* cuando el boton de hamburguesa esta en focus */
+    box-shadow: none;
+    /* sombra de caja ninguna*/
+    outline: none;
+    /* contorno ninguna*/
+}
+
+
+.navlink { 
+/* Estilos de la clase navlink */
+    color: #666777;
+    /* color #666777*/
+    font-weight: 500;
+    /* peso de la fuente 500*/
+    position: relative;
+    /* posicion relativa*/
+}
+
+.nav-link:hover, .nav-link.active {
+/* cuando el cursor esta sobre la clase navlink o esta activa */
+    color: black;
+    /* color negro*/s
+}
+
+
+.offcanvas-title{
+
+    font-size: 2.5rem;
+    font-weight: 500;
+    font-style: italic;
+}

@@ -1,15 +1,7 @@
-/* Table of Content
-==================================================
-1. General Styles
-2. Header Styles
-3. Navigation Styles
-==================================================
-*/
 
 @import url(/assets/css/footer.css);
-/*----------------
-1. General Styles
------------------*/
+@import url(/assets/css/navbar.css);
+
 body {
 /* Estilos del cuerpo */
     background-color: #ffffff;
@@ -90,117 +82,6 @@ img {
     /* ancho maximo 100%*/
  }
 
-
-/*----------------
-2. Header Styles
-------------------*/
-#mu-header {
-/* Estilos del id encabezado */
-    
-    position: fixed;
-    /* posicion relativa*/
-    left: 0;
-    /* margen izquierdo 0*/
-    right: 0;
-    /* margen derecho 0*/
-    top: 0;
-    /* margen superior 0*/
-    width: 100%;
-    /* ancho 100%*/
-    z-index: 1000;
-    /* orden de apilamiento 999*/
-    
-}
-
-.offcanvas-body{
-    overflow-x: hidden;
-    padding-left: 15px;
-}
-
-.navbar-brand {
-    padding-top: 15px;
-    font-weight: 500;
-    color: #004225;
-    font-size: 32px;
-    transition: 0.3s color;
-}
-
-.login-button{
-    background-color: #004225;
-    color: blanchedalmond;
-    font-size: 18px;
-    padding: 8px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: 0.3s background-color;
-}
-
-.login-button:hover{
-    background-color: rgb(19, 111, 47);
-}
-
-.navbar-toggler{
-    border: none;
-    font-size: 2rem;
-}
-
-.navbar-toggler:focus, .btn-close:focus{
-    box-shadow: none;
-    outline: none;
-}
-
-.navlink {
-    color: #666777;
-    font-weight: 500;
-    position: relative;
-}
-
-.nav-link:hover, .nav-link.active {
-    color: black;
-}
-
-@media (min-width: 991px){
-    .nav-link::before{
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 2px;
-        background-color: #004225;
-        visibility: hidden;
-        transition: 0.3s ease-in-out;
-    }
-    
-    .offcanvas-body{
-        overflow-x: hidden;
-        padding-left: 20px;
-        margin-left: 20px;
-    }
-    
-}
-
-.navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 0.5rem;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    height: 80px;
-    margin: 20px;
-    border-radius: 16px;
-    
-}
-
-
-.offcanvas-title{
-    font-size: 2.5rem;
-    font-weight: 500;
-    font-style: italic;
-}
 
 
 .hero-section{
