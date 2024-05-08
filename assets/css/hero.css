@@ -1,0 +1,87 @@
+.hero-section{
+/* Estilos de la seccion hero */
+    background-image: url(../assets/img/fondocomida.jpg);
+    /* imagen de fondo url(../assets/img/fondocomida.jpg) */
+    background-size: cover;
+    /* tamaño de fondo cubrir*/
+    width: 100%;
+    /* ancho 100%*/
+    height: 100vh;
+    /* altura 100vh*/
+}
+
+.hero-section::before{
+/* Estilos del pseudo-elemento antes de la seccion hero */
+    content: "";
+    /* contenido vacio*/
+    position: absolute;
+    /* posicion absoluta*/
+    top: 0;
+    /* margen superior 0*/
+    left: 0;
+    /* margen izquierdo 0*/
+    right: 0;
+    /* margen derecho 0*/
+    bottom: 0;
+    /* margen inferior 0*/
+    background-color: rgba(0, 0, 0, 0.75);
+    /* color de fondo rgba(0, 0, 0, 0.75) basicamente una capa de transparencia*/
+}
+
+.hero-section .container{
+/* Estilos del contenedor dentro la seccion hero */
+    height: 100vh;
+    /* altura 100vh*/
+    z-index: 1;
+    /* indice z 1*/
+    position: relative;
+    /* posicion relativa*/
+}
+
+.hero-section h1{
+/* Estilos del titulo h1 dentro la seccion hero */
+    font-size: 6rem;
+    /* tamaño de fuente 6rem*/
+    font-weight: 700;
+    /* peso de fuente 700*/
+    color: white;
+    /* color blanco*/
+    margin-top: 5%;
+    /* margen superior 5%*/
+}
+
+.hero-section p{
+/* Estilos del parrafo p dentro la seccion hero */
+    font-size: 3rem;
+    /* tamaño de fuente 3rem*/
+    color: white;
+    /* color blanco*/
+    margin-top: 20px;
+    /* margen superior 20px*/
+}
+
+.hero-section a{
+/* Estilos de la etiqueta a dentro la seccion hero */
+    background-color: #004225;
+    /* color de fondo #004225*/
+    color: blanchedalmond;
+    /* color blanco*/
+    font-size: 30px;
+    /* tamaño de fuente 30px*/
+    padding: 12px 30px;
+    /* relleno 12px 30px*/
+    border-radius: 50px;
+    /* radio de borde 50px*/
+    text-decoration: none;
+    /* decoracion de texto ninguno*/
+    transition: 0.3s background-color;
+    /* transicion 0.3s color de fondo*/
+    margin-top: 10%;
+    /* margen superior 10%*/
+}
+
+.hero-section a:hover{
+/* Estilos de la etiqueta a cuando esta en hover(raton sobre la etiqueta) */
+    background-color: rgb(19, 111, 47);
+    /* color de fondo rgb(19, 111, 47)*/
+}

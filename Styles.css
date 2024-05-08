@@ -1,6 +1,7 @@
 
 @import url(/assets/css/footer.css);
 @import url(/assets/css/navbar.css);
+@import url(/assets/css/hero.css);
 
 body {
 /* Estilos del cuerpo */
@@ -82,58 +83,6 @@ img {
     /* ancho maximo 100%*/
  }
 
-
-
-.hero-section{
-    background-image: url(../assets/img/fondocomida.jpg);
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-}
-
-.hero-section::before{
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-}
-
-.hero-section .container{
-    height: 100vh;
-    z-index: 1;
-    position: relative;
-}
-
-.hero-section h1{
-    font-size: 6rem;
-    font-weight: 700;
-    color: white;
-    margin-top: 5%;
-}
-
-.hero-section p{
-    font-size: 3rem;
-    color: white;
-    margin-top: 20px;
-}
-
-.hero-section a{
-    background-color: #004225;
-    color: blanchedalmond;
-    font-size: 30px;
-    padding: 12px 30px;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: 0.3s background-color;
-    margin-top: 10%;
-}
-
-.hero-section a:hover{
-    background-color: rgb(19, 111, 47);
-}
 
 .restaurantes-grid .col{
     margin-bottom: 20px;    
