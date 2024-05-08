@@ -1,7 +1,7 @@
 .hero-section{
 /* Estilos de la seccion hero */
-    background-image: url(../assets/img/fondocomida.jpg);
-    /* imagen de fondo url(../assets/img/fondocomida.jpg) */
+    background-image: url(../img/fondocomida.jpg);
+    /*  */
     background-size: cover;
     /* tamaño de fondo cubrir*/
     width: 100%;
