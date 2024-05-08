@@ -95,10 +95,7 @@ img {
 ------------------*/
 #mu-header {
 /* Estilos del id encabezado */
-    background-color: #fff;
-    /* color de fondo blanco*/
-    border-bottom: 1px solid #ddd;
-    /* borde inferior de 1px solido #eaeaea*/
+    
     position: fixed;
     /* posicion relativa*/
     left: 0;
@@ -113,6 +110,12 @@ img {
     /* orden de apilamiento 999*/
     
 }
+
+.offcanvas-body{
+    overflow-x: hidden;
+    padding-left: 15px;
+}
+
 .navbar-brand {
     padding-top: 15px;
     font-weight: 500;
@@ -169,6 +172,11 @@ img {
         transition: 0.3s ease-in-out;
     }
     
+    .offcanvas-body{
+        overflow-x: hidden;
+        padding-left: 20px;
+        margin-left: 20px;
+    }
     
 }
 
@@ -192,7 +200,7 @@ img {
 ------------------*/
 footer {
 /* Estilos del footer */
-    position: fixed;
+    position: relative;
     /* posicion  */
     left: 0;
     /* margen izquierdo 0 */
@@ -266,7 +274,10 @@ footer {
 
 .hero-section a:hover{
     background-color: rgb(19, 111, 47);
+}
 
+.restaurantes-grid .col{
+    margin-bottom: 20px;    
 }
 
 
