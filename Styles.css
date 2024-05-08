@@ -6,6 +6,7 @@
 ==================================================
 */
 
+
 /*----------------
 1. General Styles
 -----------------*/
@@ -194,29 +195,6 @@ img {
     
 }
 
-
-/*----------------
-. Footer Styles
-------------------*/
-footer {
-/* Estilos del footer */
-    position: relative;
-    /* posicion  */
-    left: 0;
-    /* margen izquierdo 0 */
-    bottom: 0;
-    /* margen inferior 0 */
-    width: 100%;
-    /* ancho 100% */
-    background-color: #333333;
-    /* color de fondo #333333 */
-    color: #ffffff;
-    /* color #ffffff */
-    padding: 20px;
-    /* relleno 20px */
-    text-align: center;
-    /* alineacion de texto al centro */
-}
 
 .offcanvas-title{
     font-size: 2.5rem;
