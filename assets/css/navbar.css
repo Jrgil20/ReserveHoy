@@ -100,6 +100,7 @@
     /* color #004225*/
     font-size: 32px;
     /* tamaño de la fuente 32px*/
+    font-family: "Prata", serif;
     transition: 0.3s color;
     /* transicion de color 0.3s*/
 }
@@ -160,12 +161,11 @@
 .nav-link:hover, .nav-link.active {
 /* cuando el cursor esta sobre la clase navlink o esta activa */
     color: black;
-    /* color negro*/s
+    /* color negro*/
 }
 
 
 .offcanvas-title{
-
     font-size: 2.5rem;
     font-weight: 500;
     font-style: italic;

@@ -98,4 +98,51 @@ img {
     color: #000000; /* Cambia el color del texto a blanco en hover */
 }
 
+.btn_verRest{
+    /* Estilos del boton de ver restaurantes */
+    background-color: #004225;
+    /* color de fondo #004225*/
+    color: blanchedalmond;
+    /* color blanco*/
+    font-size: 18px;
+    /* tamaño de fuente 18px*/
+    padding: 8px 20px;
+    /* relleno 8px 20px*/
+    border-radius: 0 32px 0 32px;
+    /* radio de borde 50px*/
+    text-decoration: none;
+    /* decoracion de texto ninguna*/
+    transition: 0.3s background;
+    display: block;
+    width: 20%;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 20px;
 
+}
+
+.btn_verRest a{
+    /* Estilos de la etiqueta a dentro la seccion hero */
+    background-color: #004225;
+    /* color de fondo #004225*/
+    color: blanchedalmond;
+    /* color blanco*/
+    font-size: 30px;
+    /* tamaño de fuente 30px*/
+    padding: 12px 30px;
+    /* relleno 12px 30px*/
+    border-radius: 0px 32px 0px 32px;
+    /* radio de borde 50px*/
+    text-decoration: none;
+    /* decoracion de texto ninguno*/
+    transition: 0.3s background-color;
+    /* transicion 0.3s color de fondo*/
+    margin-top: 10%;
+    /* margen superior 10%*/
+    }
+    
+.btn_verRest a:hover{
+    /* Estilos de la etiqueta a cuando esta en hover(raton sobre la etiqueta) */
+    background-color: rgb(19, 111, 47);
+    /* color de fondo rgb(19, 111, 47)*/
+}
