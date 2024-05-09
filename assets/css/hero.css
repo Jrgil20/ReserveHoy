@@ -58,6 +58,7 @@
     /* color blanco*/
     margin-top: 20px;
     /* margen superior 20px*/
+    line-height: 40px;
 }
 
 .hero-section a{
@@ -70,7 +71,7 @@
     /* tamaño de fuente 30px*/
     padding: 12px 30px;
     /* relleno 12px 30px*/
-    border-radius: 50px;
+    border-radius: 0px 32px 0px 32px;
     /* radio de borde 50px*/
     text-decoration: none;
     /* decoracion de texto ninguno*/

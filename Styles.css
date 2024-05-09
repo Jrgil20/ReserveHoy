@@ -83,9 +83,19 @@ img {
     /* ancho maximo 100%*/
  }
 
+ .restaurant-div .text{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-size: 60px;
+}
 
 .restaurantes-grid .col{
     margin-bottom: 20px;    
+}
+
+.restaurantes-grid .col .btn-primary:hover {
+    color: #000000; /* Cambia el color del texto a blanco en hover */
 }
 
 
