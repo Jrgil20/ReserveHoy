@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap");
 @import url("../css/formulario.css");
+@import url("../css/navbar.css");
 @import url("../css/footer.css");
 
 * {
@@ -25,4 +26,8 @@ main {
   border-radius: 20px;
   padding: 20px;
   box-shadow: 1px 5px 9px rgba(211, 211, 211, 0.9);
+}
+
+.card {
+  margin-top: 100px;
 }
