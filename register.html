@@ -14,21 +14,39 @@
 </head>
 <body>
     <main>
-        <form>
-            <label for="name">Nombre:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="confirm-password">Confirmar Contraseña:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
-
-            <button type="submit">Registrarse</button>
-        </form>
+            <!-- Formulario de conexion  -->
+        <div class="card">
+            <h2>Iniciar Sesión</h2>
+            <!-- Se conecta se inscribe -->
+            <div class="login_register">
+                <a href="#" class="login" target="blank">Restaurante</a>
+                <a href="#" class="register" target="blank">Cliente</a>
+            </div>
+  
+            <!-- Formulario -->
+            <form class="form">
+                <label for="name">Nombre:</label>
+                <input type="text" laceholder="mi name"id="name" name="name" required>
+        
+                <label for="email">Email:</label>
+                <input type="email" placeholder="micorreo@gmail.com" id="email" name="email" required>
+        
+                <label for="password">Contraseña:</label>
+                <input type="password" placeholder="*********" id="password" name="password" required>
+        
+                <label for="confirm-password">Confirmar Contraseña:</label>
+                <input type="password" placeholder="*********" id="confirm-password" name="confirm-password" required>
+        
+                <!-- Boton de login -->
+                <button type="button" class="login_btn">Registrate</button>
+            </form>
+  
+            <!-- PIED DE LA CARD -->
+            <div class="footer_card">
+                <p>¿Ya tienes una cuenta?</p>
+                <a href="login.html">Inicia Sesión</a>
+            </div>
+        </div>
     </main>
 
     <!-- Seccion de pie de pagina-->
