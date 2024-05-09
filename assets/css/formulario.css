@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
+
 .card {
     width: auto;
     height: auto;
@@ -33,7 +34,10 @@
   .login_register a {
     font-size: 1em;
     padding: 10px 55px;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
     border: none;
+    white-space: nowrap;
     width: 50%;
   }
   
