@@ -1,6 +1,6 @@
 footer {
     /* Estilos del footer */
-        position: relative;
+        position: fixed;
         /* posicion  */
         left: 0;
         /* margen izquierdo 0 */
@@ -16,5 +16,6 @@ footer {
         /* relleno 20px */
         text-align: center;
         /* alineacion de texto al centro */
+        
     }
     

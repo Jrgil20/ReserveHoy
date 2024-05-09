@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html lang="es-VE">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReserveHoy | Inicia Sesion</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReserveHoy | Inicia Sesion</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/img/letra-r.png" type="image/x-icon">
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="assets/img/letra-r.png" type="image/x-icon">
 
-    <!-- Estilos CSS -->
-    <link rel="stylesheet" href="/assets/css/login.css">
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="/assets/css/login.css">
+  <link rel="stylesheet" href="/assets/css/footer.css">
 </head>
 <body>
-    
-  <!-- Formulario de conexion  -->
-  <div class="card">
-    <h2>Iniciar Sesión</h2>
+  <main>
+    <!-- Formulario de conexion  -->
+    <div class="card">
+      <h2>Iniciar Sesión</h2>
+      <!-- Se conecta se inscribe -->
+      <div class="login_register">
+        <a href="#" class="login" target="blank">Restaurante</a>
+        <a href="#" class="register" target="blank">Cliente</a>
+      </div>
 
-    <!-- Se conecta se inscribe -->
-    <div class="login_register">
-      <a href="#" class="login" target="blank">Ingresa</a>
-      <a href="#" class="register" target="blank">Registrate</a>
+      <!-- Formulario -->
+      <form class="form">
+        <input type="email" placeholder="Correo Electrónico" class="email">
+        <input type="password" placeholder="Contraseña" class="pass">
+      </form>
+
+      <!-- MOT DE PASSE OUBLIE ? -->
+      <a href="#" class="fp">Olvidaste tu contraseña?</a>
+
+      <!-- Boton de login -->
+      <button type="button" class="login_btn">Ingresar</button>
+
+      <!-- PIED DE LA CARD -->
+      <div class="footer_card">
+        <p>No estás registrado?</p>
+        <a href="#">Registrate Ahora</a>
+      </div>
+
+      <a href="index.html" class="login_btn">Volver</a>
     </div>
-
-    <!-- Formulario -->
-    <form class="form">
-      <input type="email" placeholder="Correo Electrónico" class="email">
-      <input type="password" placeholder="Contraseña" class="pass">
-    </form>
-
-    <!-- MOT DE PASSE OUBLIE ? -->
-    <a href="#" class="fp">Olvidaste tu contraseña?</a>
-
-    <!-- Boton de login -->
-    <button type="button" class="login_btn">Ingresar</button>
-
-    <!-- PIED DE LA CARD -->
-    <div class="footer_card">
-      <p>No estás registrado?</p>
-      <a href="#">Registrate Ahora</a>
-    </div>
-
-    <a href="index.html" class="login_btn">Volver</a>
-  </div>
-
+  </main>
+  <!-- Seccion de pie de pagina-->
+  <footer>
+    <p>Reserve Hoy &copy; 2021</p>
+  </footer>
+  <!-- Fin: Seccion de pie de pagina-->
 </body>
 </html>
