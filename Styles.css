@@ -122,27 +122,12 @@ img {
 }
 
 .btn_verRest a{
-    /* Estilos de la etiqueta a dentro la seccion hero */
-    background-color: #004225;
-    /* color de fondo #004225*/
-    color: blanchedalmond;
-    /* color blanco*/
-    font-size: 30px;
-    /* tamaño de fuente 30px*/
-    padding: 12px 30px;
-    /* relleno 12px 30px*/
-    border-radius: 0px 32px 0px 32px;
-    /* radio de borde 50px*/
-    text-decoration: none;
-    /* decoracion de texto ninguno*/
-    transition: 0.3s background-color;
-    /* transicion 0.3s color de fondo*/
-    margin-top: 10%;
-    /* margen superior 10%*/
-    }
+    color: white;
+}
     
 .btn_verRest a:hover{
     /* Estilos de la etiqueta a cuando esta en hover(raton sobre la etiqueta) */
-    background-color: rgb(19, 111, 47);
+    background-color: #004225;
+    color: black;
     /* color de fondo rgb(19, 111, 47)*/
 }

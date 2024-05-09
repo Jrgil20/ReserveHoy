@@ -1,6 +1,6 @@
 footer {
     /* Estilos del footer */
-        position: fixed;
+        position: relative;
         /* posicion  */
         left: 0;
         /* margen izquierdo 0 */
