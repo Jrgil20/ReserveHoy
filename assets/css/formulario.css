@@ -48,7 +48,7 @@
   
   .login_register a.register {
     border-radius: 15px;
-    background-color: transparent;
+    background: none;
     color: black;
   }
   
