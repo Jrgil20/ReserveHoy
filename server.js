@@ -59,7 +59,7 @@ app.post('/registerClient', (req, res) => {
   }
 });
 
-// Ruta POST para el inicio de sesión
+// Ruta POST para el inicio de sesión (cliente)
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
