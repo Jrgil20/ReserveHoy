@@ -2,9 +2,7 @@
 
 ______________________________
 
-## Atribuciones
 
-[Letra r iconos creados por Laisa Islam Ani - Flaticon](https://www.flaticon.es/iconos-gratis/letra-r)
 
 ## Licencia
 
