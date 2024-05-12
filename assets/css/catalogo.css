@@ -45,11 +45,14 @@ main{
 .searchbar{
     margin-bottom: auto;
     margin-top: auto;
+    margin-right: 40px;
     height: 60px;
-    background-color: #353b48;
+    background-color: #004225;
     border-radius: 30px;
     padding: 10px;
+    transition: width 0.4s linear;
 }
+
 .search_input{
     color: white;
     border: 0;
@@ -60,16 +63,17 @@ main{
     line-height: 40px;
     transition: width 0.4s linear;
 }
+
 .searchbar:hover > .search_input{
     padding: 0 10px;
-    width: 450px;
+    width: 300px;
     caret-color:red;
-    transition: width 0.4s linear;
 }
+
 .searchbar:hover > .search_icon{
-    background: white;
-    color: #e74c3c;
+    display: none;
 }
+
 .search_icon{
     height: 40px;
     width: 40px;
@@ -80,4 +84,17 @@ main{
     border-radius: 50%;
     color:white;
     text-decoration:none;
+}
+
+@media (min-width: 991px){
+    .searchbar{
+        margin-bottom: auto;
+        margin-top: auto;
+        margin-right: 60px;
+        height: 60px;
+        background-color: #004225;
+        border-radius: 30px;
+        padding: 10px;
+        transition: width 0.4s linear;
+    }
 }
