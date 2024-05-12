@@ -34,17 +34,17 @@ app.get('/', (req, res) => {
 
 // Ruta POST para el registro
 app.post('/register', (req, res) => {
-  const username = req.body.username;
+  const email= req.body.email;
   const password = req.body.password;
 
   // Aquí deberías agregar validaciones para los datos de entrada
 
-  if (users[username]) {
+  if (users[email]) {
     res.status(400).send('El nombre de usuario ya existe');
   } else {
     // En una aplicación real, nunca debes almacenar las contraseñas en texto plano
     // Deberías usar un algoritmo de hash como bcrypt
-    users[username] = { password: password };
+    users[email] = { password: password };
     fs.writeFileSync('users.json', JSON.stringify(users));
     res.status(200).send('Usuario registrado con éxito');
   }
@@ -52,10 +52,10 @@ app.post('/register', (req, res) => {
 
 // Ruta POST para el inicio de sesión
 app.post('/login', (req, res) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
-  if (users[username] && users[username].password === password) {
+  if (users[email] && users[email].password === password) {
     // En una aplicación real, deberías crear una sesión y enviar una cookie al cliente
     res.status(200).send('Inicio de sesión exitoso');
   } else {
