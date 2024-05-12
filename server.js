@@ -18,11 +18,20 @@ app.use(express.static('public'));
 // Define el puerto en el que se ejecutará tu servidor.
 const port = 3000;
 
-// Objeto de usuarios para este ejemplo
+// Objeto de usuarios (cliente) para este ejemplo
 let users = {};
 try {
   const data = fs.readFileSync('users.json', 'utf8');
   users = JSON.parse(data);
+} catch (err) {
+  console.error(err);
+}
+
+// Objeto de restaurantes para este ejemplo
+let restaurants = {};
+try {
+  const data = fs.readFileSync('restaurants.json', 'utf8');
+  restaurants = JSON.parse(data);
 } catch (err) {
   console.error(err);
 }
@@ -32,8 +41,8 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// Ruta POST para el registro
-app.post('/register', (req, res) => {
+// Ruta POST para el registro de usuarios (cliente)
+app.post('/registerClient', (req, res) => {
   const email= req.body.email;
   const password = req.body.password;
 

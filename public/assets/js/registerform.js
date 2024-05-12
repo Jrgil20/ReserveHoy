@@ -1,16 +1,24 @@
-document.querySelector('form').addEventListener('submit', function(event) {
+document.getElementById('restauranteForm').addEventListener('submit', function(event) {
+    handleFormSubmit(event, '/registerRestaurant');
+});
+
+document.getElementById('clienteForm').addEventListener('submit', function(event) {
+    handleFormSubmit(event, '/registerClient');
+});
+
+function handleFormSubmit(event, url) {
     event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    const email = event.target.elements.email.value;
+    const password = event.target.elements.password.value;
+    const confirmPassword = event.target.elements['confirm-password'].value;
 
     if (password !== confirmPassword) {
         alert('Las contraseñas no coinciden');
         return;
     }
 
-    fetch('/register', {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,4 +30,4 @@ document.querySelector('form').addEventListener('submit', function(event) {
     .catch((error) => {
         console.error('Error:', error);
     });
-});
+}
