@@ -1,8 +1,8 @@
-document.getElementById('restauranteForm').addEventListener('submit', function(event) {
+document.getElementById('restauranteRegisterForm').addEventListener('submit', function(event) {
     handleFormSubmit(event, '/registerRestaurant');
 });
 
-document.getElementById('clienteForm').addEventListener('submit', function(event) {
+document.getElementById('clienteRegisterForm').addEventListener('submit', function(event) {
     handleFormSubmit(event, '/registerClient');
 });
 
