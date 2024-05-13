@@ -44,5 +44,5 @@ function handleFormSubmit(event, url) {
     .catch((error) => {
         console.error('Error:', error);
     });
-});
+};
 
