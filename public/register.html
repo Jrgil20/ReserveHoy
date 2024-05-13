@@ -61,50 +61,80 @@
             <h2>Registrate</h2>
             <!-- Se conecta se inscribe -->
             <div class="login_register">
-                <a href="javascript:void(0)" class="restauranteRegister" target="_self">Restaurante</a>
-                <a href="javascript:void(0)" class="clienteRegister" target="_self">Cliente</a>
+                <a href="javascript:void(0)" class="restauranteRegister-btn" target="_self">Restaurante</a>
+                <a href="javascript:void(0)" class="clienteRegister-btn" target="_self">Cliente</a>
             </div>
-  
+
+            <script>
+                window.onload = function() {
+                    const btnRestauranteReg = document.querySelector('a.restauranteRegister-btn');
+                    const btnClienteReg = document.querySelector('a.clienteRegister-btn');
+                    const formRestauranteReg = document.querySelector('#restauranteForm');
+                    const formClienteReg = document.querySelector('#clienteForm');
+
+                    // Función para activar el formulario de restaurante
+                    btnRestauranteReg.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        formRestauranteReg.style.display = 'flex';
+                        formClienteReg.style.display = 'none';
+                        btnRestauranteReg.style.color = 'white';
+                        btnRestauranteReg.style.background = 'linear-gradient(90deg, #004225, #057c48)';
+                        btnClienteReg.style.color = 'black';
+                        btnClienteReg.style.background = 'none';
+                    });
+
+                    // Función para activar el formulario de cliente
+                    btnClienteReg.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        formClienteReg.style.display = 'flex';
+                        formRestauranteReg.style.display = 'none';
+                        btnClienteReg.style.color = 'white';
+                        btnClienteReg.style.background = 'linear-gradient(90deg, #004225, #057c48)';
+                        btnRestauranteReg.style.color = 'black';
+                        btnRestauranteReg.style.background = 'none';
+                    });
+                }
+            </script>
+
             <!-- Formulario Restaurantes -->
-            <form action = "/registerrestau" method = "post" id="restauranteForm" class="form">
+            <form action="/registerrestau" method="post" id="restauranteForm" class="form">
 
                 <label for="name">Restaurante:</label>
                 <input type="text" placeholder="Nombre del Restaurante" id="nameRestaurante" name="name" required>
-        
+
                 <label for="email">Email:</label>
                 <input type="email" placeholder="micorreo@gmail.com" id="emailRestaurante" name="email" class="email" required>
 
                 <label for="phone">Número de Teléfono:</label>
                 <input type="tel" placeholder="424-1234567" id="phoneRestaurante" name="phone" required>
-        
+
                 <label for="password">Contraseña:</label>
                 <input type="password" placeholder="*********" id="passwordRestaurante" name="password" class="pass" required>
-        
+
                 <label for="confirm-password">Confirmar Contraseña:</label>
                 <input type="password" placeholder="*********" id="confirm-passwordRestaurante" name="confirm-password" class="pass" required>
-        
+
                 <!-- Boton de login -->
                 <button type="submit" class="login_btn">Registrate</button>
             </form>
 
             <!-- Formulario Clientes -->
-
-            <form action ="/register" method="post" id="clienteForm" class="form" >
+            <form action="/register" method="post" id="clienteForm" class="form">
                 <label for="name">Nombre:</label>
                 <input type="text" placeholder="Mi Nombre" id="namecliente" name="name" required>
-        
+
                 <label for="email">Email:</label>
                 <input type="email" placeholder="micorreo@gmail.com" id="emailcliente" name="email" class="email" required>
 
                 <label for="phone">Número de Teléfono:</label>
                 <input type="tel" placeholder="424-1234567" id="phonecliente" name="phone" required>
-        
+
                 <label for="password">Contraseña:</label>
                 <input type="password" placeholder="*********" id="passwordcliente" name="password" class="pass" required>
-        
+
                 <label for="confirm-password">Confirmar Contraseña:</label>
                 <input type="password" placeholder="*********" id="confirm-passwordcliente" name="confirm-password" class="pass" required>
-        
+
                 <!-- Boton de login -->
                 <button type="submit" class="login_btn">Registrate</button>
             </form>
