@@ -5,6 +5,16 @@ const bodyParser = require('body-parser');
 // Importa el módulo fs. Esto te permite usar la funcionalidad de fs en tu archivo.
 const fs = require('fs');
 
+//Importa el modulo de mysql. Permite hacer la conexion con la base de datos
+const mysql = require('mysql');
+
+//conexion con la base de datos
+let conexion = mysql.createConnection({
+    host: "localhost",
+    database: "reservahoy",
+    user:"root",
+    password: ""
+}); 
 
 // Crea una nueva aplicación Express. Esto es lo que realmente maneja las solicitudes y respuestas.
 const app = express();
@@ -14,6 +24,15 @@ app.use(bodyParser.json());
 
 // Middleware para servir archivos estáticos
 app.use(express.static('public'));
+
+//para usar ejs (motor de vista)
+app.set("view engine", "ejs");
+
+//para reconocer los datos que ingrese el usuario
+app.use(express.urlencoded({ extended: false }));
+
+//para reconocer los objetos que tengan la extesion .json
+app.use(express.json());
 
 // Define el puerto en el que se ejecutará tu servidor.
 const port = 3000;
@@ -32,22 +51,71 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+
 // Ruta POST para el registro
-app.post('/register', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+app.post("/register", (req, res) => {
+  const datos = req.body;
+  
+  let name = datos.name;
+  let email = datos.email;
+  let password = datos.password;
+  
+  //busca si el correo ya esta registrado
+  let buscar = "SELECT * FROM cliente WHERE correo = '"+email+"'";
+  //se hace la consulta
+  conexion.query(buscar,function(err,row){
+     if(err){
+      throw err;
+    }else{
+      //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
+      if (row.length > 0){
+        console.log('El correo ya está registrado');
+      }else{
+        let register = "INSERT INTO cliente (NombreApellido, correo, clave) VALUES ('"+name+"','"+email+"','"+password+"')"
+  
+        conexion.query(register,function(err,res){
+          if(err){
+            console.log(err);
+          }else{
+            console.log('Usuario registrado con éxito');
+          }
+        
+        });
+      }
+    }
+  })
 
-  // Aquí deberías agregar validaciones para los datos de entrada
+});
 
-  if (users[username]) {
-    res.status(400).send('El nombre de usuario ya existe');
-  } else {
-    // En una aplicación real, nunca debes almacenar las contraseñas en texto plano
-    // Deberías usar un algoritmo de hash como bcrypt
-    users[username] = { password: password };
-    fs.writeFileSync('users.json', JSON.stringify(users));
-    res.status(200).send('Usuario registrado con éxito');
-  }
+//Ruta POST registrar restaurante
+app.post("/registerrestau", (req,res) => {
+  const datos = req.body;
+  
+  let {name,email,phone,password} = datos;
+  
+  //busca si el correo ya esta registrado
+  let buscar = "SELECT * FROM restaurante WHERE correo = '"+name+"'";
+  //se hace la consulta
+  conexion.query(buscar,function(err,row){
+     if(err){
+      throw err;
+    }else{
+      //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
+      if (row.length > 0){
+        console.log('El correo ya está registrado');
+      }else{
+        let register = "INSERT INTO restaurante (nombreRes, correo, telefono, clave) VALUES ('"+name+"','"+email+"','"+phone+"','"+password+"')"
+        conexion.query(register,function(err,res){
+          if(err){
+            console.log(err);
+          }else{
+            console.log('Restaurante registrado con éxito');
+          }
+        
+        });
+      }
+    }
+  })
 });
 
 // Ruta POST para el inicio de sesión
