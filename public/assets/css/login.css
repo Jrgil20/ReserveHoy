@@ -28,3 +28,6 @@ main {
   box-shadow: 1px 5px 9px rgba(211, 211, 211, 0.9);
 }
 
+#clienteLoginForm{
+  display: none;
+}
