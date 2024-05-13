@@ -1,0 +1,8 @@
+@import url("../css/navbar.css");
+@import url("../css/formulario.css");
+@import url("../css/footer.css");
+
+main {
+    padding: 5px;
+    margin-top: 15vh;
+}
