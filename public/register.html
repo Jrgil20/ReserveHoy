@@ -17,7 +17,7 @@
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="/assets/css/register.css"/>
 
-    <script src="/assets/js/changeForm.js"></script>
+    <script src="./assets/js/changeForm.js"></script>
 
 </head>
 <body>
@@ -61,50 +61,49 @@
             <h2>Registrate</h2>
             <!-- Se conecta se inscribe -->
             <div class="login_register">
-                <a href="#" class="restauranteRegister" target="blank">Restaurante</a>
-                <a href="#" class="clienteRegister" target="blank">Cliente</a>
+                <a href="javascript:void(0)" class="restauranteRegister-btn" target="_self">Restaurante</a>
+                <a href="javascript:void(0)" class="clienteRegister-btn" target="_self">Cliente</a>
             </div>
-  
+
             <!-- Formulario Restaurantes -->
-            <form action = "/registerrestau" method = "post" id="restauranteForm" class="form">
+            <form action="/registerrestau" method="post" id="restauranteForm" class="form">
 
                 <label for="name">Restaurante:</label>
                 <input type="text" placeholder="Nombre del Restaurante" id="nameRestaurante" name="name" required>
-        
+
                 <label for="email">Email:</label>
                 <input type="email" placeholder="micorreo@gmail.com" id="emailRestaurante" name="email" class="email" required>
 
                 <label for="phone">Número de Teléfono:</label>
                 <input type="tel" placeholder="424-1234567" id="phoneRestaurante" name="phone" required>
-        
+
                 <label for="password">Contraseña:</label>
                 <input type="password" placeholder="*********" id="passwordRestaurante" name="password" class="pass" required>
-        
+
                 <label for="confirm-password">Confirmar Contraseña:</label>
                 <input type="password" placeholder="*********" id="confirm-passwordRestaurante" name="confirm-password" class="pass" required>
-        
+
                 <!-- Boton de login -->
                 <button type="submit" class="login_btn">Registrate</button>
             </form>
 
             <!-- Formulario Clientes -->
-
-            <form action ="/register" method="post" id="clienteForm" class="form" >
+            <form action="/register" method="post" id="clienteForm" class="form">
                 <label for="name">Nombre:</label>
                 <input type="text" placeholder="Mi Nombre" id="namecliente" name="name" required>
-        
+
                 <label for="email">Email:</label>
                 <input type="email" placeholder="micorreo@gmail.com" id="emailcliente" name="email" class="email" required>
 
                 <label for="phone">Número de Teléfono:</label>
                 <input type="tel" placeholder="424-1234567" id="phonecliente" name="phone" required>
-        
+
                 <label for="password">Contraseña:</label>
                 <input type="password" placeholder="*********" id="passwordcliente" name="password" class="pass" required>
-        
+
                 <label for="confirm-password">Confirmar Contraseña:</label>
                 <input type="password" placeholder="*********" id="confirm-passwordcliente" name="confirm-password" class="pass" required>
-        
+
                 <!-- Boton de login -->
                 <button type="submit" class="login_btn">Registrate</button>
             </form>
