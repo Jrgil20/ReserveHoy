@@ -37,11 +37,20 @@ app.use(express.json());
 // Define el puerto en el que se ejecutará tu servidor.
 const port = 3000;
 
-// Objeto de usuarios para este ejemplo
+// Objeto de usuarios (cliente) para este ejemplo
 let users = {};
 try {
   const data = fs.readFileSync('users.json', 'utf8');
   users = JSON.parse(data);
+} catch (err) {
+  console.error(err);
+}
+
+// Objeto de restaurantes para este ejemplo
+let restaurants = {};
+try {
+  const data = fs.readFileSync('restaurants.json', 'utf8');
+  restaurants = JSON.parse(data);
 } catch (err) {
   console.error(err);
 }
@@ -87,6 +96,7 @@ app.post("/register", (req, res) => {
 
 });
 
+
 //Ruta POST registrar restaurante
 app.post("/registerrestau", (req,res) => {
   const datos = req.body;
@@ -118,12 +128,12 @@ app.post("/registerrestau", (req,res) => {
   })
 });
 
-// Ruta POST para el inicio de sesión
+// Ruta POST para el inicio de sesión (cliente)
 app.post('/login', (req, res) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
-  if (users[username] && users[username].password === password) {
+  if (users[email] && users[email].password === password) {
     // En una aplicación real, deberías crear una sesión y enviar una cookie al cliente
     res.status(200).send('Inicio de sesión exitoso');
   } else {

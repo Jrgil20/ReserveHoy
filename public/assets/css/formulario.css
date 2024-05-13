@@ -40,13 +40,25 @@
     width: 50%;
   }
   
-  .login_register a.login {
+  .login_register a.restauranteRegister {
     border-radius: 15px;
     background: linear-gradient(90deg, #004225, #057c48);
     color: white;
   }
   
-  .login_register a.register {
+  .login_register a.clienteRegister {
+    border-radius: 15px;
+    background: none;
+    color: black;
+  }
+
+  .login_register a.restauranteLogin {
+    border-radius: 15px;
+    background: linear-gradient(90deg, #004225, #057c48);
+    color: white;
+  }
+  
+  .login_register a.clienteLogin {
     border-radius: 15px;
     background: none;
     color: black;

@@ -61,54 +61,56 @@
             <h2>Registrate</h2>
             <!-- Se conecta se inscribe -->
             <div class="login_register">
-                <a href="#" class="login" target="blank">Restaurante</a>
-                <a href="#" class="register" target="blank">Cliente</a>
+                <a href="#" class="restauranteRegister" target="blank">Restaurante</a>
+                <a href="#" class="clienteRegister" target="blank">Cliente</a>
             </div>
   
             <!-- Formulario Restaurantes -->
             <form action = "/registerrestau" method = "post" id="restauranteForm" class="form">
+
                 <label for="name">Restaurante:</label>
-                <input type="text" placeholder="Nombre del Restaurante" id="name" name="name" required>
+                <input type="text" placeholder="Nombre del Restaurante" id="nameRestaurante" name="name" required>
         
                 <label for="email">Email:</label>
-                <input type="email" placeholder="micorreo@gmail.com" id="email" name="email" class="email" required>
+                <input type="email" placeholder="micorreo@gmail.com" id="emailRestaurante" name="email" class="email" required>
 
                 <label for="phone">Número de Teléfono:</label>
-                <input type="tel" placeholder="424-1234567" id="phone" name="phone" required>
+                <input type="tel" placeholder="424-1234567" id="phoneRestaurante" name="phone" required>
         
                 <label for="password">Contraseña:</label>
-                <input type="password" placeholder="*********" id="password" name="password" class="pass" required>
+                <input type="password" placeholder="*********" id="passwordRestaurante" name="password" class="pass" required>
         
                 <label for="confirm-password">Confirmar Contraseña:</label>
-                <input type="password" placeholder="*********" id="confirm-password" name="confirm-password" class="pass" required>
+                <input type="password" placeholder="*********" id="confirm-passwordRestaurante" name="confirm-password" class="pass" required>
         
                 <!-- Boton de login -->
                 <button type="submit" class="login_btn">Registrate</button>
             </form>
 
-            <script src="./assets/js/registerform.js"></script>
-
             <!-- Formulario Clientes -->
+
             <form action ="/register" method="post" id="clienteForm" class="form" >
                 <label for="name">Nombre:</label>
-                <input type="text" placeholder="Mi Nombre" id="name" name="name" required>
+                <input type="text" placeholder="Mi Nombre" id="namecliente" name="name" required>
         
                 <label for="email">Email:</label>
-                <input type="email" placeholder="micorreo@gmail.com" id="email" name="email" class="email" required>
+                <input type="email" placeholder="micorreo@gmail.com" id="emailcliente" name="email" class="email" required>
 
                 <label for="phone">Número de Teléfono:</label>
-                <input type="tel" placeholder="424-1234567" id="phone" name="phone" required>
+                <input type="tel" placeholder="424-1234567" id="phonecliente" name="phone" required>
         
                 <label for="password">Contraseña:</label>
-                <input type="password" placeholder="*********" id="password" name="password" class="pass" required>
+                <input type="password" placeholder="*********" id="passwordcliente" name="password" class="pass" required>
         
                 <label for="confirm-password">Confirmar Contraseña:</label>
-                <input type="password" placeholder="*********" id="confirm-password" name="confirm-password" class="pass" required>
+                <input type="password" placeholder="*********" id="confirm-passwordcliente" name="confirm-password" class="pass" required>
         
                 <!-- Boton de login -->
                 <button type="submit" class="login_btn">Registrate</button>
             </form>
   
+            <script src="./assets/js/registerform.js"></script>
+            
             <!-- PIED DE LA CARD -->
             <div class="footer_card">
                 <p>¿Ya tienes una cuenta?</p>
