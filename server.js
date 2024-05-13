@@ -63,15 +63,15 @@ app.post("/register", (req, res) => {
   //busca si el correo ya esta registrado
   let buscar = "SELECT * FROM cliente WHERE correo = '"+email+"'";
   //se hace la consulta
-  conexion.query(buscar,function(err,res){
+  conexion.query(buscar,function(err,row){
      if(err){
       throw err;
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
-      if (rows.length > 0){
+      if (row.length > 0){
         console.log('El correo ya está registrado');
       }else{
-        let register = "INSERT INTO cliente (NombreApellido, correo, password) VALUES ('"+name+"','"+email+"','"+password+"')"
+        let register = "INSERT INTO cliente (NombreApellido, correo, clave) VALUES ('"+name+"','"+email+"','"+password+"')"
   
         conexion.query(register,function(err,res){
           if(err){
@@ -85,6 +85,37 @@ app.post("/register", (req, res) => {
     }
   })
 
+});
+
+//Ruta POST registrar restaurante
+app.post("/registerrestau", (req,res) => {
+  const datos = req.body;
+  
+  let {name,email,phone,password} = datos;
+  
+  //busca si el correo ya esta registrado
+  let buscar = "SELECT * FROM restaurante WHERE correo = '"+name+"'";
+  //se hace la consulta
+  conexion.query(buscar,function(err,row){
+     if(err){
+      throw err;
+    }else{
+      //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
+      if (row.length > 0){
+        console.log('El correo ya está registrado');
+      }else{
+        let register = "INSERT INTO restaurante (nombreRes, correo, telefono, clave) VALUES ('"+name+"','"+email+"','"+phone+"','"+password+"')"
+        conexion.query(register,function(err,res){
+          if(err){
+            console.log(err);
+          }else{
+            console.log('Restaurante registrado con éxito');
+          }
+        
+        });
+      }
+    }
+  })
 });
 
 // Ruta POST para el inicio de sesión

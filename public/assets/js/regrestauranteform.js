@@ -22,4 +22,17 @@ document.querySelector('form').addEventListener('submit', function(event) {
     .catch((error) => {
         console.error('Error:', error);
     });
+
+    fetch('/registerrestau', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username, password: password }),
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 });
