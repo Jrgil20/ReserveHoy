@@ -112,21 +112,26 @@ app.post("/registerrestau", (req,res) => {
 
 // Ruta POST para el inicio de sesión (cliente)
 app.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const datos = req.body;
+  let {email,password} = datos;
   
   const buscarUsuario = "SELECT * FROM cliente";
   conexion.query(buscarUsuario,(err,lista)=>{
         if(err){
           throw err;
         }else{
+          let bandera = 0;
            for(i=0;i<lista.length;i++){
              if((lista[i].correo === email)&&(lista[i].clave === password)){
-                console.log("Inicio de sesion exitoso")
+                bandera += 1;
                 break;
              }
            }
-           console.log("Usario o clave invalidos")
+           if(bandera != 1){
+            console.log("Usario o clave invalidos");
+           }else{
+            console.log("Inicio de sesion exitoso");
+           }
         }
   })
   
