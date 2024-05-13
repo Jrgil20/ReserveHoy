@@ -8,6 +8,7 @@
     /* ancho 100%*/
     height: 100vh;
     /* altura 100vh*/
+    margin-bottom: 60px;
 }
 
 .hero-section::before{
