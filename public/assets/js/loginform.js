@@ -4,7 +4,7 @@ document.querySelector('restauranteLoginForm').addEventListener('submit', functi
     const email = document.getElementById('emailLoginRestaurant').value;
     const password = document.getElementById('passwordUser').value;
 
-    fetch('/login', {
+    fetch('/loginres', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

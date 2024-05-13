@@ -9,7 +9,7 @@ const fs = require('fs');
 const mysql = require('mysql');
 
 //conexion con la base de datos
-let conexion = mysql.createConnection({
+const conexion = mysql.createConnection({
     host: "localhost",
     database: "reservahoy",
     user:"root",
@@ -114,13 +114,49 @@ app.post("/registerrestau", (req,res) => {
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  
+  const buscarUsuario = "SELECT * FROM cliente";
+  conexion.query(buscarUsuario,(err,lista)=>{
+        if(err){
+          throw err;
+        }else{
+           for(i=0;i<lista.length;i++){
+             if((lista[i].correo === email)&&(lista[i].clave === password)){
+                console.log("Inicio de sesion exitoso")
+                break;
+             }
+           }
+           console.log("Usario o clave invalidos")
+        }
+  })
+  
+});
 
-  if (users[email] && users[email].password === password) {
-    // En una aplicación real, deberías crear una sesión y enviar una cookie al cliente
-    res.status(200).send('Inicio de sesión exitoso');
-  } else {
-    res.status(400).send('Nombre de usuario o contraseña incorrectos');
-  }
+// Ruta POST para el inicio de sesión (restaurante)
+app.post('/loginres', (req, res) => {
+  const datos = req.body;
+  let {email,password} = datos;
+  let buscarUsuario = "SELECT * FROM restaurante";
+  conexion.query(buscarUsuario,(err,lista)=>{
+        if(err){
+          throw err;
+        }else{
+           let bandera = 0;
+           for(i=0;i<lista.length;i++){
+             if((lista[i].correo === email)&&(lista[i].clave === password)){
+                bandera += 1;
+                break;
+             }
+           }
+           if(bandera != 1){
+            console.log("Usario o clave invalidos");
+          }else{
+              console.log("Incio de sesion exitoso");
+          }
+
+        }
+  })
+  
 });
 
 // Ruta POST para agregar plato
