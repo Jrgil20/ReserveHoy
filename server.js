@@ -9,7 +9,7 @@ const fs = require('fs');
 const mysql = require('mysql');
 
 //conexion con la base de datos
-let conexion = mysql.createConnection({
+const conexion = mysql.createConnection({
     host: "localhost",
     database: "reservahoy",
     user:"root",
@@ -37,31 +37,13 @@ app.use(express.json());
 // Define el puerto en el que se ejecutará tu servidor.
 const port = 3000;
 
-// Objeto de usuarios (cliente) para este ejemplo
-let users = {};
-try {
-  const data = fs.readFileSync('users.json', 'utf8');
-  users = JSON.parse(data);
-} catch (err) {
-  console.error(err);
-}
-
-// Objeto de restaurantes para este ejemplo
-let restaurants = {};
-try {
-  const data = fs.readFileSync('restaurants.json', 'utf8');
-  restaurants = JSON.parse(data);
-} catch (err) {
-  console.error(err);
-}
-
 // Ruta para servir index.html
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
 
-// Ruta POST para el registro
+// Ruta POST para el registro de clientes 
 app.post("/register", (req, res) => {
   const datos = req.body;
   
@@ -130,15 +112,108 @@ app.post("/registerrestau", (req,res) => {
 
 // Ruta POST para el inicio de sesión (cliente)
 app.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const datos = req.body;
+  let {email,password} = datos;
+  
+  const buscarUsuario = "SELECT * FROM cliente";
+  conexion.query(buscarUsuario,(err,lista)=>{
+        if(err){
+          throw err;
+        }else{
+          let bandera = 0;
+           for(i=0;i<lista.length;i++){
+             if((lista[i].correo === email)&&(lista[i].clave === password)){
+                bandera += 1;
+                break;
+             }
+           }
+           if(bandera != 1){
+            console.log("Usario o clave invalidos");
+           }else{
+            console.log("Inicio de sesion exitoso");
+           }
+        }
+  })
+  
+});
 
-  if (users[email] && users[email].password === password) {
-    // En una aplicación real, deberías crear una sesión y enviar una cookie al cliente
-    res.status(200).send('Inicio de sesión exitoso');
-  } else {
-    res.status(400).send('Nombre de usuario o contraseña incorrectos');
-  }
+// Ruta POST para el inicio de sesión (restaurante)
+app.post('/loginres', (req, res) => {
+  const datos = req.body;
+  let {email,password} = datos;
+  let buscarUsuario = "SELECT * FROM restaurante";
+  conexion.query(buscarUsuario,(err,lista)=>{
+        if(err){
+          throw err;
+        }else{
+           let bandera = 0;
+           for(i=0;i<lista.length;i++){
+             if((lista[i].correo === email)&&(lista[i].clave === password)){
+                bandera += 1;
+                break;
+             }
+           }
+           if(bandera != 1){
+            console.log("Usario o clave invalidos");
+          }else{
+              console.log("Incio de sesion exitoso");
+          }
+
+        }
+  })
+  
+});
+
+// Ruta POST para agregar plato
+app.post("./agregaPlato", (req,res)=>{
+  const datos = req.body;
+  
+  let nombrePlato = datos.nombrePlato;
+  let tipo = datos.tipo;
+  let precio = datos.precio;
+  let descripcion = datos.descripcion;
+
+  //busca si ya existe un plato con el mismo nombre
+  let buscarPlato = "SELECT * FROM platos WHERE correo = '"+nombrePlato+"'";
+
+  //se hace la consulta
+  conexion.query(buscarPlato,function(err,row){
+    if (err){
+      throw err;
+    }else{
+      //verifica en las tablas si ya existe un plato con el mismo nombre, si esta es mayor a 0
+      if(row.length>0){
+        console.log("Esta plato ya existe en el menu");
+      }else{
+        let registerPlato = "INSERT INTO platos (nombrePlato, tipo, precio, descrip) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"',)"
+
+        //hace consulta
+        conexion.query(registerPlato,(err,res)=>{
+          if(err){
+            console.log(err);
+          }else{
+            console.log('Plato registrado con éxito');
+          }
+
+        })
+      }
+    }
+  })
+})
+
+// Ruta POST para consultar todos los platos de un restaurante
+app.post("./consultarPlatos",(req,res)=>{
+  //consulta para traer todos los platos
+  let restaurante = req.body.restaurante;
+  const platos = "SELECT * FROM platos WHERE nombreRes = '"+restaurante+"'";
+  //hace la consulta
+  conexion.query(platos,(err,list)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log(list);
+    }
+  })
 });
 
 
