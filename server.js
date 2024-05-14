@@ -11,7 +11,7 @@ const mysql = require('mysql');
 //conexion con la base de datos
 const conexion = mysql.createConnection({
     host: "localhost",
-    database: "reservehoy",
+    database: "reservahoy",
     user:"root",
     password: ""
 }); 
