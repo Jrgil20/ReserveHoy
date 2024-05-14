@@ -215,9 +215,9 @@ app.post("./agregarPlato", (req,res)=>{
 })
 
 
-//arreglar esta ruta 
-// Ruta POST para consultar todos los platos de un restaurante
-app.post("./consultarPlatos",(req,res)=>{
+
+// Ruta GET para consultar todos los platos de un restaurante
+app.get("./consultarPlatos",(req,res)=>{
   //consulta para traer todos los platos
   let restaurante = req.body.restaurante;
   const platos = "SELECT * FROM platos WHERE nombreRes = '"+restaurante+"'";
@@ -230,6 +230,83 @@ app.post("./consultarPlatos",(req,res)=>{
     }
   })
 });
+
+//Ruta GET para consulta un plato en especifico
+app.get("./consultarPlato",(req,res)=>{
+  let plato = req.body.plato;
+  const platos = "SELECT * FROM platos WHERE nombrePlato = '"+plato+"'";
+  //hace la consulta
+  conexion.query(platos,(err,element)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log(element.nombrePlato);
+      console.log(element.tipo);
+      console.log(element.descripcion);
+      console.log(element.precio);
+    }
+  })
+});
+
+// Ruta POST para agregar reserva
+app.post("./agregarReserva", (req,res)=>{
+  const datos = req.body;
+  const rest = req.body.restaurante;
+
+  let fecha = datos.fecha;
+  let hora = datos.hora;
+  let numeroPersona = datos.numeroPersona;
+  let cliente = datos.cliente;
+  let id = Math.floor(Math.random()*1000);
+  let numMesa = datos.numMesa;
+
+  ////busca si ya existe una reserva con el mismo ID
+  let buscarIDReserva = "SELECT * FROM reserva WHERE idReserva = '"+id+"'";
+  //se hace la consulta
+  conexion.query(buscarIDReserva,(err,row)=>{
+    if (err){
+      throw err;
+    }else{
+      //verifica en las tablas si ya existe una reserva el mismo ID
+      if(row.length>0){
+        console.log("Ya existe una reserva con el mismo ID");
+      }else{
+        let registrarReserva = "INSERT INTO reserva (idReserva,fecha, hora, numeroPersona,correoCli) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente.correo+"')";
+
+        let regristrarReservaMesa = "UPDATE mesa SET idReserva ='"+id+"' WHERE numMesa = '"+numMesa+"'"
+        ////busca que una mesa no este reservada a la misma hora que la reserva a registrar
+        let buscarDispoMesa = "SELECT * FROM mesa"
+        conexion.query(buscarDispoMesa,(err,list)=>{
+          if(err){
+            console.log(err);
+          }else {
+            for (let i=0;i<list.length;i++){
+              if(hora === list[i].hora){
+                console.log("Mesa no disponible a esa hora");
+              }else{
+                //hace consulta en reserva
+                conexion.query(registrarReserva,(err,res)=>{
+                  if(err){
+                    console.log(err);
+                     }else{
+                      //hace consulta en mesa
+                      conexion.query(registrarReservaMesa,(err,res)=>{
+                        if(err){
+                        console.log(err);
+                        }else console.log('Reserva registrada con éxito');
+                        })
+                     } 
+                }) 
+              }
+            }
+          }
+        })
+      }
+    }
+  })
+  })
+
+
 
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
