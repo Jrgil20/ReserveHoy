@@ -11,7 +11,7 @@ const mysql = require('mysql');
 //conexion con la base de datos
 const conexion = mysql.createConnection({
     host: "localhost",
-    database: "reservahoy",
+    database: "reservehoy",
     user:"root",
     password: ""
 }); 
@@ -317,6 +317,7 @@ app.get("/buscarReserva/:idReserva", (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     } else {
       if (result.length > 0) {
+        console.log(result);
         res.status(200).json(result);
       } else {
         res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
