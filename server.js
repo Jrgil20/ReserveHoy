@@ -306,6 +306,25 @@ app.post("./agregarReserva", (req,res)=>{
   })
   })
 
+// Ruta GET para consultar todas las reservas de un cliente
+app.get("/buscarReserva/:id", (req, res) => {
+  const idReserva = req.params.idReserva; // Obtiene el ID de la reserva de los parámetros de la ruta
+
+  let buscarReserva = "SELECT * FROM reserva WHERE idReserva = '" + idReserva + "'";
+  conexion.query(buscarReserva, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (result.length > 0) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
+      }
+    }
+  });
+});
+
 
 
 
