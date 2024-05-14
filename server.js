@@ -325,6 +325,24 @@ app.get("/buscarReserva/:idReserva", (req, res) => {
   });
 });
 
+// Ruta GET para buscar una persona por correo
+app.get("/buscarCliente/:correo", (req, res) => {
+  const correo = req.params.correo; // Obtiene el correo de los parámetros de la ruta
+
+  let buscarCliente = "SELECT * FROM cliente WHERE correo = '" + correo + "'";
+  conexion.query(buscarCliente, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (result.length > 0) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: 'No se encontró ninguna persona con ese correo' });
+      }
+    }
+  });
+});
 
 
 
