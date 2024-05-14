@@ -3,6 +3,9 @@
 @import url("../css/footer.css");
 
 main {
-    padding: 5px;
-    margin-top: 15vh;
+    background-color: #004225;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
