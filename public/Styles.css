@@ -178,5 +178,7 @@ img {
 .Reserva{
     background-color: #004225;
     padding: 40px;
-    margin-top: 10px;
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    border-radius: 25px;
 }
