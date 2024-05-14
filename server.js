@@ -307,7 +307,7 @@ app.post("./agregarReserva", (req,res)=>{
   })
 
 // Ruta GET para consultar todas las reservas de un cliente
-app.get("/buscarReserva/:id", (req, res) => {
+app.get("/buscarReserva/:idReserva", (req, res) => {
   const idReserva = req.params.idReserva; // Obtiene el ID de la reserva de los parámetros de la ruta
 
   let buscarReserva = "SELECT * FROM reserva WHERE idReserva = '" + idReserva + "'";
