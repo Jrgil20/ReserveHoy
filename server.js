@@ -4,16 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // Importa el módulo fs. Esto te permite usar la funcionalidad de fs en tu archivo.
 const fs = require('fs');
-// Importa el módulo multer. Esto te permite usar la funcionalidad de multer en tu archivo.
-const multer = require('multer'); 
 
 //Importa el modulo de mysql. Permite hacer la conexion con la base de datos
 const mysql = require('mysql');
-
-
-const upload = multer({storage:storage}).array('files',3);
-
-module.exports = uploadFileMiddleware;
 
 //conexion con la base de datos
 const conexion = mysql.createConnection({
@@ -256,9 +249,9 @@ app.get("./consultarPlato",(req,res)=>{
 });
 
 // Ruta POST para agregar reserva
-app.post('/agregarReserva//restaurante', (req,res)=>{
+app.post("./agregarReserva", (req,res)=>{
   const datos = req.body;
-  const rest = req.params.restaurante;
+  const rest = req.body.restaurante;
 
   let fecha = datos.fecha;
   let hora = datos.hora;
@@ -269,8 +262,6 @@ app.post('/agregarReserva//restaurante', (req,res)=>{
 
   ////busca si ya existe una reserva con el mismo ID
   let buscarIDReserva = "SELECT * FROM reserva WHERE idReserva = '"+id+"'";
-  //busca si ya existe una reserva con la misma hora, fecha y mesa
-  let buscarReservaHora = "SELECT * FROM reserva WHERE idReserva WHERE hora = '"+hora+"' AND fecha = '"+fecha+"' AND numMesa = '"+numMesa+"'";
   //se hace la consulta
   conexion.query(buscarIDReserva,(err,row)=>{
     if (err){
@@ -280,17 +271,17 @@ app.post('/agregarReserva//restaurante', (req,res)=>{
       if(row.length>0){
         console.log("Ya existe una reserva con el mismo ID");
       }else{
-        let registrarReserva = "INSERT INTO reserva (idReserva,fecha, hora, numeroPersona,correoCli,numMesa) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente.correo+"','"+numMesa+"')";
+        let registrarReserva = "INSERT INTO reserva (idReserva,fecha, hora, numeroPersona,correoCli) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente.correo+"')";
 
-        let registrarReservaMesa = "UPDATE mesa SET idReserva ='"+id+"' WHERE numMesa = '"+numMesa+"'"
-        
-        //hace consulta en reserva
-        conexion.query(buscarReservaHora,(err,list)=>{
+        let regristrarReservaMesa = "UPDATE mesa SET idReserva ='"+id+"' WHERE numMesa = '"+numMesa+"'"
+        ////busca que una mesa no este reservada a la misma hora que la reserva a registrar
+        let buscarDispoMesa = "SELECT * FROM mesa"
+        conexion.query(buscarDispoMesa,(err,list)=>{
           if(err){
             console.log(err);
           }else {
             for (let i=0;i<list.length;i++){
-              if(((hora === list[i].hora) && (fecha === list[i].fecha)) && (numMesa === list[i].numMesa)){
+              if(hora === list[i].hora){
                 console.log("Mesa no disponible a esa hora");
               }else{
                 //hace consulta en reserva
@@ -314,20 +305,6 @@ app.post('/agregarReserva//restaurante', (req,res)=>{
     }
   })
   })
-
-
-  //Ruta POST  para agregar imagenes
-  app.post('/upload',uploadFileMiddleware, (req,res)=>{
-    const imagesPaths =req.file.map(file => file.id);
-
-    const imgRest = "INSERT INTO restaurante WHERE imagenes: ?";
-
-    conexion.query(imgRest,[imagesPaths.map(path => [path,req.body.restaurante])],(err,result)=>{
-      if (err) throw err;
-       res.send("Imagenes cargadas exitosamente");
-    })
-  })
-
 
 // Ruta GET para consultar todas las reservas de un cliente
 app.get("/buscarReserva/:idReserva", (req, res) => {
@@ -367,7 +344,6 @@ app.get("/buscarCliente/:correo", (req, res) => {
     }
   });
 });
-
 
 
 
