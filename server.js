@@ -10,15 +10,18 @@ const multer = require('multer');
 //Importa el modulo de mysql. Permite hacer la conexion con la base de datos
 const mysql = require('mysql');
 
+const uploadFileMiddLeware = multer({strage: 'imagenes/'}).array('files',3);
 
-const upload = multer({storage:storage}).array('files',3);
 
-module.exports = uploadFileMiddleware;
+module.exports = uploadFileMiddLeware;
+
+
+
 
 //conexion con la base de datos
 const conexion = mysql.createConnection({
     host: "localhost",
-    database: "reservehoy",
+    database: "reservahoy",
     user:"root",
     password: ""
 }); 
@@ -173,7 +176,7 @@ app.post("/loginres", (req, res) => {
 });
 
 // Ruta POST para agregar plato
-app.post("./agregarPlato", (req,res)=>{
+app.post("/agregarPlato", (req,res)=>{
   const datos = req.body;
   const rest = req.body.restaurante;
 
@@ -224,39 +227,86 @@ app.post("./agregarPlato", (req,res)=>{
 
 
 // Ruta GET para consultar todos los platos de un restaurante
-app.get("./consultarPlatos",(req,res)=>{
+app.get("/consultarPlatos/restaurante",(req,res)=>{
   //consulta para traer todos los platos
-  let restaurante = req.body.restaurante;
+  let restaurante = req.params.restaurante;
   const platos = "SELECT * FROM platos WHERE nombreRes = '"+restaurante+"'";
   //hace la consulta
-  conexion.query(platos,(err,list)=>{
-    if(err){
+  conexion.query(platos,(err,result)=>{
+    if (err) {
       console.log(err);
-    }else{
-      console.log(list);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (result.length > 0) {
+        res.status(200).json(result);
+        console.log ('soy servidor y esto fue lo que encontre: ')
+        console.log(result);
+      } else {
+        res.status(404).json({ message: 'No se encontró ningun plato con ese nombre' });
+      }
     }
   })
 });
 
 //Ruta GET para consulta un plato en especifico
-app.get("./consultarPlato",(req,res)=>{
-  let plato = req.body.plato;
-  const platos = "SELECT * FROM platos WHERE nombrePlato = '"+plato+"'";
+app.get("/consultarPlato/:plato",(req,res)=>{
+  let plato = req.params.plato;
+  const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
   //hace la consulta
-  conexion.query(platos,(err,element)=>{
-    if(err){
+  conexion.query(platos,(err,result)=>{
+    if (err) {
       console.log(err);
-    }else{
-      console.log(element.nombrePlato);
-      console.log(element.tipo);
-      console.log(element.descripcion);
-      console.log(element.precio);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (result.length > 0) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: 'No se encontró ningun plato con ese nombre' });
+      }
     }
   })
 });
 
+
 // Ruta POST para agregar reserva
-app.post('/agregarReserva//restaurante', (req,res)=>{
+app.post('/agregarReserva/:restaurante', (req,res)=>{
+
+app.post("/agregarMesa",(req,res)=>{
+      const datos = req.body;
+      let {capacidad,numMesa,correoRes,} = datos;
+      let status = true;
+      let idMesa;
+      let bandera;
+      do{
+          bandera =0;
+          idMesa = Math.floor(Math.random()*1000);
+          const buscarIdMesa = "SELECT * FROM mesa WHERE id_Mesa = '"+idMesa+"'";
+          conexion.query(buscarIdMesa,(err,row)=>{
+            if(err){
+              console.log("Hubo error");
+              console.log(err);
+            }else{
+              if(row.length<1){
+                bandera = 1;
+              }
+            }
+          })
+      }while(bandera === 0)
+      const insertaMesa = "INSERT INTO mesa (status,capacidad,numMesa,correoRes,id_Mesa) VALUES ('"+status+"','"+capacidad+"','"+numMesa+"','"+correoRes+"','"+idMesa+"')"
+      conexion.query(insertaMesa,(err,res)=>{
+            if(err){
+              console.log("Error al insertar");
+              console.log(err);
+            }else{
+              console.log("Mesa agregada correctamente");
+            }
+      })
+})
+})
+
+// Ruta POST para solicitar reserva
+app.post("/solicitarReserva/:restaurante", (req,res)=>{
+
   const datos = req.body;
   const rest = req.params.restaurante;
 
@@ -283,9 +333,14 @@ app.post('/agregarReserva//restaurante', (req,res)=>{
         let registrarReserva = "INSERT INTO reserva (idReserva,fecha, hora, numeroPersona,correoCli,numMesa) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente.correo+"','"+numMesa+"')";
 
         let registrarReservaMesa = "UPDATE mesa SET idReserva ='"+id+"' WHERE numMesa = '"+numMesa+"'"
+
         
         //hace consulta en reserva
         conexion.query(buscarReservaHora,(err,list)=>{
+
+        ////busca que una mesa no este reservada a la misma hora que la reserva a registrar
+        let buscarDispoMesa = "SELECT * FROM mesa"
+        conexion.query(buscarDispoMesa,(err,list)=>{
           if(err){
             console.log(err);
           }else {
@@ -310,22 +365,10 @@ app.post('/agregarReserva//restaurante', (req,res)=>{
             }
           }
         })
-      }
+      })
     }
+  }
   })
-  })
-
-
-  //Ruta POST  para agregar imagenes
-  app.post('/upload',uploadFileMiddleware, (req,res)=>{
-    const imagesPaths =req.file.map(file => file.id);
-
-    const imgRest = "INSERT INTO restaurante WHERE imagenes: ?";
-
-    conexion.query(imgRest,[imagesPaths.map(path => [path,req.body.restaurante])],(err,result)=>{
-      if (err) throw err;
-       res.send("Imagenes cargadas exitosamente");
-    })
   })
 
 
@@ -369,6 +412,70 @@ app.get("/buscarCliente/:correo", (req, res) => {
 });
 
 
+// Ruta GET para consultar todas las reservas hecas por un restaurante
+app.get("/reservas/:restaurante", (req,res)=>{
+  let restaurante = req.body.restaurante;
+  const reservas = "SELECT * FROM restaurante WHERE nombre = '"+restaurante+"'";
+  //hace la consulta
+  conexion.query(reservas,(err,result)=>{
+    if(err){
+      res.status(200).json(err);
+    }else{
+      if(result.length>0){
+        console.log (result);
+        res.status(200).json(result);
+      }else {
+        res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
+      }
+    }
+  })
+})
+
+//Ruta GET para mostrar una reserva en especifico
+app.get("/reserva/:idReserva",(req,res)=>{
+  let idReserva = req.params.idReserva;
+
+  let buscaReserva = "SELECT FROM reserva WHERE idReserva = '"+idReserva+"'"
+
+  conexion.query(buscaReserva,(err,result)=>{
+    if (err){
+      throw err;
+    }else{
+      if(result.length>0){
+        console.log (result);
+        res.status(200).json(result);
+      }else {
+        res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
+      }
+    }
+  })
+})
+
+
+  //Ruta POST  para agregar imagenes de un restaurante
+  app.post('/upload/restautante',uploadFileMiddLeware, (req,res)=>{
+    const nombreRes = req.params.restaurante;
+    const imagesPaths =req.file.map(file => file.id);
+
+    const imgRest = "INSERT INTO restaurante WHERE nombreRes = '"+nombreRes+"' and imagenes: ?";
+
+    conexion.query(imgRest,[imagesPaths.map(path => [path,nombreRes])],(err,result)=>{
+      if (err) throw err;
+       res.send("Imagenes cargadas exitosamente");
+    })
+  })
+
+  //Ruta GET para mostrar las imagenes de un restaurante
+  app.get('/img/restaurante', (req,res)=>{
+    const nombreRes = req.params.restaurante;
+    const imgRest = "SELECT * FROM restaurante WHERE nombreRes = '"+nombreRes+"'";
+
+    conexion.query(imgRest,(err,result)=>{
+      if (err) throw err;
+      res.send(result);
+    })
+  
+  })
 
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
