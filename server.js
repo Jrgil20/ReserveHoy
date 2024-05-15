@@ -10,6 +10,15 @@ const multer = require('multer');
 //Importa el modulo de mysql. Permite hacer la conexion con la base de datos
 const mysql = require('mysql');
 
+//Importa el bycrypt para encriptar las contraseñas
+const bcrypt = require('bcrypt');
+
+//Importa el modulo jsonwebtoken para la autenticacion de usuarios
+const jwt = require('jsonwebtoken');
+
+//Usa el modulo promisfy' para convertir las funciones de callback en promesas
+const {promisify} = require('util');
+
 const uploadFileMiddLeware = multer({strage: 'imagenes/'}).array('files',3);
 
 
@@ -21,7 +30,7 @@ module.exports = uploadFileMiddLeware;
 //conexion con la base de datos
 const conexion = mysql.createConnection({
     host: "localhost",
-    database: "reservahoy",
+    database: "reservehoy",
     user:"root",
     password: ""
 }); 
@@ -58,7 +67,6 @@ app.post("/register", (req, res) => {
   const datos = req.body;
   
   let {name,email,telefono,password} = datos;
-  
   //busca si el correo ya esta registrado
   let buscar = "SELECT * FROM cliente WHERE correo = '"+email+"'";
   //se hace la consulta
@@ -92,7 +100,7 @@ app.post("/registerrestau", (req,res) => {
   const datos = req.body;
   
   let {name,email,phone,password} = datos;
-  
+  let passHash = bcrypt.hashSync(password,8);
   
   //busca si el correo ya esta registrado
   let buscar = "SELECT * FROM restaurante WHERE correoRes = '"+email+"'";
@@ -105,7 +113,7 @@ app.post("/registerrestau", (req,res) => {
       if (row.length > 0){
         console.log('El correo ya está registrado');
       }else{
-        let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
+        let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+passHash+"','"+email+"')"
         conexion.query(register,function(err,result){
           if(err){
             console.log(err);
@@ -159,7 +167,7 @@ app.post("/loginres", (req, res) => {
         }else{
            let bandera = 0;
            for(i=0;i<lista.length;i++){
-             if((lista[i].correoRes === email)&&(lista[i].clave === password)){
+             if((lista[i].correoRes === email)&&(bcrypt.compare(password,lista[i].clave))){
                 bandera += 1;
                 break;
              }
