@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2024 a las 23:57:25
+-- Tiempo de generación: 15-05-2024 a las 01:58:21
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,9 +39,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`NombreApellido`, `correo`, `password`, `telefono`) VALUES
-('fcqaf', '2ewe21@h', '1212', 'undefined'),
-('ve', 'fariasjr223@gmail.com', '1212', 'undefined'),
-('ve', 'mmmm@gmail.com', '1212', 'undefined');
+('Andres Guilarte', 'andresguilartelamuno@gmail.com', '12345', 'undefined');
 
 -- --------------------------------------------------------
 
@@ -50,11 +48,19 @@ INSERT INTO `cliente` (`NombreApellido`, `correo`, `password`, `telefono`) VALUE
 --
 
 CREATE TABLE `mesa` (
-  `idReserva` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `capacidad` int(11) NOT NULL,
-  `numMesa` int(11) NOT NULL
+  `numMesa` int(11) NOT NULL,
+  `correoRes` varchar(255) NOT NULL,
+  `id_Mesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mesa`
+--
+
+INSERT INTO `mesa` (`status`, `capacidad`, `numMesa`, `correoRes`, `id_Mesa`) VALUES
+(1, 4, 2, 'mcdonalds@gmail.com', 23);
 
 -- --------------------------------------------------------
 
@@ -81,15 +87,16 @@ CREATE TABLE `reserva` (
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `numeroPersona` int(11) NOT NULL,
-  `correoCli` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `correoCli` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `idMesa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `reserva`
 --
 
-INSERT INTO `reserva` (`idReserva`, `fecha`, `hora`, `numeroPersona`, `correoCli`) VALUES
-(123, '2024-05-24', '18:45:00', 4, 'fariasjr223@gmail.com');
+INSERT INTO `reserva` (`idReserva`, `fecha`, `hora`, `numeroPersona`, `correoCli`, `idMesa`) VALUES
+(123, '2024-05-17', '14:35:17', 2, 'andresguilartelamuno@gmail.com', 23);
 
 -- --------------------------------------------------------
 
@@ -102,20 +109,18 @@ CREATE TABLE `restaurante` (
   `direccion` varchar(255) NOT NULL,
   `telefono` varchar(255) NOT NULL,
   `clave` varchar(255) NOT NULL,
-  `correoRes` varchar(255) NOT NULL
+  `correoRes` varchar(255) NOT NULL,
+  `imagenes` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `restaurante`
 --
 
-INSERT INTO `restaurante` (`nombre`, `direccion`, `telefono`, `clave`, `correoRes`) VALUES
-('1231321', '', '13212', '12312', '123123@1212'),
-('ve', '', '1212', '1212', '33@33'),
-('1212', '', '1212', '1212', '43@32'),
-('Jesus ', '', 'F', '1212', 'feawfae@f'),
-('ve', '', '1212', '1212', 'jeg@d'),
-('ve', '', 'F', '1212', 'vevef@f');
+INSERT INTO `restaurante` (`nombre`, `direccion`, `telefono`, `clave`, `correoRes`, `imagenes`) VALUES
+('burgerking', '', '12345', '1234', 'king@gmail.com', ''),
+('McDonalds', '', '02129934567', '1234', 'mcdonalds@gmail.com', ''),
+('Wendys', '', '021299867436', '223344', 'wendys@gmail.com', '');
 
 --
 -- Índices para tablas volcadas
@@ -131,25 +136,51 @@ ALTER TABLE `cliente`
 -- Indices de la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  ADD PRIMARY KEY (`numMesa`);
+  ADD PRIMARY KEY (`id_Mesa`),
+  ADD KEY `fk_Restaurante` (`correoRes`);
 
 --
 -- Indices de la tabla `plato`
 --
 ALTER TABLE `plato`
-  ADD PRIMARY KEY (`nombrePlato`);
+  ADD PRIMARY KEY (`nombrePlato`),
+  ADD KEY `fk_Restaurant` (`correoRes`);
 
 --
 -- Indices de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  ADD PRIMARY KEY (`idReserva`);
+  ADD KEY `fk_Cliente` (`correoCli`),
+  ADD KEY `fk_Mesa` (`idMesa`);
 
 --
 -- Indices de la tabla `restaurante`
 --
 ALTER TABLE `restaurante`
   ADD PRIMARY KEY (`correoRes`);
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `mesa`
+--
+ALTER TABLE `mesa`
+  ADD CONSTRAINT `fk_Restaurante` FOREIGN KEY (`correoRes`) REFERENCES `restaurante` (`correoRes`);
+
+--
+-- Filtros para la tabla `plato`
+--
+ALTER TABLE `plato`
+  ADD CONSTRAINT `fk_Restaurant` FOREIGN KEY (`correoRes`) REFERENCES `restaurante` (`correoRes`);
+
+--
+-- Filtros para la tabla `reserva`
+--
+ALTER TABLE `reserva`
+  ADD CONSTRAINT `fk_Cliente` FOREIGN KEY (`correoCli`) REFERENCES `cliente` (`correo`),
+  ADD CONSTRAINT `fk_Mesa` FOREIGN KEY (`idMesa`) REFERENCES `mesa` (`id_Mesa`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
