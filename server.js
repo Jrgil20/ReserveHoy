@@ -221,19 +221,7 @@ app.post("./agregarPlato", (req,res)=>{
   })
 })
 
-//Ruta GET para consultar todas las mesas
-app.get("/consultarMesas",(req,res)=>{
-  let plato = req.body.correoRes;
-  const platos = "SELECT * FROM mesa WHERE correoRes = '"+correoRes+"'";
-  //hace la consulta
-  conexion.query(platos,(err,list)=>{
-    if(err){
-      console.log(err);
-    }else{
-      console.log(list);
-    }
-  })
-})
+
 
 // Ruta GET para consultar todos los platos de un restaurante
 app.get("./consultarPlatos",(req,res)=>{
@@ -266,38 +254,6 @@ app.get("./consultarPlato",(req,res)=>{
     }
   })
 });
-
-app.post("/agregarMesa",(req,res)=>{
-      const datos = req.body;
-      let {capacidad,numMesa,correoRes,} = datos;
-      let status = true;
-      let idMesa;
-      let bandera;
-      do{
-          bandera =0;
-          idMesa = Math.floor(Math.random()*1000);
-          const buscarIdMesa = "SELECT * FROM mesa WHERE id_Mesa = '"+idMesa+"'";
-          conexion.query(buscarIdMesa,(err,row)=>{
-            if(err){
-              console.log("Hubo error");
-              console.log(err);
-            }else{
-              if(row.length<1){
-                bandera = 1;
-              }
-            }
-          })
-      }while(bandera === 0)
-      const insertaMesa = "INSERT INTO mesa (status,capacidad,numMesa,correoRes,id_Mesa) VALUES ('"+status+"','"+capacidad+"','"+numMesa+"','"+correoRes+"','"+idMesa+"')"
-      conexion.query(insertaMesa,(err,res)=>{
-            if(err){
-              console.log("Error al insertar");
-              console.log(err);
-            }else{
-              console.log("Mesa agregada correctamente");
-            }
-      })
-})
 
 // Ruta POST para agregar reserva
 app.post('/agregarReserva//restaurante', (req,res)=>{
