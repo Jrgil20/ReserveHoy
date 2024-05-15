@@ -58,7 +58,7 @@ app.post("/register", (req, res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        console.log('El correo ya está registrado');
+        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html";</script>');
       }else{
         let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+telefono+"')"
   
@@ -93,14 +93,14 @@ app.post("/registerrestau", (req,res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        console.log('El correo ya está registrado');
+        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html"</script>');
       }else{
         let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
         conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/public/restaurant.html";</script>');
+            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/restaurant.html";</script>');
           }
         
         });
@@ -157,7 +157,7 @@ app.post("/loginres", (req, res) => {
            if(bandera != 1){
             res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
           }else{
-            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/public/restaurant.html";</script>');     
+            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/restaurant.html";</script>');     
           }
 
         }
