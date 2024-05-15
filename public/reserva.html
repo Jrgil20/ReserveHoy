@@ -18,6 +18,9 @@
 
       <!-- Estilos CSS -->
   <link rel="stylesheet" href="./assets/css/reserva.css">
+
+   <!-- Script-->
+   <script src="./assets/js/generaReserva.js"></script>
 </head>
 <body>
     <header id="navbar-Container">
@@ -53,46 +56,22 @@
         </nav>
     </header>
 
-    <main>
-    
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1>Reserva tu mesa</h1>
-                    <p>Reserva tu mesa en nuestro restaurante y disfruta de una experiencia única.</p>
-                    <form action="reserva.php" method="POST">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="hora" class="form-label">Hora</label>
-                            <input type="time" class="form-control" id="hora" name="hora" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="personas" class="form-label">Número de Personas</label>
-                            <input type="number" class="form-control" id="personas" name="personas" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Reservar</button>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <img src="assets/img/reserva.jpg" alt="Reserva tu mesa" class="img-fluid">
-                </div>
+    <main >
+        <div class="card text-center" >
+            <div class="card-header">
+            <h4 class="fw-light">Reserva <span id="NumeroDeReserva"></span></h4>
             </div>
-        </div>
+            <div class="card-body">
+
+              <h5 class="card-title">Reserva a nombre de <span id="PersonaQueReserva">#</span> en restaurante <span id="RestauranteDondeReserva"></span></h5>
+              <p class="card-text">  Estimado <span >#</span>, usted hizo una Reserva para <span id="NPersonas"></span> personas en el restaurant <span ></span> a la fecha <span id="FechaQueSeReserva" ></span> y hora de <span id="HoraDeReserva" ></span> con el corre <span id="CorreoDeQuienReserva"></span></p>
+              <a href="#" class="btn btn-primary">Problema?</a>
+            </div>
+            <div class="card-footer text-body-secondary">
+              <h6 class="fw-light"> <span id="TiempoDesdeReserva"></span> days ago</h6>
+            </div>
+          </div>
+
     </main>
 
     <!-- Seccion de pie de pagina-->

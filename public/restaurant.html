@@ -65,6 +65,24 @@
               <div class="card-body">
                 <h5 class="card-title">Nombre del Restaurante</h5>
                 <p class="card-text">Descripción breve del restaurante, su historia, especialidades y cualquier otra información relevante.</p>
+                <h5>Menú</h5>
+                <ul>
+                    <li>Entradas: </li>
+                    <li>Platos principales: </li>
+                    <li>Postres: </li>
+                </ul>
+                <h5>Horario</h5>
+                <p>Lunes a viernes: </p>
+                <p>Sábados y domingos: </p>
+                <h5>Contacto</h5>
+                <p>Teléfono: </p>
+                <p>Dirección: </p>
+                <div class="text-center">
+                  <input type="file" id="imageInput" style="display: none;">
+                  <label for="imageInput">
+                      <i class="fas fa-plus-circle"></i>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -91,13 +109,18 @@
                     <input type="date" class="form-control" id="fecha">
                   </div>
                   <div class="form-group">
-                    <label for="hora">Hora:</label>
-                    <input type="time" class="form-control" id="hora">
-                  </div>
-                  <div class="form-group">
                     <label for="personas">Número de personas:</label>
                     <input type="number" class="form-control" id="personas" placeholder="1">
                   </div>
+                  <div class="form-group">
+                    <label for="hora">Horas Disponibles:</label><br>
+                    <button type="button" class="btn btn-outline-primary">12:00</button>
+                    <button type="button" class="btn btn-outline-primary">14:00</button>
+                    <button type="button" class="btn btn-outline-primary">16:00</button>
+                    <button type="button" class="btn btn-outline-primary">18:00</button>
+                    <button type="button" class="btn btn-outline-primary">20:00</button>
+                    <!-- Asegúrate de agregar más botones según sea necesario -->
+                  </div></br>
                   <button type="submit" class="btn btn-success">Reservar</button>
                 </form>
               </div>
