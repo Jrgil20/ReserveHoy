@@ -346,6 +346,51 @@ app.get("/buscarCliente/:correo", (req, res) => {
 });
 
 
+//Ruta GET para buscar correo del restaurante con idMesa
+app.get('/buscarrestaurante/:idReserva', (req,res)=>{
+  const idReserva = req.params.idReserva;
+  let buscarCliente = "SELECT * FROM reserva WHERE idReserva = '" + idReserva + "'";
+  conexion.query(buscarCliente,(err,result)=>{
+    if (err) {
+      console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (result.length > 0) {
+          const reserva = result[0];
+          const idMesa = reserva.idMesa;
+          let buscarMesa = "SELECT * FROM mesa WHERE id_Mesa = '"+idMesa+"'";
+          conexion.query(buscarMesa,(err,result)=>{
+              if(err){
+                 res.status(500).json({ error: 'An error occurred' });
+              }else{
+                if(result.length > 0){
+                  const mesa = result[0];
+                  const correoRes = mesa.correoRes;
+                  let buscarRestarante = "SELECT * FROM restaurante WHERE correoRes = '"+correoRes+"'";
+                  conexion.query(buscarRestarante,(err,result)=>{
+                     if(err){
+                      res.status(500).json({ error: 'An error occurred' });
+                     }else{
+                       if(result.length > 0){
+                        res.status(200).json(result[0]);
+                       }
+                     }
+                  })
+                }
+              }
+          })
+      } else {
+        res.status(404).json({ message: 'No se encontró ninguna reserva con ese id' });
+      }
+
+  }
+})
+
+
+  }
+
+);
+
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
 // La función de devolución de llamada toma dos argumentos: un objeto de solicitud (que contiene información sobre la solicitud) y un objeto de respuesta (que se utiliza para enviar la respuesta).
