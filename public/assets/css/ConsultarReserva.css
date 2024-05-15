@@ -1,0 +1,25 @@
+@import url("../css/navbar.css");
+@import url("../css/footer.css");
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background-color: #004225;
+}
+
+.Reserva{
+    background-color: #f2f2f2;
+    padding: 40px;
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    border-radius: 25px;
+}
+
+h4{
+    font-size: 40px; 
+    color: black;
+     align-items: center;
+      margin-bottom: 10px;
+}
