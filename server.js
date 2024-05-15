@@ -62,11 +62,11 @@ app.post("/register", (req, res) => {
       }else{
         let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+telefono+"')"
   
-        conexion.query(register,function(err,res){
+        conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            console.log('Usuario registrado con éxito');
+            res.status(200).send('<script>alert("Usuario registrado con éxito"); window.location.href = "/";</script>');
           }
         
         });
@@ -96,11 +96,11 @@ app.post("/registerrestau", (req,res) => {
         console.log('El correo ya está registrado');
       }else{
         let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
-        conexion.query(register,function(err,res){
+        conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            console.log('Restaurante registrado con éxito');
+            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/public/restaurant.html";</script>');
           }
         
         });
@@ -128,13 +128,13 @@ app.post('/login', (req, res) => {
              }
            }
            if(bandera != 1){
-            window.alert("Usario o clave invalidos");
+            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
            }else{
-            window.alert("Inicio de sesion exitoso");
+            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/";</script>');
            }
         }
   })
-  
+    
 });
 
 // Ruta POST para el inicio de sesión (restaurante)
@@ -155,9 +155,9 @@ app.post("/loginres", (req, res) => {
              }
            }
            if(bandera != 1){
-            console.log("Usario o clave invalidos");
+            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
           }else{
-              console.log("Incio de sesion exitoso");
+            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/public/restaurant.html";</script>');     
           }
 
         }
@@ -195,7 +195,7 @@ app.post("./agregarPlato", (req,res)=>{
           if(err){
             console.log(err);
           }else{
-            console.log('Plato registrado con éxito');
+            res.status(200).send('<script>alert("Plato registrado con éxito"); window.location.href = "/";</script>');
           }
 
         })
@@ -204,7 +204,7 @@ app.post("./agregarPlato", (req,res)=>{
           if(err){
             console.log(err);
           }else{
-            console.log('Plato registrado con éxito');
+            res.status(200).send('<script>alert("Plato registrado con éxito"); window.location.href = "/";</script>');
           }
 
         })
