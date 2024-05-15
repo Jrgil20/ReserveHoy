@@ -1,3 +1,10 @@
+const urlParams = new URLSearchParams(window.location.search);
+//creamos una variable que obtenga el valor de la url
+const idDeLaReserva = urlParams.get('reserva');
+// obtenemos el valor de la url
+
+buscarReserva(idDeLaReserva);
+//llamamos a la funcion buscarReserva con el valor de la url
 
 async function buscarReserva(idDeLaReserva) {
   try {
@@ -14,5 +21,3 @@ async function buscarReserva(idDeLaReserva) {
     console.error('Error:', error);
   }
 }
-
-buscarReserva('123'); // este id debe ser el id de la reserva que quieres buscar
