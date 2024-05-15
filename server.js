@@ -225,7 +225,7 @@ app.post("/agregarPlato", (req,res)=>{
 })
 
 
-//Ruta GET para ebviar todos los restaurantes
+//Ruta GET para enviar todos los restaurantes
 app.get("/consultarRestaurantes",(req,res)=>{
   let traeRestaurantes = "SELECT * FROM restaurante";
   conexion.query(traeRestaurantes,(err,result)=>{
@@ -239,8 +239,8 @@ app.get("/consultarRestaurantes",(req,res)=>{
         res.status(404).json({ message: 'No se encontró ningun restaurante' });
       }
     }
-  }
-})
+  })
+});
 
 // Ruta GET para consultar todos los platos de un restaurante
 app.get("/consultarPlatos/restaurante",(req,res)=>{
