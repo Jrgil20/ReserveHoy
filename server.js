@@ -225,6 +225,22 @@ app.post("/agregarPlato", (req,res)=>{
 })
 
 
+//Ruta GET para ebviar todos los restaurantes
+app.get("/consultarRestaurantes",(req,res)=>{
+  let traeRestaurantes = "SELECT * FROM restaurante";
+  conexion.query(traeRestaurantes,(err,result)=>{
+    if(err){
+      res.status(500).json(err);
+    }else{
+      if(result.length>0){
+        res.status(200).json(result);
+        console.log('Datos Encontrados en el servidor:',result);
+      }else {
+        res.status(404).json({ message: 'No se encontró ningun restaurante' });
+      }
+    }
+  }
+})
 
 // Ruta GET para consultar todos los platos de un restaurante
 app.get("/consultarPlatos/restaurante",(req,res)=>{
