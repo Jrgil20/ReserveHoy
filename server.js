@@ -100,7 +100,7 @@ app.post("/registerrestau", (req,res) => {
           if(err){
             console.log(err);
           }else{
-            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/public/restaurant.html";</script>');
+            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/restaurant.html";</script>');
           }
         
         });
@@ -157,7 +157,7 @@ app.post("/loginres", (req, res) => {
            if(bandera != 1){
             res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
           }else{
-            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/public/restaurant.html";</script>');     
+            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/restaurant.html";</script>');     
           }
 
         }
