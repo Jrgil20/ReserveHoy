@@ -1,0 +1,50 @@
+@import url("../css/navbar.css");
+@import url("../css/footer.css");
+
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+main{
+    background-color: #f5f5f5;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-top: 150px;
+    margin-bottom: 10px;
+  }
+
+.table {
+    font-size: 14px;
+  }
+.table-fixed thead {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;}
+
+  .table th,
+  .table td {
+    vertical-align: middle;
+  }
+  .table th {
+    background-color: #f8f9fa;
+    border-top: none;
+  }
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+  }
+
+  .Reserva{
+    background-color: #004225;
+    padding: 40px;
+    margin-top: 1vh;
+    margin-bottom: 5vh;
+    border-radius: 25px;
+}
+
+  
