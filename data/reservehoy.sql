@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-05-2024 a las 01:58:21
+-- Tiempo de generación: 15-05-2024 a las 12:31:18
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.1.25
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,7 +39,8 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`NombreApellido`, `correo`, `password`, `telefono`) VALUES
-('Andres Guilarte', 'andresguilartelamuno@gmail.com', '12345', 'undefined');
+('Andres Guilarte', 'andresguilartelamuno@gmail.com', '12345', 'undefined'),
+('ve', 'jeg@d', '12', 'undefined');
 
 -- --------------------------------------------------------
 
@@ -118,8 +119,13 @@ CREATE TABLE `restaurante` (
 --
 
 INSERT INTO `restaurante` (`nombre`, `direccion`, `telefono`, `clave`, `correoRes`, `imagenes`) VALUES
+('1', '', '1', '1', '1@1', ''),
+('china', '', '123', '1111', 'china@1', ''),
+('comidillas', '', '1212', '1111', 'comidillas@1', ''),
+('JRG', '', '123', '123', 'JRG@1', ''),
 ('burgerking', '', '12345', '1234', 'king@gmail.com', ''),
 ('McDonalds', '', '02129934567', '1234', 'mcdonalds@gmail.com', ''),
+('ve', '', '47487', '123', 've@li', ''),
 ('Wendys', '', '021299867436', '223344', 'wendys@gmail.com', '');
 
 --
@@ -150,6 +156,7 @@ ALTER TABLE `plato`
 -- Indices de la tabla `reserva`
 --
 ALTER TABLE `reserva`
+  ADD PRIMARY KEY (`idReserva`),
   ADD KEY `fk_Cliente` (`correoCli`),
   ADD KEY `fk_Mesa` (`idMesa`);
 
