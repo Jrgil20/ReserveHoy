@@ -18,6 +18,9 @@
 
       <!-- Estilos CSS -->
   <link rel="stylesheet" href="./assets/css/reserva.css">
+
+   <!-- Script-->
+   <script src="./assets/js/generaReserva.js"></script>
 </head>
 <body>
     <header id="navbar-Container">
@@ -32,10 +35,10 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Inicio</a>
+                                <a class="nav-link mx-lg-2 active" aria-current="page" href="index.html">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="#">Reservar</a>
+                                <a class="nav-link mx-lg-2" href="catalogo.html">Catalogo</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mx-lg-2" href="#">Contacto</a>
@@ -59,8 +62,9 @@
             <h4 class="fw-light">Reserva <span id="NumeroDeReserva"></span></h4>
             </div>
             <div class="card-body">
-              <h5 class="card-title">Reserva a nombre de <span id="PersonaQueReserva"></span> en restaurante <span id="RestauranteDondeReserva"></span></h5>
-              <p class="card-text">  Estimado <span ></span>, usted hizo una Reserva para <span ></span> personas en el restaurant <span ></span> a la fecha <span ></span> y hora de <span ></span></p>
+
+              <h5 class="card-title">Reserva a nombre de <span id="PersonaQueReserva">#</span> en restaurante <span id="RestauranteDondeReserva"></span></h5>
+              <p class="card-text">  Estimado <span >#</span>, usted hizo una Reserva para <span id="NPersonas"></span> personas en el restaurant <span ></span> a la fecha <span id="FechaQueSeReserva" ></span> y hora de <span id="HoraDeReserva" ></span> con el corre <span id="CorreoDeQuienReserva"></span></p>
               <a href="#" class="btn btn-primary">Problema?</a>
             </div>
             <div class="card-footer text-body-secondary">

@@ -11,7 +11,7 @@ const mysql = require('mysql');
 //conexion con la base de datos
 const conexion = mysql.createConnection({
     host: "localhost",
-    database: "reservahoy",
+    database: "reservehoy",
     user:"root",
     password: ""
 }); 
@@ -58,7 +58,7 @@ app.post("/register", (req, res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        console.log('El correo ya está registrado');
+        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html";</script>');
       }else{
         let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+telefono+"')"
   
@@ -93,14 +93,14 @@ app.post("/registerrestau", (req,res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        console.log('El correo ya está registrado');
+        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html"</script>');
       }else{
         let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
         conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/public/restaurant.html";</script>');
+            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/restaurant.html";</script>');
           }
         
         });
@@ -157,7 +157,7 @@ app.post("/loginres", (req, res) => {
            if(bandera != 1){
             res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
           }else{
-            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/public/restaurant.html";</script>');     
+            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/restaurant.html";</script>');     
           }
 
         }
@@ -215,9 +215,9 @@ app.post("./agregarPlato", (req,res)=>{
 })
 
 
-//arreglar esta ruta 
-// Ruta POST para consultar todos los platos de un restaurante
-app.post("./consultarPlatos",(req,res)=>{
+
+// Ruta GET para consultar todos los platos de un restaurante
+app.get("./consultarPlatos",(req,res)=>{
   //consulta para traer todos los platos
   let restaurante = req.body.restaurante;
   const platos = "SELECT * FROM platos WHERE nombreRes = '"+restaurante+"'";
@@ -230,6 +230,121 @@ app.post("./consultarPlatos",(req,res)=>{
     }
   })
 });
+
+//Ruta GET para consulta un plato en especifico
+app.get("./consultarPlato",(req,res)=>{
+  let plato = req.body.plato;
+  const platos = "SELECT * FROM platos WHERE nombrePlato = '"+plato+"'";
+  //hace la consulta
+  conexion.query(platos,(err,element)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log(element.nombrePlato);
+      console.log(element.tipo);
+      console.log(element.descripcion);
+      console.log(element.precio);
+    }
+  })
+});
+
+// Ruta POST para agregar reserva
+app.post("./agregarReserva", (req,res)=>{
+  const datos = req.body;
+  const rest = req.body.restaurante;
+
+  let fecha = datos.fecha;
+  let hora = datos.hora;
+  let numeroPersona = datos.numeroPersona;
+  let cliente = datos.cliente;
+  let id = Math.floor(Math.random()*1000);
+  let numMesa = datos.numMesa;
+
+  ////busca si ya existe una reserva con el mismo ID
+  let buscarIDReserva = "SELECT * FROM reserva WHERE idReserva = '"+id+"'";
+  //se hace la consulta
+  conexion.query(buscarIDReserva,(err,row)=>{
+    if (err){
+      throw err;
+    }else{
+      //verifica en las tablas si ya existe una reserva el mismo ID
+      if(row.length>0){
+        console.log("Ya existe una reserva con el mismo ID");
+      }else{
+        let registrarReserva = "INSERT INTO reserva (idReserva,fecha, hora, numeroPersona,correoCli) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente.correo+"')";
+
+        let regristrarReservaMesa = "UPDATE mesa SET idReserva ='"+id+"' WHERE numMesa = '"+numMesa+"'"
+        ////busca que una mesa no este reservada a la misma hora que la reserva a registrar
+        let buscarDispoMesa = "SELECT * FROM mesa"
+        conexion.query(buscarDispoMesa,(err,list)=>{
+          if(err){
+            console.log(err);
+          }else {
+            for (let i=0;i<list.length;i++){
+              if(hora === list[i].hora){
+                console.log("Mesa no disponible a esa hora");
+              }else{
+                //hace consulta en reserva
+                conexion.query(registrarReserva,(err,res)=>{
+                  if(err){
+                    console.log(err);
+                     }else{
+                      //hace consulta en mesa
+                      conexion.query(registrarReservaMesa,(err,res)=>{
+                        if(err){
+                        console.log(err);
+                        }else console.log('Reserva registrada con éxito');
+                        })
+                     } 
+                }) 
+              }
+            }
+          }
+        })
+      }
+    }
+  })
+  })
+
+// Ruta GET para consultar todas las reservas de un cliente
+app.get("/buscarReserva/:idReserva", (req, res) => {
+  const idReserva = req.params.idReserva; // Obtiene el ID de la reserva de los parámetros de la ruta
+
+  let buscarReserva = "SELECT * FROM reserva WHERE idReserva = '" + idReserva + "'";
+  conexion.query(buscarReserva, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (result.length > 0) {
+        res.status(200).json(result);
+        console.log('Datos Encontrados en el servidor:',result);
+      } else {
+        res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
+      }
+    }
+  });
+});
+
+// Ruta GET para buscar una persona por correo
+app.get("/buscarCliente/:correo", (req, res) => {
+  const correo = req.params.correo; // Obtiene el correo de los parámetros de la ruta
+
+  let buscarCliente = "SELECT * FROM cliente WHERE correo = '" + correo + "'";
+  conexion.query(buscarCliente, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (result.length > 0) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: 'No se encontró ninguna persona con ese correo' });
+      }
+    }
+  });
+});
+
 
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
