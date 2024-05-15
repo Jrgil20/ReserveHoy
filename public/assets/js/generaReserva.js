@@ -25,6 +25,7 @@ async function buscarReserva(idDeLaReserva) {
     
     // se imprime en consola el objeto data para comprobar que se obtuvo la informacion
     document.getElementById('PersonaQueReserva').textContent = cliente.NombreApellido;
+    document.getElementById('PersonaCualReserva').textContent = cliente.NombreApellido;
     document.getElementById('NumeroDeReserva').textContent = reserva.idReserva;
     document.getElementById('NPersonas').textContent = reserva.numeroPersona;
     document.getElementById('FechaQueSeReserva').textContent = reserva.fecha;

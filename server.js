@@ -318,7 +318,6 @@ app.get("/buscarReserva/:idReserva", (req, res) => {
     } else {
       if (result.length > 0) {
         res.status(200).json(result);
-        console.log('Datos Encontrados en el servidor:',result);
       } else {
         res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
       }
