@@ -1,4 +1,3 @@
-let correoRestau = "wendys@gmail.com";
 
 async function traePlatos(){
     try {
