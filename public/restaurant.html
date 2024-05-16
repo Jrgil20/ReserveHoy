@@ -103,26 +103,22 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Reserva tu mesa</h5>
-                <form action="/" method="post" id="restauranteForm" class="form">      
+                <form action="/agregarReserva" method="post" id="restauranteForm" class="form">      
                   <div class="form-group">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Tu nombre">
                   </div>
                   <div class="form-group">
                     <label for="email">Correo Electrónico:</label>
                     <input type="email" class="form-control" id="email" name="email" required>
                   </div>
                   <div class="form-group">
-                    <label for="phone">Número Telefónico:</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required>
-                  </div>
-                  <div class="form-group">
                     <label for="fecha">Fecha:</label>
-                    <input type="date" class="form-control" id="fecha">
+                    <input type="date" class="form-control" name="fecha" id="fecha">
                   </div>
                   <div class="form-group">
                     <label for="personas">Número de personas:</label>
-                    <input type="number" class="form-control" id="personas" placeholder="1">
+                    <input type="number" class="form-control" name="personas" id="personas" placeholder="1">
                   </div>
                   <div class="form-group">
                     <label for="hora">Horas Disponibles:</label><br>
@@ -151,6 +147,8 @@
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      
+      <scripts src="./assets/js/resevaform.js"></scripts>
 
 
     <!-- Seccion de pie de pagina-->

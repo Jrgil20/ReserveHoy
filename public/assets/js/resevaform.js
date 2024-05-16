@@ -1,13 +1,15 @@
+
 document.getElementById('restauranteForm').addEventListener('submit', function(event) {
     // Prevent the form from being submitted normally
     event.preventDefault();
   
     // Get the values of the input fields
-    var nombre = document.getElementById('nombre').value;
-    var email = document.getElementById('email').value;
-    var phone = document.getElementById('phone').value;
-    var fecha = document.getElementById('fecha').value;
-    var personas = document.getElementById('personas').value;
+    const urlParams = new URLSearchParams(window.location.search);
+    let correoRes = urlParams.get('restaurante');
+    let email = document.getElementById('email').value;
+    let fecha = document.getElementById('fecha').value;
+    let personas = document.getElementById('personas').value;
+    
   
     // Do something with the values, like send them to a server
     fetch('/', {
@@ -16,11 +18,10 @@ document.getElementById('restauranteForm').addEventListener('submit', function(e
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        nombre: nombre,
         email: email,
-        phone: phone,
         fecha: fecha,
-        personas: personas
+        personas: personas,
+        restaurante: correoRes
       }),
     })
     .then(response => response.json())
