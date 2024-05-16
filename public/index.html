@@ -33,8 +33,10 @@
     <!-- Scripts JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/js/scrollPosition.js"></script>
+    <script src="./assets/js/PlatesRestList.js"></script>
 
 </head>
+
 <body>
     <!-- Seccion de encabezado-->
     <header id="navbar-Container">
@@ -52,10 +54,10 @@
                                 <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="catalogo.html">Reservar</a>
+                                <a class="nav-link mx-lg-2" href="catalogo.html">Catalogo</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="#">Contacto</a>
+                              <a class="nav-link mx-lg-2" href="ConsultarReserva.html">Consulta</a>
                             </li>
                         </ul>
                     </div>
@@ -70,6 +72,7 @@
                 </button>
             </div>
         </nav>
+        
     </header>
     <!-- Fin: Seccion de encabezado-->
 
@@ -130,12 +133,13 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
           <h4 style="font-size: 40px; color: white; align-items: center; margin-bottom: 10px;">Consulta tu Reserva</h4>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Coloca el ID de la Reserva" aria-label="Buscar">
+          <form id="BuscaReserva" class="d-flex" role="search">
+            <input id="IdABuscar" class="form-control me-2" type="search" placeholder="Coloca el ID de la Reserva" aria-label="Buscar" required>
             <button class="btn btn-outline-success" type="submit">Buscar</button>
           </form>
         </div>
       </div>
+      <script src="./assets/js/BuscarReserva.js"></script>
     </section>
     <!-- Fin: Seccion de Reserva-->
 
@@ -145,58 +149,8 @@
       <h1 class="text">Restaurantes</h1>
     </div>
     <section class="restaurantes-grid">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            <div class="col">
-              <div class="card">
-                <img src="/assets/img/fondocomida.jpg" class="card-img-top" alt="card example" />
-                <div class="card-body">
-                  <h3 class="card-title"><strong>Restaurant 1</strong></h3>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-grid gap-2">
-                    <button class="btn btn-primary restaurant-info-button" type="button" style="font-size: 20px;">Informacion del Restaurante</button>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-                <img src="/assets/img/fondocomida.jpg" class="card-img-top" alt="card example" />
-                <div class="card-body">
-                  <h3 class="card-title"><strong>Restaurant 2</strong></h3>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-grid gap-2">
-                    <button class="btn btn-primary restaurant-info-button" type="button" style="font-size: 20px;">Informacion del Restaurante</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-                <img src="/assets/img/fondocomida.jpg" class="card-img-top" alt="card example" />
-                <div class="card-body">
-                  <h3 class="card-title"><strong>Restaurant 3</strong></h3>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                  <div class="d-grid gap-2">
-                    <button class="btn btn-primary restaurant-info-button" type="button" style="font-size: 20px;">Informacion del Restaurante</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-                <img src="/assets/img/fondocomida.jpg" class="card-img-top" alt="card example" />
-                <div class="card-body">
-                  <h3 class="card-title"><strong>Restaurant 4</strong></h3>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-grid gap-2">
-                    <button class="btn btn-primary restaurant-info-button" type="button" style="font-size: 20px;">Informacion del Restaurante</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="container" id="ListaDeRestaurantes" >
+        <script src="./assets/js/restaurantListMini.js"></script>
       </div>
       
     </section>

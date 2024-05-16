@@ -58,15 +58,15 @@ app.post("/register", (req, res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        console.log('El correo ya está registrado');
+        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html";</script>');
       }else{
         let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+telefono+"')"
   
-        conexion.query(register,function(err,res){
+        conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            console.log('Usuario registrado con éxito');
+            res.status(200).send('<script>alert("Usuario registrado con éxito"); window.location.href = "/";</script>');
           }
         
         });
@@ -93,14 +93,15 @@ app.post("/registerrestau", (req,res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        console.log('El correo ya está registrado');
+        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html"</script>');
       }else{
         let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
-        conexion.query(register,function(err,res){
+        conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            console.log('Restaurante registrado con éxito');
+            let email = datos.email;
+            res.status(200).send(`<script>alert("Restaurante registrado con éxito"); window.location.href = "/restaurant.html?restaurante=${email}";</script>`); 
           }
         
         });
@@ -128,13 +129,13 @@ app.post('/login', (req, res) => {
              }
            }
            if(bandera != 1){
-            window.alert("Usario o clave invalidos");
+            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
            }else{
-            window.alert("Inicio de sesion exitoso");
+            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/";</script>');
            }
         }
   })
-  
+    
 });
 
 // Ruta POST para el inicio de sesión (restaurante)
@@ -155,9 +156,10 @@ app.post("/loginres", (req, res) => {
              }
            }
            if(bandera != 1){
-            console.log("Usario o clave invalidos");
+            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
           }else{
-              console.log("Incio de sesion exitoso");
+            let email = datos.email;
+            res.status(200).send(`<script>alert("Inicio de sesión exitoso"); window.location.href = "/restaurant.html?restaurante=${email}";</script>`);     
           }
 
         }
@@ -166,9 +168,9 @@ app.post("/loginres", (req, res) => {
 });
 
 // Ruta POST para agregar plato
-app.post("./agregarPlato", (req,res)=>{
+app.post("/agregarPlato", (req,res)=>{
   const datos = req.body;
-  const rest = req.body.restaurante;
+  const rest = "wendys@gmail.com";
 
   let nombrePlato = datos.nombrePlato;
   let tipo = datos.tipo;
@@ -176,7 +178,7 @@ app.post("./agregarPlato", (req,res)=>{
   let descripcion = datos.descripcion;
 
   //busca si ya existe un plato con el mismo nombre en un restaurante
-  let buscarPlatoRest = "SELECT * FROM restaurante WHERE nombrePlato = '"+nombrePlato+"'";
+  let buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+rest+"' AND nombrePlato = '"+nombrePlato+"'";
 
   //se hace la consulta
   conexion.query(buscarPlatoRest,function(err,row){
@@ -187,58 +189,40 @@ app.post("./agregarPlato", (req,res)=>{
       if(row.length>0){
         console.log("Esta plato ya existe en el menu");
       }else{
-        let registerPlato = "INSERT INTO platos (nombrePlato, tipo, precio, descrip) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"',)"
-        
-        let registerPlatoRest = "UPDATE restaurante SET nombrePlato ='"+nombrePlato+"' WHERE nombreRes = '"+rest+"'";
+        let registerPlato = "INSERT INTO plato (nombrePlato, tipo, precio, descripcion, correoRes) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"','"+rest+"')"
         //hace consulta en platos
         conexion.query(registerPlato,(err,res)=>{
           if(err){
             console.log(err);
           }else{
-            console.log('Plato registrado con éxito');
+            res.status(200).send('<script>alert("Plato registrado con éxito"); window.location.href = "/";</script>');
           }
 
         })
-        //hace consulta en restaurante
-        conexion.query(registerPlatoRest,(err,res)=>{
-          if(err){
-            console.log(err);
-          }else{
-            console.log('Plato registrado con éxito');
-          }
-
-        })
-
       }
     }
   })
 })
 
-//Ruta GET para consultar todas las mesas
-app.get("/consultarMesas",(req,res)=>{
-  let plato = req.body.correoRes;
-  const platos = "SELECT * FROM mesa WHERE correoRes = '"+correoRes+"'";
-  //hace la consulta
-  conexion.query(platos,(err,list)=>{
-    if(err){
-      console.log(err);
-    }else{
-      console.log(list);
-    }
-  })
-})
 
-// Ruta GET para consultar todos los platos de un restaurante
-app.get("./consultarPlatos",(req,res)=>{
+
+// Ruta POST para consultar todos los platos de un restaurante
+app.post("/consultarPlatos",(req,res)=>{
   //consulta para traer todos los platos
   let restaurante = req.body.restaurante;
-  const platos = "SELECT * FROM platos WHERE nombreRes = '"+restaurante+"'";
+  console.log(restaurante);
+  const platos = "SELECT * FROM plato WHERE correoRes = '"+restaurante+"'";
   //hace la consulta
   conexion.query(platos,(err,list)=>{
     if(err){
       console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
     }else{
-      console.log(list);
+       if(list.length > 0){
+        res.status(200).json(list);
+       }else{
+        res.status(404).json({ message: 'No hay platos registrados para ese restaurante' });
+       }
     }
   })
 });
@@ -246,7 +230,7 @@ app.get("./consultarPlatos",(req,res)=>{
 //Ruta GET para consulta un plato en especifico
 app.get("./consultarPlato",(req,res)=>{
   let plato = req.body.plato;
-  const platos = "SELECT * FROM platos WHERE nombrePlato = '"+plato+"'";
+  const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
   //hace la consulta
   conexion.query(platos,(err,element)=>{
     if(err){
@@ -259,38 +243,6 @@ app.get("./consultarPlato",(req,res)=>{
     }
   })
 });
-
-app.post("/agregarMesa",(req,res)=>{
-      const datos = req.body;
-      let {capacidad,numMesa,correoRes,} = datos;
-      let status = true;
-      let idMesa;
-      let bandera;
-      do{
-          bandera =0;
-          idMesa = Math.floor(Math.random()*1000);
-          const buscarIdMesa = "SELECT * FROM mesa WHERE id_Mesa = '"+idMesa+"'";
-          conexion.query(buscarIdMesa,(err,row)=>{
-            if(err){
-              console.log("Hubo error");
-              console.log(err);
-            }else{
-              if(row.length<1){
-                bandera = 1;
-              }
-            }
-          })
-      }while(bandera === 0)
-      const insertaMesa = "INSERT INTO mesa (status,capacidad,numMesa,correoRes,id_Mesa) VALUES ('"+status+"','"+capacidad+"','"+numMesa+"','"+correoRes+"','"+idMesa+"')"
-      conexion.query(insertaMesa,(err,res)=>{
-            if(err){
-              console.log("Error al insertar");
-              console.log(err);
-            }else{
-              console.log("Mesa agregada correctamente");
-            }
-      })
-})
 
 // Ruta POST para agregar reserva
 app.post("./agregarReserva", (req,res)=>{
@@ -350,7 +302,7 @@ app.post("./agregarReserva", (req,res)=>{
   })
   })
 
-// Ruta GET para consultar todas las reservas de un cliente
+// Ruta GET para consultar una reserva de un cliente
 app.get("/buscarReserva/:idReserva", (req, res) => {
   const idReserva = req.params.idReserva; // Obtiene el ID de la reserva de los parámetros de la ruta
 
@@ -361,7 +313,7 @@ app.get("/buscarReserva/:idReserva", (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     } else {
       if (result.length > 0) {
-        res.status(200).json(result);
+        res.status(200).json(result[0]);
       } else {
         res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
       }
@@ -380,7 +332,7 @@ app.get("/buscarCliente/:correo", (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     } else {
       if (result.length > 0) {
-        res.status(200).json(result);
+        res.status(200).json(result[0]);
       } else {
         res.status(404).json({ message: 'No se encontró ninguna persona con ese correo' });
       }
@@ -388,7 +340,74 @@ app.get("/buscarCliente/:correo", (req, res) => {
   });
 });
 
+//Ruta GET que manda todos los clientes
+app.get("/traerClientes",(req,res)=>{
+  let traeClientes = "SELECT * FROM cliente";
+  conexion.query(traeClientes,(err,result)=>{
+     if(err){
+       res.status(500).json({ error: 'An error occurred' });
+     }else{
+      if(result.length > 0){
+        res.status(200).json(result);
+      }else{
+        res.status(404).json({ message: 'No hay clientes' });
+      }
+    
+  }
+  })
+})
 
+//Ruta GET que trae un restaurante por correo
+app.get("/traeRest/:correoRes",(req,res)=>{
+  const correoRest = req.params.correoRes;
+    let traeReservas = "SELECT * FROM restaurante WHERE correoRes = '"+correoRest+"'";
+    conexion.query(traeReservas,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+         if(result.length > 0){
+           res.status(200).json(result[0]);
+         }else{
+          res.status(404).json({ message: 'No hay un restaurante con este correo' });
+         }
+       }
+    })
+})
+
+//Ruta GET que trae todos los Restaurantes
+app.get("/traeRestaurantes",(req,res)=>{
+     let traeRes= "SELECT * FROM restaurante";
+     conexion.query(traeRes,(err,result)=>{
+        if(err){
+          res.status(500).json({ error: 'An error occurred' });
+        }else{
+            if(result.length > 0){
+              res.status(200).json(result);
+            }else{
+              res.status(404).json({ message: 'No hay restaurantes' });
+            }
+          
+        }
+     })
+})
+
+
+//Ruta GET que trae todos las reservas de un restaurante
+app.get("/buscarReservasRest/:correoRes",(req,res)=>{
+    const correoRest = req.params.correoRes;
+    let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
+    conexion.query(traeReservas,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+         if(result.length > 0){
+           res.status(200).json(result);
+         }else{
+          res.status(404).json({ message: 'No hay reservas para este restaurante' });
+         }
+       }
+    })
+})
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
 // La función de devolución de llamada toma dos argumentos: un objeto de solicitud (que contiene información sobre la solicitud) y un objeto de respuesta (que se utiliza para enviar la respuesta).

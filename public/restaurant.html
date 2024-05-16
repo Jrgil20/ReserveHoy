@@ -16,15 +16,17 @@
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="/assets/css/restaurant.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    
+    <!-- Script-->
+    <script src="./assets/js/GeneraRestaurant.js"></script>
 
-    <script src="assets/js/agregarMesa.js"></script>
 </head>
 <body>
     <!-- Seccion de encabezado-->
     <header id="navbar-Container">
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand me-auto" href="#">ReservaHoy</a>
+                <a class="navbar-brand me-auto" href="index.html">ReservaHoy</a>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
@@ -33,20 +35,21 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Inicio</a>
+
+                                <a class="nav-link mx-lg-2 active" aria-current="page" href="index.html">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="#">Reservar</a>
+                                <a class="nav-link mx-lg-2" href="catalogo.html">Catalogo</a>
+
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="#">Contacto</a>
+                              <a class="nav-link mx-lg-2" href="ConsultarReserva.html">Consulta</a>
                             </li>
-                            <li class="nav-item">
-                              <a class="nav-link mx-lg-2" href="mesas.html">Mesas</a>
-                          </li>
+
                         </ul>
                     </div>
                 </div>
+                <!-- SI YA INICIO SESION LO MANDA A SU PERFIL, SINO DEBE MANDARLO A LOGIN.HTML-->
                 <a href="login.html" class="login-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
@@ -57,27 +60,55 @@
                 </button>
             </div>
         </nav>
+        <div class="div-breadcrumb">
+          <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+              <li class="breadcrumb-item"><a href="catalogo.html">Catálogo</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Restaurante</li>
+            </ol>
+          </nav>
+        </div>
     </header>
     <!-- Fin: Seccion de encabezado-->
 
     <div class="container mt-5">
-        <div class="row">
+        <div class="row" style="margin-top: 6vh;">
           <!-- Tarjeta de Información del Restaurante -->
           <div class="col-md-8">
             <div class="card">
-              <img src="imagen_del_restaurante.jpg" class="card-img-top" alt="Restaurante">
+              <img src="/assets/img/Restaurant.png" class="card-img-top" alt="Restaurante">
               <div class="card-body">
-                <h5 class="card-title">Nombre del Restaurante</h5>
-                <p class="card-text">Descripción breve del restaurante, su historia, especialidades y cualquier otra información relevante.</p>
+                <h5 class="card-title"><span id="NombreDelRestaurante"></span></h5>
+                <p class="card-text"> <span id="DescripcionDelRestaurant"></span></p>
+                <h5>Menú</h5>
+                <ul>
+                    <li>Entradas: </li>
+                    <li>Platos principales: </li>
+                    <li>Postres: </li>
+                </ul>
+                <h5>Horario</h5>
+                <p>Lunes a viernes: </p>
+                <p>Sábados y domingos: </p>
+                <h5>Contacto</h5>
+                <p>Teléfono: <span id="TelefonoDelRestaurant"></span> </p>
+                <p>Dirección: <span id="DireccionDelRestaurant" ></span></p>
+                <div class="text-center">
+                  <input type="file" id="imageInput" style="display: none;">
+                  <label for="imageInput">
+                      <i class="fas fa-plus-circle"></i>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
+          
           <!-- Tarjeta de Formulario de Reservación -->
           <div class="col-md-4">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Reserva tu mesa</h5>
-                <form>
+                <form action="/" method="post" id="restauranteForm" class="form">      
                   <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
@@ -95,13 +126,18 @@
                     <input type="date" class="form-control" id="fecha">
                   </div>
                   <div class="form-group">
-                    <label for="hora">Hora:</label>
-                    <input type="time" class="form-control" id="hora">
-                  </div>
-                  <div class="form-group">
                     <label for="personas">Número de personas:</label>
                     <input type="number" class="form-control" id="personas" placeholder="1">
                   </div>
+                  <div class="form-group">
+                    <label for="hora">Horas Disponibles:</label><br>
+                    <button type="button" class="btn btn-outline-primary">12:00</button>
+                    <button type="button" class="btn btn-outline-primary">14:00</button>
+                    <button type="button" class="btn btn-outline-primary">16:00</button>
+                    <button type="button" class="btn btn-outline-primary">18:00</button>
+                    <button type="button" class="btn btn-outline-primary">20:00</button>
+                    <!-- Asegúrate de agregar más botones según sea necesario -->
+                  </div></br>
                   <button type="submit" class="btn btn-success">Reservar</button>
                 </form>
               </div>

@@ -1,2 +1,3 @@
 <a href="https://www.flaticon.es/iconos-gratis/letra-r" title="letra r iconos">Letra r iconos creados por Laisa Islam Ani - Flaticon</a>
-<a href="https://bootsnipp.com/snippets/4MByn" title="BootStrap Snippet Bootstrap 4 counter using HTML CSS JAVASCRIPT"> Componente de Bootstrap proporcionado por Bootsnipp. Diseñado por dkstudio.
+<a href="https://bootsnipp.com/snippets/4MByn" title="BootStrap Snippet Bootstrap 4 counter using HTML CSS JAVASCRIPT"> Componente de Bootstrap proporcionado por Bootsnipp. Diseñado por dkstudio.</a>
+<a href="https://pixabay.com/es/illustrations/botella-vidrio-agua-vino-7760987/ " title="BotellaVidrioAGua">Componente pixabay bajo licencia pixabay</a>
