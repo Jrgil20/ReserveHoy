@@ -32,18 +32,18 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="#">Inicio</a>
+                                <a class="nav-link mx-lg-2" href="perfil.html">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Historial</a>
+                                <a class="nav-link mx-lg-2 " href="perfil.html">Perfil</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link mx-lg-2" href="ConsultarReserva.html">Consulta</a>
+                              <a class="nav-link mx-lg-2active" aria-current="page" href="historialReservas.html">Consulta</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <a href="index.html" class="login-button">
+                <a href="perfil.html" class="login-button">
                     Volver
                 </a>
                 <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -51,10 +51,18 @@
                 </button>
             </div>
         </nav>
+        <div class="div-breadcrumb">
+          <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="perfil.html">Perfil</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Consulta</li>
+            </ol>
+          </nav>
+        </div>
     </header>
 
     <main >
-        <div class="container">
+        <div class="container" style="margin-top: 20vh;">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Historial de Reservas</h5>
@@ -138,8 +146,8 @@
     </main>
 
     <!-- Seccion de pie de pagina-->
-    <footer>
-        <p>Reserve Hoy &copy; 2021</p>
+    <footer style="position: absolute;">
+        <p>Reserve Hoy &copy; 2024</p>
     </footer>
     <!-- Fin: Seccion de pie de pagina-->
 </body>
