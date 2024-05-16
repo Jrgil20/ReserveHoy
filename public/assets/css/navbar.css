@@ -31,7 +31,7 @@
     /* relleno 0.5rem*/
     background-color: #fff;
     /* color de fondo blanco*/
-    border-bottom: 1px solid #ddd;
+    
     /* borde inferior 1px solido #ddd*/
     height: 80px;
     /* altura 80px*/
@@ -170,3 +170,15 @@
     font-weight: 500;
     font-style: italic;
 }
+
+.div-breadcrumb {
+    background-color: white;
+    margin: 20px;
+    margin-top: 85px;
+    padding: 10px;
+    padding-left: 50px;
+    padding-top: 15px;
+    z-index: 1000;
+    border-radius: 0 0 16px 16px;
+    border-bottom: 1px solid #ddd;
+  }
