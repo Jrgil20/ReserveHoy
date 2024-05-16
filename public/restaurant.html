@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="/assets/css/restaurant.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     
+    <!-- Script-->
+    <script src="./assets/js/GeneraRestaurant.js"></script>
+
 </head>
 <body>
     <!-- Seccion de encabezado-->
@@ -76,8 +79,8 @@
             <div class="card">
               <img src="imagen_del_restaurante.jpg" class="card-img-top" alt="Restaurante">
               <div class="card-body">
-                <h5 class="card-title">Nombre del Restaurante</h5>
-                <p class="card-text">Descripción breve del restaurante, su historia, especialidades y cualquier otra información relevante.</p>
+                <h5 class="card-title"><span id="NombreDelRestaurante"></span></h5>
+                <p class="card-text"> <span id="DescripcionDelRestaurant"></span></p>
                 <h5>Menú</h5>
                 <ul>
                     <li>Entradas: </li>
@@ -88,9 +91,14 @@
                 <p>Lunes a viernes: </p>
                 <p>Sábados y domingos: </p>
                 <h5>Contacto</h5>
-                <p>Teléfono: </p>
-                <p>Dirección: </p>
-                
+                <p>Teléfono: <span id="TelefonoDelRestaurant"></span> </p>
+                <p>Dirección: <span id="DireccionDelRestaurant" ></span></p>
+                <div class="text-center">
+                  <input type="file" id="imageInput" style="display: none;">
+                  <label for="imageInput">
+                      <i class="fas fa-plus-circle"></i>
+                  </label>
+                </div>
               </div>
             </div>
           </div>

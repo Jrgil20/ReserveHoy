@@ -100,7 +100,8 @@ app.post("/registerrestau", (req,res) => {
           if(err){
             console.log(err);
           }else{
-            res.status(200).send('<script>alert("Restaurante registrado con éxito"); window.location.href = "/restaurant.html";</script>');
+            let email = datos.email;
+            res.status(200).send(`<script>alert("Restaurante registrado con éxito"); window.location.href = "/restaurant.html?restaurante=${email}";</script>`); 
           }
         
         });
@@ -157,7 +158,8 @@ app.post("/loginres", (req, res) => {
            if(bandera != 1){
             res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
           }else{
-            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/restaurant.html";</script>');     
+            let email = datos.email;
+            res.status(200).send(`<script>alert("Inicio de sesión exitoso"); window.location.href = "/restaurant.html?restaurante=${email}";</script>`);     
           }
 
         }
@@ -166,9 +168,9 @@ app.post("/loginres", (req, res) => {
 });
 
 // Ruta POST para agregar plato
-app.post("./agregarPlato", (req,res)=>{
+app.post("/agregarPlato", (req,res)=>{
   const datos = req.body;
-  const rest = req.body.restaurante;
+  const rest = "wendys@gmail.com";
 
   let nombrePlato = datos.nombrePlato;
   let tipo = datos.tipo;
@@ -176,7 +178,7 @@ app.post("./agregarPlato", (req,res)=>{
   let descripcion = datos.descripcion;
 
   //busca si ya existe un plato con el mismo nombre en un restaurante
-  let buscarPlatoRest = "SELECT * FROM restaurante WHERE nombrePlato = '"+nombrePlato+"'";
+  let buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+rest+"' AND nombrePlato = '"+nombrePlato+"'";
 
   //se hace la consulta
   conexion.query(buscarPlatoRest,function(err,row){
@@ -187,9 +189,7 @@ app.post("./agregarPlato", (req,res)=>{
       if(row.length>0){
         console.log("Esta plato ya existe en el menu");
       }else{
-        let registerPlato = "INSERT INTO platos (nombrePlato, tipo, precio, descrip) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"',)"
-        
-        let registerPlatoRest = "UPDATE restaurante SET nombrePlato ='"+nombrePlato+"' WHERE nombreRes = '"+rest+"'";
+        let registerPlato = "INSERT INTO plato (nombrePlato, tipo, precio, descripcion, correoRes) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"','"+rest+"')"
         //hace consulta en platos
         conexion.query(registerPlato,(err,res)=>{
           if(err){
@@ -199,16 +199,6 @@ app.post("./agregarPlato", (req,res)=>{
           }
 
         })
-        //hace consulta en restaurante
-        conexion.query(registerPlatoRest,(err,res)=>{
-          if(err){
-            console.log(err);
-          }else{
-            res.status(200).send('<script>alert("Plato registrado con éxito"); window.location.href = "/";</script>');
-          }
-
-        })
-
       }
     }
   })
@@ -216,17 +206,23 @@ app.post("./agregarPlato", (req,res)=>{
 
 
 
-// Ruta GET para consultar todos los platos de un restaurante
-app.get("./consultarPlatos",(req,res)=>{
+// Ruta POST para consultar todos los platos de un restaurante
+app.post("/consultarPlatos",(req,res)=>{
   //consulta para traer todos los platos
   let restaurante = req.body.restaurante;
-  const platos = "SELECT * FROM platos WHERE nombreRes = '"+restaurante+"'";
+  console.log(restaurante);
+  const platos = "SELECT * FROM plato WHERE correoRes = '"+restaurante+"'";
   //hace la consulta
   conexion.query(platos,(err,list)=>{
     if(err){
       console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
     }else{
-      console.log(list);
+       if(list.length > 0){
+        res.status(200).json(list);
+       }else{
+        res.status(404).json({ message: 'No hay platos registrados para ese restaurante' });
+       }
     }
   })
 });
@@ -234,7 +230,7 @@ app.get("./consultarPlatos",(req,res)=>{
 //Ruta GET para consulta un plato en especifico
 app.get("./consultarPlato",(req,res)=>{
   let plato = req.body.plato;
-  const platos = "SELECT * FROM platos WHERE nombrePlato = '"+plato+"'";
+  const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
   //hace la consulta
   conexion.query(platos,(err,element)=>{
     if(err){
@@ -344,6 +340,40 @@ app.get("/buscarCliente/:correo", (req, res) => {
   });
 });
 
+//Ruta GET que manda todos los clientes
+app.get("/traerClientes",(req,res)=>{
+  let traeClientes = "SELECT * FROM cliente";
+  conexion.query(traeClientes,(err,result)=>{
+     if(err){
+       res.status(500).json({ error: 'An error occurred' });
+     }else{
+      if(result.length > 0){
+        res.status(200).json(result);
+      }else{
+        res.status(404).json({ message: 'No hay clientes' });
+      }
+    
+  }
+  })
+})
+
+//Ruta GET que trae un restaurante por correo
+app.get("/traeRest/:correoRes",(req,res)=>{
+  const correoRest = req.params.correoRes;
+    let traeReservas = "SELECT * FROM restaurante WHERE correoRes = '"+correoRest+"'";
+    conexion.query(traeReservas,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+         if(result.length > 0){
+           res.status(200).json(result[0]);
+         }else{
+          res.status(404).json({ message: 'No hay un restaurante con este correo' });
+         }
+       }
+    })
+})
+
 //Ruta GET que trae todos los Restaurantes
 app.get("/traeRestaurantes",(req,res)=>{
      let traeRes= "SELECT * FROM restaurante";
@@ -365,7 +395,7 @@ app.get("/traeRestaurantes",(req,res)=>{
 //Ruta GET que trae todos las reservas de un restaurante
 app.get("/buscarReservasRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
-    let traeReservas = "SELECT * FROM reserva WHERE correoREs = '"+correoRest+"'";
+    let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
     conexion.query(traeReservas,(err,result)=>{
        if(err){
          res.status(500).json({ error: 'An error occurred' });
