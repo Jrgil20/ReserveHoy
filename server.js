@@ -355,6 +355,23 @@ app.get("/traerClientes",(req,res)=>{
   })
 })
 
+//Ruta GET que trae un restaurante por correo
+app.get("/traeRest/:correoRes",(req,res)=>{
+  const correoRest = req.params.correoRes;
+    let traeReservas = "SELECT * FROM restaurante WHERE correoRes = '"+correoRest+"'";
+    conexion.query(traeReservas,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+         if(result.length > 0){
+           res.status(200).json(result[0]);
+         }else{
+          res.status(404).json({ message: 'No hay un restaurante con este correo' });
+         }
+       }
+    })
+})
+
 //Ruta GET que trae todos los Restaurantes
 app.get("/traeRestaurantes",(req,res)=>{
      let traeRes= "SELECT * FROM restaurante";
@@ -376,7 +393,7 @@ app.get("/traeRestaurantes",(req,res)=>{
 //Ruta GET que trae todos las reservas de un restaurante
 app.get("/buscarReservasRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
-    let traeReservas = "SELECT * FROM reserva WHERE correoREs = '"+correoRest+"'";
+    let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
     conexion.query(traeReservas,(err,result)=>{
        if(err){
          res.status(500).json({ error: 'An error occurred' });
