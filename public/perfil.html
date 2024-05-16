@@ -122,15 +122,25 @@
                         <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#platoForm">Agregar Plato</button>
                         <div id="platoForm" class="collapse mt-3">
                             <!-- Contenido del formulario para agregar platos -->
+                           <form action="/agregarPlato" method="post" id="platForm">
                             <div class="form-group">
                                 <label for="nombrePlato">Tipo de Plato:</label>
-                                <input type="text" class="form-control" id="tipoPlato" placeholder="Tipo de plato">
+                                <input type="text" class="form-control" id="tipoPlato" placeholder="Tipo de plato" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombrePlato">Nombre del Plato:</label>
-                                <input type="text" class="form-control" id="nombrePlato" placeholder="Nombre del plato">
+                                <input type="text" class="form-control" id="nombrePlato" placeholder="Nombre del plato" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombrePlato">Precio</label>
+                                <input type="text" class="form-control" id="precioPlato" placeholder="Precio del plato" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombrePlato">Descripcion:</label>
+                                <input type="text" class="form-control" id="descripPlato" placeholder="Descripcion del plato" required>
                             </div>
                             <button type="submit" class="btn btn-success">Guardar</button>
+                           </form>
                     </div>
                 </div>
           </div>
