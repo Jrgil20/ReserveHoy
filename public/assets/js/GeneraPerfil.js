@@ -22,3 +22,6 @@ async function traeReservas(correoRes){
         console.error('Error:', error);
       }
 }
+
+// Guardar correo del restaurante en sessionStorage
+sessionStorage.setItem('correoRestaurante', correoRes);
