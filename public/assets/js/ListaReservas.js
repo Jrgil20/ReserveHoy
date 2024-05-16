@@ -1,3 +1,5 @@
+
+
 const urlParams = new URLSearchParams(window.location.search);
 //creamos una variable que obtenga el valor de la url
 const correoRes = urlParams.get('restaurante');
@@ -23,10 +25,17 @@ async function traeReservas(correoRes){
           // Crea un elemento <tr> para cada reserva
           let tr = document.createElement('tr');
 
-          // Crea un elemento <td> para el nombre de la reserva
-          let tdNombre = document.createElement('td');
+          // Crea un elemento <td> para el id
+          console.log(reserva.idReserva);
+          let tdidReserva= document.createElement('td');
           tdidReserva.textContent = reserva.idReserva;
           tr.appendChild(tdidReserva);
+
+          //Crea un elemento <td> para el nombre
+           
+           let tdNombre = document.createElement('td');
+           tdNombre.textContent = reserva.correoCli;
+           tr.appendChild(tdNombre);
 
           // Crea un elemento <td> para la fecha de la reserva
           let tdFecha = document.createElement('td');
@@ -40,7 +49,7 @@ async function traeReservas(correoRes){
 
           // Crea un elemento <td> para el número de personas
           let tdPersonas = document.createElement('td');
-          tdPersonas.textContent = reserva.personas;
+          tdPersonas.textContent = reserva.numeroPersona;
           tr.appendChild(tdPersonas);
 
           // Crea un elemento <td> para el estado de la reserva
@@ -51,12 +60,12 @@ async function traeReservas(correoRes){
           // Crea un elemento <td> para el botón de confirmar la reserva
           let tdBotonConfirm = document.createElement('td');
           let BotonConfirm = document.createElement('button');
-          boton.textContent = 'Confirmar';
+          BotonConfirm.textContent = 'Confirmar';
 
           // Crea un elemento <td> para el botón de cancelar la reserva
           let tdBotonCancel = document.createElement('td');
           let botonCancel = document.createElement('button');
-          boton.textContent = 'Cancelar';
+          botonCancel.textContent = 'Cancelar';
 
           // Añade el elemento <tr> al elemento padre
           padre.appendChild(tr);

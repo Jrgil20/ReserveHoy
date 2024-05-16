@@ -412,6 +412,7 @@ app.get("/buscarMesasRest:correoRest",(req,res)=>{
 //Ruta GET que trae todos las reservas de un restaurante
 app.get("/buscarReservasRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
+    console.log(correoRest);
     let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
     conexion.query(traeReservas,(err,result)=>{
        if(err){
