@@ -166,9 +166,9 @@ app.post("/loginres", (req, res) => {
 });
 
 // Ruta POST para agregar plato
-app.post("./agregarPlato", (req,res)=>{
+app.post("/agregarPlato", (req,res)=>{
   const datos = req.body;
-  const rest = req.body.restaurante;
+  const rest = "wendys@gmail.com";
 
   let nombrePlato = datos.nombrePlato;
   let tipo = datos.tipo;
@@ -176,7 +176,7 @@ app.post("./agregarPlato", (req,res)=>{
   let descripcion = datos.descripcion;
 
   //busca si ya existe un plato con el mismo nombre en un restaurante
-  let buscarPlatoRest = "SELECT * FROM restaurante WHERE nombrePlato = '"+nombrePlato+"'";
+  let buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+rest+"' AND nombrePlato = '"+nombrePlato+"'";
 
   //se hace la consulta
   conexion.query(buscarPlatoRest,function(err,row){
@@ -187,9 +187,7 @@ app.post("./agregarPlato", (req,res)=>{
       if(row.length>0){
         console.log("Esta plato ya existe en el menu");
       }else{
-        let registerPlato = "INSERT INTO platos (nombrePlato, tipo, precio, descrip) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"',)"
-        
-        let registerPlatoRest = "UPDATE restaurante SET nombrePlato ='"+nombrePlato+"' WHERE nombreRes = '"+rest+"'";
+        let registerPlato = "INSERT INTO plato (nombrePlato, tipo, precio, descripcion, correoRes) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"','"+rest+"')"
         //hace consulta en platos
         conexion.query(registerPlato,(err,res)=>{
           if(err){
@@ -199,16 +197,6 @@ app.post("./agregarPlato", (req,res)=>{
           }
 
         })
-        //hace consulta en restaurante
-        conexion.query(registerPlatoRest,(err,res)=>{
-          if(err){
-            console.log(err);
-          }else{
-            res.status(200).send('<script>alert("Plato registrado con éxito"); window.location.href = "/";</script>');
-          }
-
-        })
-
       }
     }
   })
