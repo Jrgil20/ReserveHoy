@@ -38,13 +38,13 @@ async function traeMesas(correoRes){
         let padre = document.getElementById('MesasDelRestaurante'); 
 
         // Recorre la lista de reservas del restaurante
-        for (let reserva of data) {
+        for (let mesa of data) {
         
           // Crea un elemento li para cada mesa
           let li = document.createElement('li');
-          li.textContent = reserva.numeroMesa;
+          li.textContent = 'mesa #'+mesa.numeroMesa+' con capacidad para '+mesa.capacidad+' personas, se encuentra '+mesa.status;
           padre.appendChild(li);
-          
+
         
         }
 
