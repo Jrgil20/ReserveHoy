@@ -392,6 +392,23 @@ app.get("/traeRestaurantes",(req,res)=>{
 })
 
 
+//Ruta GET que trae todas las mesas de un restaurante
+app.get("/buscarMesasRest:correoRest",(req,res)=>{
+  const correoRest = req.params.correoRes;
+  let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";
+  conexion.query(traeReservas,(err,result)=>{
+     if(err){
+       res.status(500).json({ error: 'An error occurred' });
+     }else{
+       if(result.length > 0){
+         res.status(200).json(result);
+       }else{
+        res.status(404).json({ message: 'No hay mesas para este restaurante' });
+       }
+     }
+  })
+})
+
 //Ruta GET que trae todos las reservas de un restaurante
 app.get("/buscarReservasRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
