@@ -22,3 +22,34 @@ async function traeReservas(correoRes){
         console.error('Error:', error);
       }
 }
+
+traeMesas(correoRes);
+
+async function traeMesas(correoRes){
+    try {
+        const response = await fetch('/buscarMesasRest/' + correoRes);
+        //hacemos una peticion a la ruta /buscarReserva/ + el valor de la url
+        //la palabra reservada await hace que la funcion se espere a que la promesa se resuelva
+        const data = await response.json();
+        //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
+        //la funcion json() convierte la respuesta del servidor en un objeto json
+         console.log(data);
+        // Obtén el elemento padre donde quieres añadir los nuevos elementos
+        let padre = document.getElementById('MesasDelRestaurante'); 
+
+        // Recorre la lista de reservas del restaurante
+        for (let reserva of data) {
+        
+          // Crea un elemento li para cada mesa
+          let li = document.createElement('li');
+          li.textContent = reserva.numeroMesa;
+          padre.appendChild(li);
+          
+        
+        }
+
+      } catch (error) {
+        console.error('Error:', error);
+      }
+}
+
