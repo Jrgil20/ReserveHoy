@@ -101,7 +101,7 @@ app.post("/registerrestau", (req,res) => {
             console.log(err);
           }else{
             let email = datos.email;
-            res.status(200).send(`<script>alert("Restaurante registrado con éxito"); window.location.href = "/restaurant.html?restaurante=${email}";</script>`); 
+            res.status(200).send(`<script>alert("Restaurante registrado con éxito"); window.location.href = "/perfil.html?restaurante=${email}";</script>`); 
           }
         
         });
@@ -159,7 +159,7 @@ app.post("/loginres", (req, res) => {
             res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
           }else{
             let email = datos.email;
-            res.status(200).send(`<script>alert("Inicio de sesión exitoso"); window.location.href = "/restaurant.html?restaurante=${email}";</script>`);     
+            res.status(200).send(`<script>alert("Inicio de sesión exitoso"); window.location.href = "/perfil.html?restaurante=${email}";</script>`);     
           }
 
         }
