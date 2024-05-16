@@ -19,10 +19,10 @@ async function traeRestaurantes(){
           let card = document.createElement('div');
           card.className = 'card';
 
-          //let img = document.createElement('img');
-          //img.src = restaurante.imagen;
-          //img.className = 'card-img-top';
-          //img.alt = 'Imagen del producto';
+          let img = document.createElement('img');
+          img.src = '/assets/img/Restaurant.png';
+          img.className = 'card-img-top';
+          img.alt = 'Imagen del producto';
 
           let cardBody = document.createElement('div');
           cardBody.className = 'card-body';
@@ -45,7 +45,7 @@ async function traeRestaurantes(){
           cardBody.appendChild(p);
           cardBody.appendChild(a);
 
-          // card.appendChild(img);
+          card.appendChild(img);
           card.appendChild(cardBody);
 
           col.appendChild(card);
