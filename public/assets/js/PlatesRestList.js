@@ -1,7 +1,14 @@
+let correoRestau = "wendys@gmail.com";
 
-async function traeRestaurantes(){
+async function traePlatos(){
     try {
-        const response = await fetch('/traeRestaurantes/');
+        const response = await fetch('/consultarPlatos/',{
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ restaurante: correoRestau}),
+        });
         //hacemos una peticion a la ruta /traeRestaurantes
         //la palabra reservada await hace que la funcion se espere a que la promesa se resuelva
         const data = await response.json();
@@ -9,11 +16,11 @@ async function traeRestaurantes(){
         //la funcion json() convierte la respuesta del servidor en un objeto json
         console.log(data);
         for(let i=0;i<data.length;i++){
-            console.log(data[i].nombre);
+            console.log(data[i].nombrePlato);
         }
       } catch (error) {
         console.error('Error:', error);
       }
 }
 
-traeRestaurantes();
+traePlatos();

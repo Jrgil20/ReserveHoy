@@ -216,17 +216,23 @@ app.post("./agregarPlato", (req,res)=>{
 
 
 
-// Ruta GET para consultar todos los platos de un restaurante
-app.get("./consultarPlatos",(req,res)=>{
+// Ruta POST para consultar todos los platos de un restaurante
+app.post("/consultarPlatos",(req,res)=>{
   //consulta para traer todos los platos
   let restaurante = req.body.restaurante;
-  const platos = "SELECT * FROM platos WHERE nombreRes = '"+restaurante+"'";
+  console.log(restaurante);
+  const platos = "SELECT * FROM plato WHERE correoRes = '"+restaurante+"'";
   //hace la consulta
   conexion.query(platos,(err,list)=>{
     if(err){
       console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
     }else{
-      console.log(list);
+       if(list.length > 0){
+        res.status(200).json(list);
+       }else{
+        res.status(404).json({ message: 'No hay platos registrados para ese restaurante' });
+       }
     }
   })
 });
@@ -234,7 +240,7 @@ app.get("./consultarPlatos",(req,res)=>{
 //Ruta GET para consulta un plato en especifico
 app.get("./consultarPlato",(req,res)=>{
   let plato = req.body.plato;
-  const platos = "SELECT * FROM platos WHERE nombrePlato = '"+plato+"'";
+  const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
   //hace la consulta
   conexion.query(platos,(err,element)=>{
     if(err){
@@ -343,6 +349,23 @@ app.get("/buscarCliente/:correo", (req, res) => {
     }
   });
 });
+
+//Ruta GET que manda todos los clientes
+app.get("/traerClientes",(req,res)=>{
+  let traeClientes = "SELECT * FROM cliente";
+  conexion.query(traeClientes,(err,result)=>{
+     if(err){
+       res.status(500).json({ error: 'An error occurred' });
+     }else{
+      if(result.length > 0){
+        res.status(200).json(result);
+      }else{
+        res.status(404).json({ message: 'No hay clientes' });
+      }
+    
+  }
+  })
+})
 
 //Ruta GET que trae todos los Restaurantes
 app.get("/traeRestaurantes",(req,res)=>{
