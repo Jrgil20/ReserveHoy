@@ -15,7 +15,7 @@ async function traeReservas(correoRes){
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
         document.getElementById('NombreDelRestaurante').textContent = data.nombre;
-        document.getElementById('DescripcionDelRestaurant').textContent = data.direccion;        ;
+        document.getElementById('DescripcionDelRestaurant').textContent = data.descripcion;
         document.getElementById('TelefonoDelRestaurant').textContent = data.telefono;
         document.getElementById('DireccionDelRestaurant').textContent = data.direccion;
       } catch (error) {
