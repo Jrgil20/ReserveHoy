@@ -306,7 +306,7 @@ app.post("./agregarReserva", (req,res)=>{
   })
   })
 
-// Ruta GET para consultar todas las reservas de un cliente
+// Ruta GET para consultar una reserva de un cliente
 app.get("/buscarReserva/:idReserva", (req, res) => {
   const idReserva = req.params.idReserva; // Obtiene el ID de la reserva de los parámetros de la ruta
 
@@ -317,7 +317,7 @@ app.get("/buscarReserva/:idReserva", (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     } else {
       if (result.length > 0) {
-        res.status(200).json(result);
+        res.status(200).json(result[0]);
       } else {
         res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
       }
@@ -336,7 +336,7 @@ app.get("/buscarCliente/:correo", (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     } else {
       if (result.length > 0) {
-        res.status(200).json(result);
+        res.status(200).json(result[0]);
       } else {
         res.status(404).json({ message: 'No se encontró ninguna persona con ese correo' });
       }
@@ -389,6 +389,23 @@ app.get('/buscarrestaurante/:idReserva', (req,res)=>{
   }
 
 );
+
+//Ruta GET que trae todos los Restaurantes
+app.get("/traeRestaurantes",(req,res)=>{
+     const traeRes= "SELECT * FROM restaurante";
+     conexion.query(traeRes,(err,result)=>{
+        if(err){
+          res.status(500).json({ error: 'An error occurred' });
+        }else{
+            if(result.length > 0){
+              res.status(200).json(result);
+            }else{
+              res.status(404).json({ message: 'No hay restaurantes' });
+            }
+          
+        }
+     })
+})
 
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
