@@ -6,7 +6,6 @@ async function traeRestaurantes(){
         const data = await response.json();
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
-        console.log(data);
 
         // Obtén el elemento padre donde quieres añadir los nuevos elementos
         let padre = document.getElementById('ListaDeRestaurantes');
@@ -37,7 +36,7 @@ async function traeRestaurantes(){
           p.textContent = restaurante.correoRes;
 
           let a = document.createElement('a');
-          a.href = 'restaurant.html';
+          a.href = 'restaurant.html?restaurante=' + restaurante.correoRes;
           a.className = 'btn btn-primary';
           a.textContent = 'Ver más';
 
