@@ -1,8 +1,9 @@
-import { sendConfirmationEmail, sendCancellationEmail } from './sendEmail.js';
+
 
 const urlParams = new URLSearchParams(window.location.search);
 //creamos una variable que obtenga el valor de la url
 const correoRes = urlParams.get('restaurante');
+console.log(correoRes);
 // obtenemos el valor de la url
 
 traeReservas(correoRes);
@@ -61,13 +62,13 @@ async function traeReservas(correoRes){
           let tdBotonConfirm = document.createElement('td');
           let BotonConfirm = document.createElement('button');
           BotonConfirm.textContent = 'Confirmar';
-          BotonConfirm.addEventListener('click', sendConfirmationEmail); // Agrega el evento de clic
+          //BotonConfirm.addEventListener('click', sendConfirmationEmail); // Agrega el evento de clic
 
           // Crea un elemento <td> para el botón de cancelar la reserva
           let tdBotonCancel = document.createElement('td');
           let botonCancel = document.createElement('button');
           botonCancel.textContent = 'Cancelar';
-          botonCancel.addEventListener('click', sendCancellationEmail); // Agrega el evento de clic
+          //botonCancel.addEventListener('click', sendCancellationEmail); // Agrega el evento de clic
 
           // Añade el elemento <tr> al elemento padre
           padre.appendChild(tr);

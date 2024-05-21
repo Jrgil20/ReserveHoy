@@ -127,27 +127,29 @@
                            <form action="/agregarPlato" method="post" id="platForm">
                             <div class="form-group">
                                 <label for="nombrePlato">Tipo de Plato:</label>
-                                <input type="text" class="form-control" id="tipoPlato" placeholder="Tipo de plato" required>
+                                <input type="text" class="form-control" name="tipoPlato" id="tipoPlato" placeholder="Tipo de plato" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombrePlato">Nombre del Plato:</label>
-                                <input type="text" class="form-control" id="nombrePlato" placeholder="Nombre del plato" required>
+                                <input type="text" class="form-control" name="nombrePlato" id="nombrePlato" placeholder="Nombre del plato" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombrePlato">Precio</label>
-                                <input type="text" class="form-control" id="precioPlato" placeholder="Precio del plato" required>
+                                <input type="text" class="form-control" name="precioPlato" id="precioPlato" placeholder="Precio del plato" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombrePlato">Descripcion:</label>
-                                <input type="text" class="form-control" id="descripPlato" placeholder="Descripcion del plato" required>
+                                <input type="text" class="form-control" name="descripPlato" id="descripPlato" placeholder="Descripcion del plato" required>
+                            </div>
+                            <div class="form-group">
+                              <input type="hidden" name="correoRes" id="correoRes">
                             </div>
                             <button type="submit" class="btn btn-success">Guardar</button>
-
                         </div>
                     <h5 class="card-text">Mesas</h5>
                     <a href="mesas.html"><button type="button" class="btn btn-outline-primary">Ver Mesas</button></a>
-
                            </form>
+                           <script src="./assets/js/agregPlato.js"></script>
                     </div>
 
                 </div>
