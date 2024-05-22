@@ -17,7 +17,7 @@ async function traeReservas(correoRes){
         document.getElementById('DescripcionDelRestaurant').textContent = data.descripcion;
         document.getElementById('TelefonoDelRestaurant').textContent = data.telefono;
         document.getElementById('DireccionDelRestaurant').textContent = data.direccion;
-        document.getElementById('correoRes').value = correoRes;
+        document.getElementById('correoResPlat').value = correoRes;
       } catch (error) {
         console.error('Error:', error);
       }

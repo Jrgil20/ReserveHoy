@@ -103,7 +103,6 @@ app.post("/registerrestau", (req,res) => {
             let email = datos.email;
             res.status(200).send(`<script>alert("Restaurante registrado con éxito"); window.location.href = "/perfil.html?restaurante=${email}";</script>`); 
           }
-        
         });
       }
     }
@@ -173,7 +172,7 @@ app.post("/loginres", (req, res) => {
 app.post("/agregarPlato", (req,res)=>{
   const datos = req.body;
   let {correoRestaurante,nombrePlato,tipo,precio,descripcion} = datos;
-  //console.log(correoRes);
+  let idPlato = Math.random()*100;
 
   //busca si ya existe un plato con el mismo nombre en un restaurante
   let buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+correoRestaurante+"' AND nombrePlato = '"+nombrePlato+"'";
@@ -187,17 +186,42 @@ app.post("/agregarPlato", (req,res)=>{
       if(row.length>0){
         console.log("Este plato ya existe en el menu");
       }else{
-        let registerPlato = "INSERT INTO plato (nombrePlato, tipo, precio, descripcion, correoRes) VALUES ('"+nombrePlato+"','"+tipo+"','"+precio+"','"+descripcion+"','"+correoRestaurante+"')"
-        //hace consulta en platos
-        conexion.query(registerPlato,(err,res)=>{
-          if(err){
-            console.log(err);
-            res.status(500).json({ error: 'An error occurred' });
-          }else{
-            res.status(200).send('<script>alert("Plato registrado con éxito"); window.location.href = "/";</script>');
-          }
-
-        })
+         let confirmarPlato = "SELECT * FROM plato WHERE idPlato = '"+idPlato+"' AND correoRes = '"+correoRestaurante+"'";
+         conexion.query(confirmarPlato,function(error,lista){
+            if(error){
+               throw error;
+            }else{
+              if(lista.length > 0){
+                let bandera = 0;
+                do{
+                  idPlato = Math.random()*100;
+                  for(let i=0;i<lista.length;i++){
+                    if(idPlato === lista[i].idPlato){
+                      bandera = 1;
+                      break;
+                    }
+                  }
+                }while(bandera === 0);
+                let registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
+                conexion.query(registrarPlato,function(mistake,result){
+                  if(mistake){
+                    res.status(500).json({ error: 'An error occurred' });
+                  }else{
+                    res.status(200).send(`<script>alert("Plato agregado"); window.location.href = "/";</script>`);
+                  }
+                })
+              }else{
+                let registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
+                conexion.query(registrarPlato,function(mistake,result){
+                  if(mistake){
+                    res.status(500).json({ error: 'An error occurred' });
+                  }else{
+                    res.status(200).send(`Plato agregado con exito`);
+                  }
+                })
+              }
+            }
+         })
       }
     }
   })
@@ -236,8 +260,7 @@ app.post ("/agregarMesa", (req,res)=>{
     let {restaurante, capacidad} = datos; 
 
     //busca si ya existe una mesa con el mismo id en un restaurante
-    let buscarIdMesaRest = "SELECT * FROM mesa WHERE correoRes = '"+restaurante+"' AND id_Mesa = '"+id_Mesa+"'";
-
+    let buscarIdMesaRest = "SELECT * FROM mesa WHERE id_Mesa = '"+id_Mesa+"'";
     //se hace la consulta 
     conexion.query(buscarIdMesaRest,(err,row)=>{
       if (err){
@@ -245,22 +268,36 @@ app.post ("/agregarMesa", (req,res)=>{
       }else {
         //verifica en la tabla si ya exite una mesa con el mismo ID, si esta es mayor a 0
         if (row.length>0){
-          console.log("Id de mesa no disponible. Intente mas tarde");
-        }else{
-          let registrarMesa = "INSERT INTO mesa (status, capacidad, numMesa, correoRes, id_Mesa) VALUES ('"+status+"', '"+capacidad+"', '"+numMesa+"', '"+restaurante+"', '"+id_Mesa+"')"
-
-          //hace consulta en mesa
-          conexion.query(registrarMesa,(err,res)=>{
+           let bandera = 0;
+           do{
+               id_Mesa = Math.random()*100;
+               if(id_Mesa != row[0].id_Mesa){
+                 bandera = 1;
+              }
+             }while(bandera === 0);
+            let registrarMesa = "INSERT INTO mesa (status, capacidad, numMesa, correoRes, id_Mesa) VALUES ('"+status+"', '"+capacidad+"', '"+numMesa+"', '"+restaurante+"', '"+id_Mesa+"')";
+            //hace consulta en mesa
+            conexion.query(registrarMesa,(err,result)=>{
             if(err){
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
             }else {
-              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>'); 
+              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>');
+            }
+          })
+        }else{
+          let registrarMesa = "INSERT INTO mesa (status, capacidad, numMesa, correoRes, id_Mesa) VALUES ('"+status+"', '"+capacidad+"', '"+numMesa+"', '"+restaurante+"', '"+id_Mesa+"')";
+          //hace consulta en mesa
+          conexion.query(registrarMesa,(err,result)=>{
+            if(err){
+              console.log(err);
+              res.status(500).json({ error: 'An error occurred' });
+            }else {
+              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>');
             }
           })
         }
       }
-
     })
 })
 
@@ -325,7 +362,7 @@ app.post("/agregarReserva", (req,res)=>{
                            console.log("Ya hay una reserva a esa hora");
                          }else{
                            let insertarValores = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCLi, idMesa, correoRes) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente+"','"+idMesa+"','"+rest+"')";
-                           res.status(200).send('<script>alert("Restaurante registrado con éxito";</script>');
+                           res.status(200).send('<script>alert("Reserva registrada con éxito";</script>');
                          }
                        }
                   })
@@ -349,7 +386,7 @@ app.post("/agregarReserva", (req,res)=>{
                          console.log("Ya hay una reserva a esa hora");
                        }else{
                          let insertarValores = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCLi, idMesa, correoRes) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente+"','"+idMesa+"','"+rest+"')";
-                         res.status(200).send('<script>alert("Restaurante registrado con éxito";</script>');
+                         res.status(200).send('<script>alert("Reserva registrada con éxito";</script>');
                        }
                      }
                 })
