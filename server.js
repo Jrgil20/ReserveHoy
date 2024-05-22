@@ -167,6 +167,8 @@ app.post("/loginres", (req, res) => {
   
 });
 
+
+
 // Ruta POST para agregar plato
 app.post("/agregarPlato", (req,res)=>{
   const datos = req.body;
@@ -223,6 +225,44 @@ app.post("/consultarPlatos",(req,res)=>{
     }
   })
 });
+
+
+// Ruta POST para agregar mesa
+app.post ("/agregarMesa", (req,res)=>{
+    const datos = req.body;
+    const status = 0;
+    const numMesa = Math.random()*100;
+    const id_Mesa = Math.random()*100;
+    let {restaurante, capacidad} = datos; 
+
+    //busca si ya existe una mesa con el mismo id en un restaurante
+    let buscarIdMesaRest = "SELECT * FROM mesa WHERE correoRes = '"+restaurante+"' AND id_Mesa = '"+id_Mesa+"'";
+
+    //se hace la consulta 
+    conexion.query(buscarIdMesaRest,(err,row)=>{
+      if (err){
+        throw err;
+      }else {
+        //verifica en la tabla si ya exite una mesa con el mismo ID, si esta es mayor a 0
+        if (row.length>0){
+          console.log("Id de mesa no disponible. Intente mas tarde");
+        }else{
+          let registrarMesa = "INSERT INTO mesa (status, capacidad, numMesa, correoRes, id_Mesa) VALUES ('"+status+"', '"+capacidad+"', '"+numMesa+"', '"+restaurante+"', '"+id_Mesa+"')"
+
+          //hace consulta en mesa
+          conexion.query(registrarMesa,(err,res)=>{
+            if(err){
+              console.log(err);
+              res.status(500).json({ error: 'An error occurred' });
+            }else {
+              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>'); 
+            }
+          })
+        }
+      }
+
+    })
+})
 
 //Ruta GET para consulta un plato en especifico
 app.get("./consultarPlato",(req,res)=>{
@@ -412,10 +452,10 @@ app.get("/traeRestaurantes",(req,res)=>{
 
 
 //Ruta GET que trae todas las mesas de un restaurante
-app.get("/buscarMesasRest:correoRest",(req,res)=>{
+app.get("/buscarMesasRest/:correoRest",(req,res)=>{
   const correoRest = req.params.correoRes;
   let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";
-  conexion.query(traeReservas,(err,result)=>{
+  conexion.query(traeMesas,(err,result)=>{
      if(err){
        res.status(500).json({ error: 'An error occurred' });
      }else{
