@@ -383,7 +383,7 @@ app.post("/agregarReserva", (req,res)=>{
                       res.status(500).json({ error: 'An error occurred' });
                      }else{
                        if(result.length>0){
-                         console.log("Ya hay una reserva a esa hora");
+                         res.status(304).send('<script>alert("Ya hay una reserva a esa hora";</script>');
                        }else{
                          let insertarValores = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCLi, idMesa, correoRes) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente+"','"+idMesa+"','"+rest+"')";
                          res.status(200).send('<script>alert("Reserva registrada con éxito";</script>');

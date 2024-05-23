@@ -1,3 +1,6 @@
+let correoDelRestaurante = urlParams.get('restaurante');
+document.getElementById('CorreoDelRestaurante').value = correoDelRestaurante;
+
 
 document.getElementById('restauranteForm').addEventListener('submit', function(event) {
     // Prevent the form from being submitted normally
@@ -5,7 +8,7 @@ document.getElementById('restauranteForm').addEventListener('submit', function(e
   
     // Get the values of the input fields
     const urlParams = new URLSearchParams(window.location.search);
-    let correoRes = urlParams.get('restaurante');
+    let correoRes =  document.getElementById('CorreoDelRestaurante').value;
     let email = document.getElementById('email').value;
     let fecha = document.getElementById('fecha').value;
     let personas = document.getElementById('personas').value;
