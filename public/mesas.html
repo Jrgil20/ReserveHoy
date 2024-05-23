@@ -18,6 +18,7 @@
 
       <!-- Estilos CSS -->
   <link rel="stylesheet" href="./assets/css/mesas.css">
+  <script src='./assets/js/GenerarMesas.js'></script>
 </head>
 <body>
     <header id="navbar-Container">
@@ -115,12 +116,15 @@
                         <div id="platoForm" class="collapse mt-3">
                             <!-- Contenido del formulario para agregar platos -->
                             <div class="form-group">
+                              <form action="/agregarMesa" method="post" id="mesaForm">
                                 <label for="numAsientos">Numero de Asientos:</label>
-                                <input type="number" class="form-control" id="numAsi" min="1">
+                                <input name = "capacidad" type="text" class="form-control" id="numAsi" min="1">
+                                <input type="hidden" name="restaurante" id="restaurante">
+                                <button type="submit" class="btn btn-success">Agregar</button>
+                              </form>
+                            <script src="./assets/js/agregaMesa.js"></script>
                             </div>
-                            
-                            <button type="submit" class="btn btn-success">Agregar</button>
-                    </div>
+                          </div>
                 </div>
           </div>
         </div>

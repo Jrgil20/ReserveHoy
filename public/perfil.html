@@ -79,14 +79,10 @@
                 <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#infoForm">Agregar Informacion Basica</button>
                 <div id="infoForm" class="collapse mt-3">
                 <!-- Contenido del formulario para agregar platos -->
-                    <form>
+                    <form method="post">
                         <div class="form-group">
                         <label for="nombre">Descripcion:</label>
                         <input type="text" class="form-control" id="nombre" placeholder="Breve Descripcion">
-                        </div>
-                        <div class="form-group">
-                        <label for="phone">Número Telefónico:</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" required>
                         </div>
                         <div class="form-group">
                         <label for="fecha">Horario:</label>
@@ -127,27 +123,33 @@
                            <form action="/agregarPlato" method="post" id="platForm">
                             <div class="form-group">
                                 <label for="nombrePlato">Tipo de Plato:</label>
-                                <input type="text" class="form-control" id="tipoPlato" placeholder="Tipo de plato" required>
+                                <input type="text" class="form-control" name="tipoPlato" id="tipoPlato" placeholder="Tipo de plato" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombrePlato">Nombre del Plato:</label>
-                                <input type="text" class="form-control" id="nombrePlato" placeholder="Nombre del plato" required>
+                                <input type="text" class="form-control" name="nombrePlato" id="nombrePlato" placeholder="Nombre del plato" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombrePlato">Precio</label>
-                                <input type="text" class="form-control" id="precioPlato" placeholder="Precio del plato" required>
+                                <input type="text" class="form-control" name="precioPlato" id="precioPlato" placeholder="Precio del plato" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombrePlato">Descripcion:</label>
-                                <input type="text" class="form-control" id="descripPlato" placeholder="Descripcion del plato" required>
+                                <input type="text" class="form-control" name="descripPlato" id="descripPlato" placeholder="Descripcion del plato" required>
+                            </div>
+                            <div class="form-group">
+                              <input type="hidden" name="correoResPlat" id="correoResPlat">
                             </div>
                             <button type="submit" class="btn btn-success">Guardar</button>
-
                         </div>
                     <h5 class="card-text">Mesas</h5>
-                    <a href="mesas.html"><button type="button" class="btn btn-outline-primary">Ver Mesas</button></a>
-
+                    
                            </form>
+                           <script src="./assets/js/agregPlato.js"></script>
+                           <form id="BuscaMesa">
+                            <button type="submit" class="btn btn-outline-primary">Ver Mesas</button>
+                           </form>
+                           <script src ="assets/js/BuscarMesa.js"></script>
                     </div>
 
                 </div>
