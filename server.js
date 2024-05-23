@@ -253,11 +253,11 @@ app.post("/consultarPlatos",(req,res)=>{
 
 // Ruta POST para agregar mesa
 app.post ("/agregarMesa", (req,res)=>{
-    const datos = req.body;
+    const datos = req.body;//Vaciamos el cuerpo de la petición HTTP en la variable body
     const status = 0;
-    const numMesa = Math.random()*100;
-    const id_Mesa = Math.random()*100;
-    let {restaurante, capacidad} = datos; 
+    const numMesa = Math.random()*100;//Creacion de un nuevo número de mesa
+    const id_Mesa = Math.random()*100;//Creacion de un nuevo ID
+    let {restaurante, capacidad} = datos; //Mediante destructuracion se asigna el contenido de datos en las variables
 
     //busca si ya existe una mesa con el mismo id en un restaurante
     let buscarIdMesaRest = "SELECT * FROM mesa WHERE id_Mesa = '"+id_Mesa+"'";
@@ -270,6 +270,7 @@ app.post ("/agregarMesa", (req,res)=>{
         if (row.length>0){
            let bandera = 0;
            do{
+               //Si existe el mismo id, se generara uno hasta que no coincida
                id_Mesa = Math.random()*100;
                if(id_Mesa != row[0].id_Mesa){
                  bandera = 1;
@@ -286,6 +287,7 @@ app.post ("/agregarMesa", (req,res)=>{
             }
           })
         }else{
+          //Camino si no hay id repetido
           let registrarMesa = "INSERT INTO mesa (status, capacidad, numMesa, correoRes, id_Mesa) VALUES ('"+status+"', '"+capacidad+"', '"+numMesa+"', '"+restaurante+"', '"+id_Mesa+"')";
           //hace consulta en mesa
           conexion.query(registrarMesa,(err,result)=>{
@@ -299,6 +301,22 @@ app.post ("/agregarMesa", (req,res)=>{
         }
       }
     })
+})
+
+//RUTA POST para actualizar la informacion de un restaurante
+app.post("/actuInfoRestau",(req,res)=>{
+     const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
+     let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
+     const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";
+     //Se declara el query
+     conexion.query(actuMesa,(err,result)=>{//Se hace el query
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
+      }else {
+        res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
+        //Si todo sale bien, se envia la notificacion de éxito
+      }
+     })
 })
 
 //Ruta GET para consulta un plato en especifico
@@ -490,16 +508,16 @@ app.get("/traeRestaurantes",(req,res)=>{
 
 //Ruta GET que trae todas las mesas de un restaurante
 app.get("/buscarMesasRest/:correoRest",(req,res)=>{
-  const correoRest = req.params.correoRes;
-  let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";
-  conexion.query(traeMesas,(err,result)=>{
+  const correoRest = req.params.correoRest;//Obtiene el correo de la ruta
+  let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";//Declaramos el query
+  conexion.query(traeMesas,(err,result)=>{//Hacemos el query
      if(err){
-       res.status(500).json({ error: 'An error occurred' });
+       res.status(500).json({ error: 'An error occurred' });//Si hay error, manda la notifiacion
      }else{
        if(result.length > 0){
-         res.status(200).json(result);
+         res.status(200).json(result);//Si hay mesas, devuelve la lista
        }else{
-        res.status(404).json({ message: 'No hay mesas para este restaurante' });
+        res.status(404).json({ message: 'No hay mesas para este restaurante' });//Si no hay, devuelve error 404 not found
        }
      }
   })
