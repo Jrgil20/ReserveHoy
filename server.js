@@ -1,14 +1,11 @@
-// Importa el módulo Express. Esto te permite usar la funcionalidad de Express en tu archivo.
 const express = require('express');
 // importa el módulo body-parser. Esto te permite usar la funcionalidad de body-parser en tu archivo.
 const bodyParser = require('body-parser');
 // Importa el módulo fs. Esto te permite usar la funcionalidad de fs en tu archivo.
 const fs = require('fs');
 
-//Importa el modulo de mysql. Permite hacer la conexion con la base de datos
 const mysql = require('mysql');
 
-//conexion con la base de datos
 const conexion = mysql.createConnection({
     host: "localhost",
     database: "reservehoy",
@@ -16,7 +13,6 @@ const conexion = mysql.createConnection({
     password: ""
 }); 
 
-// Crea una nueva aplicación Express. Esto es lo que realmente maneja las solicitudes y respuestas.
 const app = express();
 
 // Middleware para parsear el cuerpo de las solicitudes POST
@@ -31,7 +27,6 @@ app.set("view engine", "ejs");
 //para reconocer los datos que ingrese el usuario
 app.use(express.urlencoded({ extended: false }));
 
-//para reconocer los objetos que tengan la extesion .json
 app.use(express.json());
 
 // Define el puerto en el que se ejecutará tu servidor.
@@ -56,7 +51,7 @@ app.post("/register", (req, res) => {
      if(err){
       throw err;
     }else{
-      //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
+      //verifica en la tablas si el correo ya esta registrado
       if (row.length > 0){
         res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html";</script>');
       }else{
@@ -83,10 +78,8 @@ app.post("/registerrestau", (req,res) => {
   
   let {name,email,phone,password} = datos;
   
-  
   //busca si el correo ya esta registrado
   let buscar = "SELECT * FROM restaurante WHERE correoRes = '"+email+"'";
-  //se hace la consulta
   conexion.query(buscar,function(err,row){
      if(err){
       throw err;
@@ -130,6 +123,7 @@ app.post('/login', (req, res) => {
            if(bandera != 1){
             res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
            }else{
+            // se redireciona al perfil del usuario
             res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/";</script>');
            }
         }
@@ -184,7 +178,7 @@ app.post("/agregarPlato", (req,res)=>{
     }else{
       //verifica en las tablas si ya existe un plato con el mismo nombre, si esta es mayor a 0
       if(row.length>0){
-        console.log("Este plato ya existe en el menu");
+        res.status(304).send(`<script>alert("Este plato ya existe en el menu");</script>`);
       }else{
          let confirmarPlato = "SELECT * FROM plato WHERE idPlato = '"+idPlato+"' AND correoRes = '"+correoRestaurante+"'";
          conexion.query(confirmarPlato,function(error,lista){
