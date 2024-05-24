@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 const mysql = require('mysql');
+const { error } = require('console');
 
 const conexion = mysql.createConnection({
     host: "localhost",
@@ -316,79 +317,150 @@ app.get("./consultarPlato",(req,res)=>{
 app.post("/agregarReserva", (req,res)=>{
   const datos = req.body;
   const rest = datos.restaurante;
-  console.log(rest);
-
   let fecha = datos.fecha;
-  let hora = datos.hora;
+  let hora = 12;
+  //console.log(hora);
   let numeroPersona = datos.personas;
   let cliente = datos.email;
   let id = Math.floor(Math.random()*1000);
   
   ////busca si ya existe una reserva con el mismo ID
-  let buscarIDReserva = "SELECT * FROM reserva WHERE idReserva = '"+id+"'";
+  let buscarIDReserva = "SELECT idReserva FROM reserva WHERE idReserva = '"+id+"'";
   //se hace la consulta
   conexion.query(buscarIDReserva,(err,result)=>{
-     if(err){
+    if(err){
+      console.log(err);
       res.status(500).json({ error: 'An error occurred' });
-     }else{
-       if(result.length>0){
-         do{
-            let bandera=0;
-            id = Math.floor(Math.random()*1000);
-             for(let i=1;i<result.length;i++){
-               if(id === result[i].idReserva)
-                bandera += 1;
-             }  
-          }while(bandera > 0)
-          let buscarIdMesa = "SELECT * FROM mesa WHERE correoRes = '"+rest+"'";
-          conexion.query(buscarIdMesa,(err,result)=>{
-             if(err){
-              res.status(500).json({ error: 'An error occurred' });
-             }else{
-                if(result.length > 0){
-                  let idMesa = result[0].idMesa;
-                  let comprobarHora = "SELECT * FROM reserva WHERE idMESA = '"+idMesa+"' AND hora = '"+hora+"'";
-                  conexion.query(comprobarHora,(err,result)=>{
-                       if(err,result){
-                        res.status(500).json({ error: 'An error occurred' });
-                       }else{
-                         if(result.length>0){
-                           console.log("Ya hay una reserva a esa hora");
-                         }else{
-                           let insertarValores = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCLi, idMesa, correoRes) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente+"','"+idMesa+"','"+rest+"')";
-                           res.status(200).send('<script>alert("Reserva registrada con éxito";</script>');
-                         }
-                       }
-                  })
-                }
-             }
-          })
-       }else{
-        let buscarIdMesa = "SELECT * FROM mesa WHERE correoRes = '"+rest+"'";
-        conexion.query(buscarIdMesa,(err,result)=>{
-           if(err){
-            res.status(500).json({ error: 'An error occurred' });
+    }else{
+      if(result.length > 0){//Si ya existe un id con esa numeración, entra a este bloque
+        bandera = 0;
+        id = Math.floor(Math.random()*1000)
+        do{
+            if(result[0] === id){
+              id = Math.floor(Math.random()*1000)
+            }else{
+              bandera = 1;
+            }
+        }while(bandera === 0);//Se genera un id hasta que no sea repetido
+        //Busca las mesas de ese restaurante que tienen la capacidad requerida
+        let traeMesas = "SELECT id_Mesa FROM mesa WHERE capacidad = '"+numeroPersona+"' AND correoRes = '"+rest+"'";
+        //Se hace la consulta
+        conexion.query(traeMesas,(error,resultado)=>{
+           if(error){
+            console.log(error);
+             res.status(500).json({ error: 'An error occurred' });
            }else{
-              if(result.length > 0){
-                let idMesa = result[0].idMesa;
-                let comprobarHora = "SELECT * FROM reserva WHERE idMESA = '"+idMesa+"' AND hora = '"+hora+"'";
-                conexion.query(comprobarHora,(err,result)=>{
-                     if(err,result){
-                      res.status(500).json({ error: 'An error occurred' });
-                     }else{
-                       if(result.length>0){
-                         res.status(304).send('<script>alert("Ya hay una reserva a esa hora";</script>');
-                       }else{
-                         let insertarValores = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCLi, idMesa, correoRes) VALUES ('"+id+"','"+fecha+"','"+hora+"','"+numeroPersona+"','"+cliente+"','"+idMesa+"','"+rest+"')";
-                         res.status(200).send('<script>alert("Reserva registrada con éxito";</script>');
-                       }
-                     }
+             if(resultado.length > 0){//Si hay mesas que cumplen el requerimiento, entra aquí
+                let mesasValidas = resultado.sort(function(a,b){
+                  return a-b;
+                });
+                //Ordena la lista de menor a mayor
+                let verificarDisponibilidad = "SELECT idMesa FROM reserva WHERE numeroPersona = '"+numeroPersona+"' AND correoRes = '"+rest+"' AND fecha = '"+fecha+"' AND hora = '"+hora+"'";
+                //Busca las mesas que estén ocupadas en la fecha y hora de la solicitud
+                conexion.query(verificarDisponibilidad,(mistake,list)=>{
+                  if(mistake){
+                    res.status(500).json({ error: 'An error occurred' });
+                  }else{
+                    if(list.length === 0){//Si no hay mesas ocupadas, hace el proceso de insercion con la primera mesa encontrada
+                      let idAceptadoPrev = mesasValidas[0];
+                      let idAceptado = idAceptadoPrev.id_Mesa;
+                      let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                      conexion.query(insercionReserva,(erreur,resultat)=>{
+                       if(erreur){
+                          console.log(erreur);
+                          res.status(500).json({ error: 'An error occurred' });
+                        }else{
+                              console.log("Se logro");
+                             }
+                          })
+                    }else{
+                        if(list.length === mesasValidas.length){//Si están todas ocupadas, envía la notificación de error
+                          res.status(409).send('Todas las mesas ocupadas');
+                        }else{//Si hay mesas ocupadas pero no son la totalidad de las disponibles, entra a este bloque
+                          list.sort(function(a,b){
+                            return a-b;
+                          })
+                          let idAceptadoPrev = mesasValidas[list.length];
+                          let idAceptado = idAceptadoPrev.id_Mesa;
+                          let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                          conexion.query(insercionReserva,(erreur,resultat)=>{
+                             if(erreur){
+                               console.log(erreur);
+                               res.status(500).json({ error: 'An error occurred' });
+                             }else{
+                               console.log("Se logro");
+                             }
+                          })
+                        }
+                    }
+                  }
                 })
-              }
+             }else{//Si no hay mesas del restaurante con la capacidad requerida, entra aquí
+               console.log("No hay mesas");
+             }
            }
         })
-       }
+     }else{//Entra aquí si el id creado por primera vez es único
+        //Busca las mesas de ese restaurante que tienen la capacidad requerida
+        let traeMesas = "SELECT id_Mesa FROM mesa WHERE capacidad = '"+numeroPersona+"' AND correoRes = '"+rest+"'";
+        //Se hace la consulta
+        conexion.query(traeMesas,(error,resultado)=>{
+           if(error){
+            console.log(error);
+             res.status(500).json({ error: 'An error occurred' });
+           }else{
+             if(resultado.length > 0){//Si hay mesas que cumplen el requerimiento, entra aquí
+                let mesasValidas = resultado.sort(function(a,b){
+                  return a-b;
+                });
+                //Ordena la lista de menor a mayor
+                let verificarDisponibilidad = "SELECT idMesa FROM reserva WHERE numeroPersona = '"+numeroPersona+"' AND correoRes = '"+rest+"' AND fecha = '"+fecha+"' AND hora = '"+hora+"'";
+                //Busca las mesas que estén ocupadas en la fecha y hora de la solicitud
+                conexion.query(verificarDisponibilidad,(mistake,list)=>{
+                  if(mistake){
+                    res.status(500).json({ error: 'An error occurred' });
+                  }else{
+                    if(list.length === 0){//Si no hay mesas ocupadas, hace el proceso de insercion con la primera mesa encontrada
+                      let idAceptadoPrev = mesasValidas[0];
+                      let idAceptado = idAceptadoPrev.id_Mesa;
+                      let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                      conexion.query(insercionReserva,(erreur,resultat)=>{
+                       if(erreur){
+                          console.log(erreur);
+                          res.status(500).json({ error: 'An error occurred' });
+                        }else{
+                              console.log("Se logro");
+                             }
+                          })
+                    }else{
+                        if(list.length === mesasValidas.length){//Si están todas ocupadas, envía la notificación de error
+                          res.status(409).send('Todas las mesas ocupadas');
+                        }else{//Si hay mesas ocupadas pero no son la totalidad de las disponibles, entra a este bloque
+                          list.sort(function(a,b){
+                            return a-b;
+                          })
+                          let idAceptadoPrev = mesasValidas[list.length];
+                          let idAceptado = idAceptadoPrev.id_Mesa;
+                          let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                          conexion.query(insercionReserva,(erreur,resultat)=>{
+                             if(erreur){
+                               console.log(erreur);
+                               res.status(500).json({ error: 'An error occurred' });
+                             }else{
+                               console.log("Se logro");
+                             }
+                          })
+                        }
+                    }
+                  }
+                })
+             }else{//Si no hay mesas del restaurante con la capacidad requerida, entra aquí
+              console.log("No hay mesas disponibles");
+             }
+           }
+        })
      }
+    } 
   })
   })
 
@@ -484,7 +556,7 @@ app.get("/traeRestaurantes",(req,res)=>{
 
 //Ruta GET que trae todas las mesas de un restaurante
 app.get("/buscarMesasRest/:correoRest",(req,res)=>{
-  const correoRest = req.params.correoRes;
+  const correoRest = req.params.correoRest;
   let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";
   conexion.query(traeMesas,(err,result)=>{
      if(err){

@@ -11,13 +11,14 @@ async function traeReservas(correoRes){
         //hacemos una peticion a la ruta /buscarReserva/ + el valor de la url
         //la palabra reservada await hace que la funcion se espere a que la promesa se resuelva
         const data = await response.json();
-        console.log(data);
+        console.log(correoRes);
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
         document.getElementById('NombreDelRestaurante').textContent = data.nombre;
         document.getElementById('DescripcionDelRestaurant').textContent = data.descripcion;
         document.getElementById('TelefonoDelRestaurant').textContent = data.telefono;
         document.getElementById('DireccionDelRestaurant').textContent = data.direccion;
+        document.getElementById('CorreoDelRestaurante').value = correoRes;
       } catch (error) {
         console.error('Error:', error);
       }
@@ -27,6 +28,7 @@ traeMesas(correoRes);
 
 async function traeMesas(correoRes){
     try {
+      console.log(correoRes);
         const response = await fetch('/buscarMesasRest/' + correoRes);
         //hacemos una peticion a la ruta /buscarReserva/ + el valor de la url
         //la palabra reservada await hace que la funcion se espere a que la promesa se resuelva
@@ -42,7 +44,7 @@ async function traeMesas(correoRes){
         
           // Crea un elemento li para cada mesa
           let li = document.createElement('li');
-          li.textContent = 'mesa #'+mesa.numeroMesa+' con capacidad para '+mesa.capacidad+' personas, se encuentra '+mesa.status;
+          li.textContent = 'mesa #'+mesa.numMesa+' con capacidad para '+mesa.capacidad+' personas, se encuentra '+mesa.status;
           padre.appendChild(li);
 
         
