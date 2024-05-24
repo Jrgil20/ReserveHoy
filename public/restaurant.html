@@ -120,15 +120,35 @@
                     <label for="personas">Número de personas:</label>
                     <input type="number" class="form-control" name="personas" id="personas" placeholder="1">
                   </div>
+                  <style>
+                    .selected {
+                      background-color: #337ab7;
+                      color: #fff;
+                      border-color: #337ab7;
+                    }
+                  </style>
+                  
                   <div class="form-group">
                     <label for="hora">Horas Disponibles:</label><br>
-                    <button type="button" class="btn btn-outline-primary" value="12:00">12:00</button>
-                    <button type="button" class="btn btn-outline-primary">14:00</button>
-                    <button type="button" class="btn btn-outline-primary">16:00</button>
-                    <button type="button" class="btn btn-outline-primary">18:00</button>
-                    <button type="button" class="btn btn-outline-primary">20:00</button>
+                    <button type="button" class="btn btn-outline-primary" data-value="12:00">12:00</button>
+                    <button type="button" class="btn btn-outline-primary" data-value="14:00">14:00</button>
+                    <button type="button" class="btn btn-outline-primary" data-value="16:00">16:00</button>
+                    <button type="button" class="btn btn-outline-primary" data-value="18:00">18:00</button>
+                    <button type="button" class="btn btn-outline-primary" data-value="20:00">20:00</button>
                     <!-- Asegúrate de agregar más botones según sea necesario -->
-                  </div></br>
+                  </div><br>
+                  
+                  <script>
+                    const buttons = document.querySelectorAll('.form-group button');
+                  
+                    buttons.forEach(button => {
+                      button.addEventListener('click', () => {
+                        buttons.forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                      });
+                    });
+                  </script>
+                  
                   <button type="submit" class="btn btn-success">Reservar</button>
                 </form><br> 
                 <h5 class="card-title">Mesas Disponibles</h5>
@@ -149,6 +169,8 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
       
       <scripts src="./assets/js/resevaform.js"></scripts>
+
+
 
 
     <!-- Seccion de pie de pagina-->
