@@ -4,15 +4,14 @@ document.getElementById('restauranteForm').addEventListener('submit', function(e
     event.preventDefault();
   
     // Get the values of the input fields
-    const urlParams = new URLSearchParams(window.location.search);
-    let correoRes = urlParams.get('restaurante');
+    let correoRes =  document.getElementById('CorreoDelRestaurante').value;
     let email = document.getElementById('email').value;
     let fecha = document.getElementById('fecha').value;
     let personas = document.getElementById('personas').value;
     
   
     // Do something with the values, like send them to a server
-    fetch('/', {
+    fetch('/agregarReserva', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

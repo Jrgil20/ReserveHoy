@@ -120,6 +120,14 @@
                     <label for="personas">Número de personas:</label>
                     <input type="number" class="form-control" name="personas" id="personas" placeholder="1">
                   </div>
+                  
+                  
+                  <div class="form-group" hidden>
+                    <label for="CorreoDelRestaurante">Correo del Restaurante:</label>
+                    <input type="hidden" class="form-control" name="CorreoDelRestaurante" id="CorreoDelRestaurante">
+                  </div>
+  
+                
                   <style>
                     .selected {
                       background-color: #337ab7;
@@ -127,14 +135,15 @@
                       border-color: #337ab7;
                     }
                   </style>
-                  
+                
                   <div class="form-group">
                     <label for="hora">Horas Disponibles:</label><br>
-                    <button type="button" class="btn btn-outline-primary" data-value="12:00">12:00</button>
-                    <button type="button" class="btn btn-outline-primary" data-value="14:00">14:00</button>
-                    <button type="button" class="btn btn-outline-primary" data-value="16:00">16:00</button>
-                    <button type="button" class="btn btn-outline-primary" data-value="18:00">18:00</button>
-                    <button type="button" class="btn btn-outline-primary" data-value="20:00">20:00</button>
+                    <button type="button" class="btn btn-outline-primary" value="12:00">12:00</button>
+                    <button type="button" class="btn btn-outline-primary" value="14:00">14:00</button>
+                    <button type="button" class="btn btn-outline-primary" value="16:00">16:00</button>
+                    <button type="button" class="btn btn-outline-primary" value="18:00">18:00</button>
+                    <button type="button" class="btn btn-outline-primary" value="20:00">20:00</button>
+
                     <!-- Asegúrate de agregar más botones según sea necesario -->
                   </div><br>
                   
@@ -150,7 +159,9 @@
                   </script>
                   
                   <button type="submit" class="btn btn-success">Reservar</button>
-                </form><br> 
+                </form>
+                <script src="./assets/js/resevaform.js"></script>
+                <br> 
                 <h5 class="card-title">Mesas Disponibles</h5>
                 <p class="card-text">Mesas disponibles para reservar.</p>
                 <ul id="MesasDelRestaurante">
