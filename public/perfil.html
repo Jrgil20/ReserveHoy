@@ -70,8 +70,8 @@
                 <h5 class="card-title">Nombre del Restaurante:<span id="NombreDelRestaurante"></span></h5>
                 <p class="card-text">Descripción: <span id="DescripcionDelRestaurant"></span></p>
                 <h5>Horario</h5>
-                <p>Lunes a viernes: </p>
-                <p>Sábados y domingos: </p>
+                <p>Lunes a viernes: <span id="HorLunVierDelRestaurant"></span></p>
+                <p>Sábados y domingos: <span id="HorSabDomDelRestaurant"></span></p>
                 <h5>Contacto</h5>
                 <p>Teléfono: <span id="TelefonoDelRestaurant"></span></p>
                 <p>Dirección: <span id="DireccionDelRestaurant" ></span> </p>
@@ -79,22 +79,27 @@
                 <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#infoForm">Agregar Informacion Basica</button>
                 <div id="infoForm" class="collapse mt-3">
                 <!-- Contenido del formulario para agregar platos -->
-                    <form method="post">
+                    <form action="/actuInfoRestau" method="post" id="infForm">
                         <div class="form-group">
                         <label for="nombre">Descripcion:</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Breve Descripcion">
+                        <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Breve Descripcion" required>
                         </div>
                         <div class="form-group">
-                        <label for="fecha">Horario:</label>
-                        <input type="text" class="form-control" id="horario" placeholder="Lunes a Viernes: 8am - 10pm">
+                        <label for="fecha">Horario Lunes a Viernes:</label>
+                        <input type="text" class="form-control" name="horario" id="horario" placeholder="8am - 10pm" required>
+                        </div>
+                        <div class="form-group">
+                        <label for="fechaFin">Horario Fin de Semana:</label>
+                        <input type="text" class="form-control" name="horarioFin" id="horarioFin" placeholder="8am - 10pm" required>
                         </div>
                         <div class="form-group">
                         <label for="direccion">Dirección:</label>
-                        <input type="text" class="form-control" id="direccion" placeholder="Dirección del restaurante">
+                        <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Dirección del restaurante" required>
                         </div>
                         </br>
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </form>
+                    <script src="./assets/js/actuResInfo.js"></script>
                 </br>
                 </div>
                 <h5>Imagenes</h5>

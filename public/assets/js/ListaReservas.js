@@ -1,9 +1,6 @@
-
-
 const urlParams = new URLSearchParams(window.location.search);
 //creamos una variable que obtenga el valor de la url
 const correoRes = urlParams.get('restaurante');
-console.log(correoRes);
 // obtenemos el valor de la url
 
 traeReservas(correoRes);
@@ -16,7 +13,6 @@ async function traeReservas(correoRes){
         const data = await response.json();
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
-         console.log(data);
         // Obtén el elemento padre donde quieres añadir los nuevos elementos
         let padre = document.getElementById('ReservasList'); 
 
@@ -27,7 +23,6 @@ async function traeReservas(correoRes){
           let tr = document.createElement('tr');
 
           // Crea un elemento <td> para el id
-          console.log(reserva.idReserva);
           let tdidReserva= document.createElement('td');
           tdidReserva.textContent = reserva.idReserva;
           tr.appendChild(tdidReserva);
