@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const mysql = require('mysql');
 const { error } = require('console');
+const { url } = require('inspector');
 
 const conexion = mysql.createConnection({
     host: "localhost",
@@ -72,9 +73,8 @@ app.post("/register", (req, res) => {
 
 });
 
-
 //Ruta POST registrar restaurante
-app.post("/registerrestau", (req,res) => {
+app.post("/registerRestaurant", (req,res) => {
   const datos = req.body;
   
   let {name,email,phone,password} = datos;
@@ -87,7 +87,7 @@ app.post("/registerrestau", (req,res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html"</script>');
+        res.status(409).json({ message: "El correo ya está registrado", url: "/register.html"  });
       }else{
         let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
         conexion.query(register,function(err,result){
@@ -95,13 +95,14 @@ app.post("/registerrestau", (req,res) => {
             console.log(err);
           }else{
             let email = datos.email;
-            res.status(200).send(`<script>alert("Restaurante registrado con éxito"); window.location.href = "/perfil.html?restaurante=${email}";</script>`); 
+            res.status(200).json({ message: "Restaurante registrado con éxito", url: "/perfil.html?restaurante=" + email }); 
           }
         });
       }
     }
   })
 });
+
 
 // Ruta POST para el inicio de sesión (cliente)
 app.post('/login', (req, res) => {
