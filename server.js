@@ -105,10 +105,11 @@ app.post("/registerRestaurant", (req,res) => {
 
 
 // Ruta POST para el inicio de sesión (cliente)
-app.post('/login', (req, res) => {
+app.post('/loginCliente', (req, res) => {
   const datos = req.body;
+
   let email = datos.email;
-  let password = datos.pass;
+  let password = datos.password;
   
   const buscarUsuario = "SELECT * FROM cliente";
   conexion.query(buscarUsuario,(err,lista)=>{
@@ -117,16 +118,16 @@ app.post('/login', (req, res) => {
         }else{
           let bandera = 0;
            for(i=0;i<lista.length;i++){
-             if((lista[i].correo === email)&&(lista[i].clave === password)){
+             if((lista[i].correo === email)&&(lista[i].password === password)){
                 bandera += 1;
                 break;
              }
            }
            if(bandera != 1){
-            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
+            res.status(400).json({ message: "Usuario o clave invalidada" });
            }else{
             // se redireciona al perfil del usuario
-            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/";</script>');
+            res.status(200).json({ message: "Inicio de sesión exitoso" });
            }
         }
   })
@@ -134,10 +135,10 @@ app.post('/login', (req, res) => {
 });
 
 // Ruta POST para el inicio de sesión (restaurante)
-app.post("/loginres", (req, res) => {
+app.post("/loginRestaurant", (req, res) => {
   const datos = req.body;
   let email = datos.email;
-  let password = datos.pass;
+  let password = datos.password;
   let buscarUsuario = "SELECT * FROM restaurante";
   conexion.query(buscarUsuario,(err,lista)=>{
         if(err){
@@ -151,10 +152,10 @@ app.post("/loginres", (req, res) => {
              }
            }
            if(bandera != 1){
-            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
+            res.status(400).json({ message: "Usuario o clave invalidada" });
           }else{
             let email = datos.email;
-            res.status(200).send(`<script>alert("Inicio de sesión exitoso"); window.location.href = "/perfil.html?restaurante=${email}";</script>`);     
+            res.status(200).json({ message: "Inicio de sesión exitoso",url: "/perfil.html?restaurante=" + email });     
           }
 
         }
