@@ -4,6 +4,10 @@ document.getElementById('restauranteForm').addEventListener('submit', function(e
     handleFormSubmit(event, '/registerRestaurant');
 });
 
+document.getElementById('clienteForm').addEventListener('submit', function(event) {
+    handleFormSubmit(event, '/registerClient');
+});
+
 function handleFormSubmit(event, url) {
     event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
 

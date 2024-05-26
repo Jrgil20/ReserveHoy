@@ -41,10 +41,10 @@ app.get('/', (req, res) => {
 
 
 // Ruta POST para el registro de clientes 
-app.post("/register", (req, res) => {
+app.post("/registerClient", (req, res) => {
   const datos = req.body;
   
-  let {name,email,telefono,password} = datos;
+  let {name,email,phone,password} = datos;
   
   //busca si el correo ya esta registrado
   let buscar = "SELECT * FROM cliente WHERE correo = '"+email+"'";
@@ -55,15 +55,15 @@ app.post("/register", (req, res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado
       if (row.length > 0){
-        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html";</script>');
+        res.status(409).json({ message: "El correo ya está registrado", url: "/register.html"  });
       }else{
-        let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+telefono+"')"
+        let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+phone+"')"
   
         conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            res.status(200).send('<script>alert("Usuario registrado con éxito"); window.location.href = "/";</script>');
+            res.status(200).json({ message: "Cliente registrado con éxito", url: "/register.html" });
           }
         
         });
