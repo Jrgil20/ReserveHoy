@@ -1,7 +1,7 @@
 console.log('El archivo InformacionRestaurante.js ha sido llamado.');
 
 document.getElementById('correoRestaurante').value = sessionStorage.getItem('correoRestaurante');
-console.log('El correo del restaurante es: ' + sessionStorage.getItem('correoRestaurante'));
+
 
 document.getElementById('FormInformacionRestaurante').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
