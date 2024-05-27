@@ -1,7 +1,4 @@
-const urlParams = new URLSearchParams(window.location.search);
-//creamos una variable que obtenga el valor de la url
-const correoRes = urlParams.get('restaurante');
-// obtenemos el valor de la url
+const correoRes = sessionStorage.getItem('correoRestaurante');
 
 traeMesas(correoRes);
 
@@ -13,7 +10,7 @@ async function traeMesas(correoRes){
         const data = await response.json();
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
-        document.getElementById('restaurante').value = correoRes;
+        document.getElementById('correoRestaurante').value = correoRes;
 
         let padre = document.getElementById('mesasList'); 
 
@@ -44,6 +41,3 @@ async function traeMesas(correoRes){
         console.error('Error:', error);
       }
 }
-
-// Guardar correo del restaurante en sessionStorage
-sessionStorage.setItem('correoRestaurante', correoRes);

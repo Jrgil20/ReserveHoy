@@ -71,7 +71,6 @@
               </thead>
               <tbody id="mesasList">
                 <!-- Filas de datos -->
-                <!-- Agrega más filas según tus necesidades -->
               </tbody>
             </table>
           </div>
@@ -86,15 +85,15 @@
                         <div id="platoForm" class="collapse mt-3">
                             <!-- Contenido del formulario para agregar platos -->
                             <div class="form-group">
-                              <form action="/agregarMesa" method="post" id="mesaForm">
-                                <label for="numAsientos">Numero de Asientos:</label>
-                                <input name = "capacidad" type="text" class="form-control" id="numAsi" min="1">
-                                <input type="hidden" name="restaurante" id="restaurante">
+                              <form id="mesaForm">
+                                <label for="capacidad">Numero de Asientos:</label>
+                                <input name = "capacidad" type="text" class="form-control" id="capacidad" min="1">
+                                <input type="hidden" name="correoRestaurante" id="correoRestaurante">
                                 <button type="submit" class="btn btn-success">Agregar</button>
                               </form>
                             <script src="./assets/js/agregaMesa.js"></script>
                             </div>
-                          </div>
+                        </div>
                 </div>
           </div>
         </div>

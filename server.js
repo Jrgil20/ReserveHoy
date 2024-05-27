@@ -164,6 +164,21 @@ app.post("/loginRestaurant", (req, res) => {
 });
 
 
+//RUTA POST para actualizar la informacion de un restaurante
+app.post("/actualizarInformacionRestaurante",(req,res)=>{
+  const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
+  let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
+  const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";
+  //Se declara el query
+  conexion.query(actuMesa,(err,result)=>{//Se hace el query
+   if(err){
+     res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
+   }else {
+     res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
+     //Si todo sale bien, se envia la notificacion de éxito
+   }
+  })
+})
 
 // Ruta POST para agregar plato
 app.post("/agregarPlato", (req,res)=>{
@@ -280,7 +295,7 @@ app.post ("/agregarMesa", (req,res)=>{
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
             }else {
-              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>');
+              res.status(200).send('Mesa registrada con éxito');
             }
           })
         }else{
@@ -292,7 +307,7 @@ app.post ("/agregarMesa", (req,res)=>{
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
             }else {
-              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>');
+              res.status(200).send('Mesa registrada con éxito');
             }
           })
         }
@@ -300,21 +315,7 @@ app.post ("/agregarMesa", (req,res)=>{
     })
 })
 
-//RUTA POST para actualizar la informacion de un restaurante
-app.post("/actualizarInformacionRestaurante",(req,res)=>{
-     const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
-     let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
-     const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";
-     //Se declara el query
-     conexion.query(actuMesa,(err,result)=>{//Se hace el query
-      if(err){
-        res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
-      }else {
-        res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
-        //Si todo sale bien, se envia la notificacion de éxito
-      }
-     })
-})
+
 
 //Ruta GET para consulta un plato en especifico
 app.get("./consultarPlato",(req,res)=>{
