@@ -301,7 +301,7 @@ app.post ("/agregarMesa", (req,res)=>{
 })
 
 //RUTA POST para actualizar la informacion de un restaurante
-app.post("/actuInfoRestau",(req,res)=>{
+app.post("/actualizarInformacionRestaurante",(req,res)=>{
      const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
      let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
      const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";

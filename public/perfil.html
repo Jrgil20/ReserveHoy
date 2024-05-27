@@ -78,28 +78,33 @@
                 <script src="./assets/js/GeneraPerfil.js"></script>
                 <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#infoForm">Agregar Informacion Basica</button>
                 <div id="infoForm" class="collapse mt-3">
-                <!-- Contenido del formulario para agregar platos -->
-                    <form action="/actuInfoRestau" method="post" id="infForm">
+                <!-- Contenido del formulario para actualizar informacion del restaurante -->
+                    <form id="FormInformacionRestaurante" class="form"  >
                         <div class="form-group">
-                        <label for="nombre">Descripcion:</label>
-                        <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Breve Descripcion" required>
+                            <label for="nombre">Descripcion:</label>
+                            <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Breve Descripcion" required >
                         </div>
                         <div class="form-group">
-                        <label for="fecha">Horario Lunes a Viernes:</label>
-                        <input type="text" class="form-control" name="horario" id="horario" placeholder="8am - 10pm" required>
+                            <label for="horario">Horario Lunes a Viernes:</label>
+                            <input type="time" class="form-control" name="horarioInicio" id="horarioInicio" placeholder="Hora de inicio" required>
+                            <input type="time" class="form-control" name="horarioFin" id="horarioFin" placeholder="Hora de fin" required>
                         </div>
                         <div class="form-group">
-                        <label for="fechaFin">Horario Fin de Semana:</label>
-                        <input type="text" class="form-control" name="horarioFin" id="horarioFin" placeholder="8am - 10pm" required>
+                            <label for="horarioFinde">Horario Fin de Semana:</label>
+                            <input type="time" class="form-control" name="horarioIniciofindesemana" id="horarioIniciofindesemana" placeholder="Hora de inicio finde" required>
+                            <input type="time" class="form-control" name="horarioFinfindesemana" id="horarioFinfindesemana" placeholder="Hora de fin finde" required>
                         </div>
                         <div class="form-group">
-                        <label for="direccion">Dirección:</label>
-                        <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Dirección del restaurante" required>
+                            <label for="direccion">Dirección:</label>
+                            <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Dirección del restaurante" >
+                        </div>
+                        <div class="form-group" hidden>
+                            <input type="text" class="form-control" name="correoRestaurante" id="correoRestaurante" >
                         </div>
                         </br>
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </form>
-                    <script src="./assets/js/actuResInfo.js"></script>
+                    <script src="./assets/js/InformacionRestaurante.js"></script>
                 </br>
                 </div>
                 <h5>Imagenes</h5>
