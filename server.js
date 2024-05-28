@@ -23,8 +23,6 @@ app.use(bodyParser.json());
 // Middleware para servir archivos estáticos
 app.use(express.static('public'));
 
-//para usar ejs (motor de vista)
-app.set("view engine", "ejs");
 
 //para reconocer los datos que ingrese el usuario
 app.use(express.urlencoded({ extended: false }));
@@ -480,7 +478,7 @@ app.post("/agregarReserva", (req,res)=>{
                           console.log(erreur);
                           res.status(500).json({ error: 'An error occurred' });
                         }else{
-                              console.log("Se logro");
+                          res.status(200).json({ message: 'Reserva creada con éxito', idReserva: id });
                              }
                           })
                     }else{
@@ -539,7 +537,7 @@ app.post("/agregarReserva", (req,res)=>{
                           console.log(erreur);
                           res.status(500).json({ error: 'An error occurred' });
                         }else{
-                              console.log("Se logro");
+                            res.status(200).json({ message: 'Reserva creada con éxito', idReserva: id });
                              }
                           })
                     }else{
@@ -557,7 +555,7 @@ app.post("/agregarReserva", (req,res)=>{
                                console.log(erreur);
                                res.status(500).json({ error: 'An error occurred' });
                              }else{
-                               console.log("Se logro");
+                              res.status(200).json({ message: 'Reserva creada con éxito', idReserva: id });
                              }
                           })
                         }

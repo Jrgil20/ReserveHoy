@@ -33,7 +33,7 @@ function handleFormSubmit(event, url) {
   })
   .then(response => response.json())
   .then(data => {
-    alert('Success: ' + JSON.stringify(data));
+    alert('Success: ' + data.message);
   })
   .catch((error) => {
     console.error('Error:', error);
