@@ -34,6 +34,9 @@ function handleFormSubmit(event, url) {
   .then(response => response.json())
   .then(data => {
     alert('Success: ' + data.message);
+    if (data.idReserva) {
+      window.location.href = '/reserva.html?reserva=' + data.idReserva;
+    }
   })
   .catch((error) => {
     console.error('Error:', error);

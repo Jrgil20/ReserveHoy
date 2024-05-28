@@ -496,7 +496,7 @@ app.post("/agregarReserva", (req,res)=>{
                                console.log(erreur);
                                res.status(500).json({ error: 'An error occurred' });
                              }else{
-                              res.status(200).send('Todas las mesas ocupadas');
+                              res.status(200).json({ message: 'No hay mesa Disponible'});
                              }
                           })
                         }
@@ -504,7 +504,7 @@ app.post("/agregarReserva", (req,res)=>{
                   }
                 })
              }else{//Si no hay mesas del restaurante con la capacidad requerida, entra aquí
-               console.log("No hay mesas");
+              res.status(200).json({ message: 'No hay mesa Disponible'});
              }
            }
         })
@@ -542,7 +542,7 @@ app.post("/agregarReserva", (req,res)=>{
                           })
                     }else{
                         if(list.length === mesasValidas.length){//Si están todas ocupadas, envía la notificación de error
-                          res.status(409).send('Todas las mesas ocupadas');
+                          res.status(200).json({ message: 'No hay mesa Disponible'});
                         }else{//Si hay mesas ocupadas pero no son la totalidad de las disponibles, entra a este bloque
                           list.sort(function(a,b){
                             return a-b;
@@ -563,7 +563,7 @@ app.post("/agregarReserva", (req,res)=>{
                   }
                 })
              }else{//Si no hay mesas del restaurante con la capacidad requerida, entra aquí
-              console.log("No hay mesas disponibles");
+              res.status(200).json({ message: 'No hay mesa Disponible'});
              }
            }
         })
