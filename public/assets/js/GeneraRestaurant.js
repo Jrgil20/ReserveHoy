@@ -3,6 +3,18 @@ const urlParams = new URLSearchParams(window.location.search);
 const correoRes = urlParams.get('restaurante');
 // obtenemos el valor de la url
 
+// Get the current date and time
+let now = new Date();
+
+// Format the date and time in the 'YYYY-MM-DDThh:mm' format
+let dateTime = now.toISOString().substring(0, 16);
+
+// Set the min attribute of the FechayhoradelaReserva input field to the current date and time
+document.getElementById('FechayhoradelaReserva').min = dateTime;
+
+const datetimeInput = document.getElementById('FechayhoradelaReserva');
+const errorElement = document.getElementById('error');
+
 traeReservas(correoRes);
 traeMesas(correoRes);
 
@@ -23,8 +35,6 @@ async function traeReservas(correoRes){
         console.error('Error:', error);
       }
 }
-
-
 
 async function traeMesas(correoRes){
     try {
