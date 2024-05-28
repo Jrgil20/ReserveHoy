@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const mysql = require('mysql');
 const { error } = require('console');
+const { url } = require('inspector');
 
 const conexion = mysql.createConnection({
     host: "localhost",
@@ -22,8 +23,6 @@ app.use(bodyParser.json());
 // Middleware para servir archivos estáticos
 app.use(express.static('public'));
 
-//para usar ejs (motor de vista)
-app.set("view engine", "ejs");
 
 //para reconocer los datos que ingrese el usuario
 app.use(express.urlencoded({ extended: false }));
@@ -40,10 +39,10 @@ app.get('/', (req, res) => {
 
 
 // Ruta POST para el registro de clientes 
-app.post("/register", (req, res) => {
+app.post("/registerClient", (req, res) => {
   const datos = req.body;
   
-  let {name,email,telefono,password} = datos;
+  let {name,email,phone,password} = datos;
   
   //busca si el correo ya esta registrado
   let buscar = "SELECT * FROM cliente WHERE correo = '"+email+"'";
@@ -54,15 +53,15 @@ app.post("/register", (req, res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado
       if (row.length > 0){
-        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html";</script>');
+        res.status(409).json({ message: "El correo ya está registrado", url: "/register.html"  });
       }else{
-        let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+telefono+"')"
+        let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+phone+"')"
   
         conexion.query(register,function(err,result){
           if(err){
             console.log(err);
           }else{
-            res.status(200).send('<script>alert("Usuario registrado con éxito"); window.location.href = "/";</script>');
+            res.status(200).json({ message: "Cliente registrado con éxito", url: "/register.html" });
           }
         
         });
@@ -72,9 +71,8 @@ app.post("/register", (req, res) => {
 
 });
 
-
 //Ruta POST registrar restaurante
-app.post("/registerrestau", (req,res) => {
+app.post("/registerRestaurant", (req,res) => {
   const datos = req.body;
   
   let {name,email,phone,password} = datos;
@@ -87,7 +85,7 @@ app.post("/registerrestau", (req,res) => {
     }else{
       //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
       if (row.length > 0){
-        res.status(409).send('<script>alert("El correo ya está registrado"); window.location.href = "/register.html"</script>');
+        res.status(409).json({ message: "El correo ya está registrado", url: "/register.html"  });
       }else{
         let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
         conexion.query(register,function(err,result){
@@ -95,7 +93,7 @@ app.post("/registerrestau", (req,res) => {
             console.log(err);
           }else{
             let email = datos.email;
-            res.status(200).send(`<script>alert("Restaurante registrado con éxito"); window.location.href = "/perfil.html?restaurante=${email}";</script>`); 
+            res.status(200).json({ message: "Restaurante registrado con éxito", url: "/perfil.html?restaurante=" + email }); 
           }
         });
       }
@@ -103,40 +101,11 @@ app.post("/registerrestau", (req,res) => {
   })
 });
 
-// Ruta POST para el inicio de sesión (cliente)
-app.post('/login', (req, res) => {
-  const datos = req.body;
-  let email = datos.email;
-  let password = datos.pass;
-  
-  const buscarUsuario = "SELECT * FROM cliente";
-  conexion.query(buscarUsuario,(err,lista)=>{
-        if(err){
-          throw err;
-        }else{
-          let bandera = 0;
-           for(i=0;i<lista.length;i++){
-             if((lista[i].correo === email)&&(lista[i].clave === password)){
-                bandera += 1;
-                break;
-             }
-           }
-           if(bandera != 1){
-            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
-           }else{
-            // se redireciona al perfil del usuario
-            res.status(200).send('<script>alert("Inicio de sesión exitoso"); window.location.href = "/";</script>');
-           }
-        }
-  })
-    
-});
-
 // Ruta POST para el inicio de sesión (restaurante)
-app.post("/loginres", (req, res) => {
+app.post("/loginRestaurant", (req, res) => {
   const datos = req.body;
   let email = datos.email;
-  let password = datos.pass;
+  let password = datos.password;
   let buscarUsuario = "SELECT * FROM restaurante";
   conexion.query(buscarUsuario,(err,lista)=>{
         if(err){
@@ -150,10 +119,10 @@ app.post("/loginres", (req, res) => {
              }
            }
            if(bandera != 1){
-            res.status(400).send('<script>alert("Usuario o clave invalidada");</script>');
+            res.status(400).json({ message: "Usuario o clave invalidada" });
           }else{
             let email = datos.email;
-            res.status(200).send(`<script>alert("Inicio de sesión exitoso"); window.location.href = "/perfil.html?restaurante=${email}";</script>`);     
+            res.status(200).json({ message: "Inicio de sesión exitoso",url: "/perfil.html?restaurante=" + email });     
           }
 
         }
@@ -161,6 +130,141 @@ app.post("/loginres", (req, res) => {
   
 });
 
+
+//RUTA POST para actualizar la informacion de un restaurante
+app.post("/actualizarInformacionRestaurante",(req,res)=>{
+  const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
+  let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
+  const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";
+  //Se declara el query
+  conexion.query(actuMesa,(err,result)=>{//Se hace el query
+   if(err){
+     res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
+   }else {
+     res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
+     //Si todo sale bien, se envia la notificacion de éxito
+   }
+  })
+})
+
+//Ruta GET que trae un restaurante por correo
+app.get("/traeRest/:correoRes",(req,res)=>{
+  const correoRest = req.params.correoRes;
+    let traeReservas = "SELECT * FROM restaurante WHERE correoRes = '"+correoRest+"'";
+    conexion.query(traeReservas,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+         if(result.length > 0){
+           res.status(200).json(result[0]);
+         }else{
+          res.status(404).json({ message: 'No hay un restaurante con este correo' });
+         }
+       }
+    })
+})
+
+//RUTA GET para traer Horarios de un restaurante dado su clave forranea (correo)
+app.get("/traeHorarios/:correoRes",(req,res)=>{
+  const correoRest = req.params.correoRes;
+  let traeHorarios = "SELECT horFinDe, horLunVier FROM restaurante WHERE correoRes = '"+correoRest+"'";
+  conexion.query(traeHorarios,(err,result)=>{
+     if(err){
+       res.status(500).json({ error: 'An error occurred' });
+     }else{
+       if(result.length > 0){
+         res.status(200).json(result[0]);
+       }else{
+        res.status(404).json({ message: 'No hay un restaurante con este correo' });
+       }
+     }
+  })
+})
+
+//Ruta GET que trae todos los Restaurantes
+app.get("/traeRestaurantes",(req,res)=>{
+     let traeRes= "SELECT * FROM restaurante";
+     conexion.query(traeRes,(err,result)=>{
+        if(err){
+          res.status(500).json({ error: 'An error occurred' });
+        }else{
+            if(result.length > 0){
+              res.status(200).json(result);
+            }else{
+              res.status(404).json({ message: 'No hay restaurantes' });
+            }
+          
+        }
+     })
+})
+
+
+//Ruta GET que trae todas las mesas de un restaurante
+app.get("/buscarMesasRest/:correoRest",(req,res)=>{
+
+  const correoRest = req.params.correoRest;//Obtiene el correo de la ruta
+  let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";//Declaramos el query
+  conexion.query(traeMesas,(err,result)=>{//Hacemos el query
+
+     if(err){
+       res.status(500).json({ error: 'An error occurred' });//Si hay error, manda la notifiacion
+     }else{
+       if(result.length > 0){
+         res.status(200).json(result);//Si hay mesas, devuelve la lista
+       }else{
+        res.status(404).json({ message: 'No hay mesas para este restaurante' });//Si no hay, devuelve error 404 not found
+       }
+     }
+  })
+})
+
+//Ruta GET que trae todos las reservas de un restaurante
+app.get("/buscarReservasRest/:correoRes",(req,res)=>{
+    const correoRest = req.params.correoRes;
+    console.log(correoRest);
+    let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
+    conexion.query(traeReservas,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+         if(result.length > 0){
+           res.status(200).json(result);
+         }else{
+          res.status(404).json({ message: 'No hay reservas para este restaurante' });
+         }
+       }
+    })
+})
+
+// Ruta POST para el inicio de sesión (cliente)
+app.post('/loginCliente', (req, res) => {
+  const datos = req.body;
+
+  let email = datos.email;
+  let password = datos.password;
+  
+  const buscarUsuario = "SELECT * FROM cliente";
+  conexion.query(buscarUsuario,(err,lista)=>{
+        if(err){
+          throw err;
+        }else{
+          let bandera = 0;
+           for(i=0;i<lista.length;i++){
+             if((lista[i].correo === email)&&(lista[i].password === password)){
+                bandera += 1;
+                break;
+             }
+           }
+           if(bandera != 1){
+            res.status(400).json({ message: "Usuario o clave invalidada" });
+           }else{
+            // se redireciona al perfil del usuario
+            res.status(200).json({ message: "Inicio de sesión exitoso" });
+           }
+        }
+  })
+    
+});
 
 
 // Ruta POST para agregar plato
@@ -278,7 +382,7 @@ app.post ("/agregarMesa", (req,res)=>{
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
             }else {
-              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>');
+              res.status(200).send('Mesa registrada con éxito');
             }
           })
         }else{
@@ -290,7 +394,7 @@ app.post ("/agregarMesa", (req,res)=>{
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
             }else {
-              res.status(200).send('<script>alert("Mesa registrada con éxito"); window.location.href = "/";</script>');
+              res.status(200).send('Mesa registrada con éxito');
             }
           })
         }
@@ -298,21 +402,7 @@ app.post ("/agregarMesa", (req,res)=>{
     })
 })
 
-//RUTA POST para actualizar la informacion de un restaurante
-app.post("/actuInfoRestau",(req,res)=>{
-     const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
-     let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
-     const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";
-     //Se declara el query
-     conexion.query(actuMesa,(err,result)=>{//Se hace el query
-      if(err){
-        res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
-      }else {
-        res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
-        //Si todo sale bien, se envia la notificacion de éxito
-      }
-     })
-})
+
 
 //Ruta GET para consulta un plato en especifico
 app.get("./consultarPlato",(req,res)=>{
@@ -336,7 +426,7 @@ app.post("/agregarReserva", (req,res)=>{
   const datos = req.body;
   const rest = datos.restaurante;
   let fecha = datos.fecha;
-  let hora = 12;
+  let hora = datos.hora;
   //console.log(hora);
   let numeroPersona = datos.personas;
   let cliente = datos.email;
@@ -388,7 +478,7 @@ app.post("/agregarReserva", (req,res)=>{
                           console.log(erreur);
                           res.status(500).json({ error: 'An error occurred' });
                         }else{
-                              console.log("Se logro");
+                          res.status(200).json({ message: 'Reserva creada con éxito', idReserva: id });
                              }
                           })
                     }else{
@@ -406,7 +496,7 @@ app.post("/agregarReserva", (req,res)=>{
                                console.log(erreur);
                                res.status(500).json({ error: 'An error occurred' });
                              }else{
-                               console.log("Se logro");
+                              res.status(200).json({ message: 'No hay mesa Disponible'});
                              }
                           })
                         }
@@ -414,7 +504,7 @@ app.post("/agregarReserva", (req,res)=>{
                   }
                 })
              }else{//Si no hay mesas del restaurante con la capacidad requerida, entra aquí
-               console.log("No hay mesas");
+              res.status(200).json({ message: 'No hay mesa Disponible'});
              }
            }
         })
@@ -447,12 +537,12 @@ app.post("/agregarReserva", (req,res)=>{
                           console.log(erreur);
                           res.status(500).json({ error: 'An error occurred' });
                         }else{
-                              console.log("Se logro");
+                            res.status(200).json({ message: 'Reserva creada con éxito', idReserva: id });
                              }
                           })
                     }else{
                         if(list.length === mesasValidas.length){//Si están todas ocupadas, envía la notificación de error
-                          res.status(409).send('Todas las mesas ocupadas');
+                          res.status(200).json({ message: 'No hay mesa Disponible'});
                         }else{//Si hay mesas ocupadas pero no son la totalidad de las disponibles, entra a este bloque
                           list.sort(function(a,b){
                             return a-b;
@@ -465,7 +555,7 @@ app.post("/agregarReserva", (req,res)=>{
                                console.log(erreur);
                                res.status(500).json({ error: 'An error occurred' });
                              }else{
-                               console.log("Se logro");
+                              res.status(200).json({ message: 'Reserva creada con éxito', idReserva: id });
                              }
                           })
                         }
@@ -473,7 +563,7 @@ app.post("/agregarReserva", (req,res)=>{
                   }
                 })
              }else{//Si no hay mesas del restaurante con la capacidad requerida, entra aquí
-              console.log("No hay mesas disponibles");
+              res.status(200).json({ message: 'No hay mesa Disponible'});
              }
            }
         })
@@ -537,77 +627,7 @@ app.get("/traerClientes",(req,res)=>{
   })
 })
 
-//Ruta GET que trae un restaurante por correo
-app.get("/traeRest/:correoRes",(req,res)=>{
-  const correoRest = req.params.correoRes;
-    let traeReservas = "SELECT * FROM restaurante WHERE correoRes = '"+correoRest+"'";
-    conexion.query(traeReservas,(err,result)=>{
-       if(err){
-         res.status(500).json({ error: 'An error occurred' });
-       }else{
-         if(result.length > 0){
-           res.status(200).json(result[0]);
-         }else{
-          res.status(404).json({ message: 'No hay un restaurante con este correo' });
-         }
-       }
-    })
-})
 
-//Ruta GET que trae todos los Restaurantes
-app.get("/traeRestaurantes",(req,res)=>{
-     let traeRes= "SELECT * FROM restaurante";
-     conexion.query(traeRes,(err,result)=>{
-        if(err){
-          res.status(500).json({ error: 'An error occurred' });
-        }else{
-            if(result.length > 0){
-              res.status(200).json(result);
-            }else{
-              res.status(404).json({ message: 'No hay restaurantes' });
-            }
-          
-        }
-     })
-})
-
-
-//Ruta GET que trae todas las mesas de un restaurante
-app.get("/buscarMesasRest/:correoRest",(req,res)=>{
-
-  const correoRest = req.params.correoRest;//Obtiene el correo de la ruta
-  let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";//Declaramos el query
-  conexion.query(traeMesas,(err,result)=>{//Hacemos el query
-
-     if(err){
-       res.status(500).json({ error: 'An error occurred' });//Si hay error, manda la notifiacion
-     }else{
-       if(result.length > 0){
-         res.status(200).json(result);//Si hay mesas, devuelve la lista
-       }else{
-        res.status(404).json({ message: 'No hay mesas para este restaurante' });//Si no hay, devuelve error 404 not found
-       }
-     }
-  })
-})
-
-//Ruta GET que trae todos las reservas de un restaurante
-app.get("/buscarReservasRest/:correoRes",(req,res)=>{
-    const correoRest = req.params.correoRes;
-    console.log(correoRest);
-    let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
-    conexion.query(traeReservas,(err,result)=>{
-       if(err){
-         res.status(500).json({ error: 'An error occurred' });
-       }else{
-         if(result.length > 0){
-           res.status(200).json(result);
-         }else{
-          res.status(404).json({ message: 'No hay reservas para este restaurante' });
-         }
-       }
-    })
-})
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
 // La función de devolución de llamada toma dos argumentos: un objeto de solicitud (que contiene información sobre la solicitud) y un objeto de respuesta (que se utiliza para enviar la respuesta).

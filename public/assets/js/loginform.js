@@ -1,39 +1,39 @@
-document.querySelector('restauranteLoginForm').addEventListener('submit', function(event) {
+console.log('El archivo loginform.js ha sido llamado.');
+
+document.getElementById('restaurantLoginForm').addEventListener('submit', function(event) {
+    handleFormSubmit(event, '/loginRestaurant');
+});
+
+document.getElementById('clienteLoginForm').addEventListener('submit', function(event) {
+    handleFormSubmit(event, '/loginCliente');
+});
+
+function handleFormSubmit(event, url) {
     event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
 
-    const email = document.getElementById('emailLoginRestaurant').value;
-    const password = document.getElementById('passwordUser').value;
+    let email = event.target.elements.email.value;
+    let password = event.target.elements.password.value;
 
-    fetch('/loginres', {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email: email, password: password }),
     })
-    .then(response => response.text())
-    .then(data => alert(data))
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-});
-
-document.querySelector('clienteLoginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
-
-    const email = document.getElementById('emailLoginCliente').value;
-    const password = document.getElementById('passwordUser').value;
-
-    fetch('/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: email, password: password }),
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        }
+        if (data.url) {
+            window.location.href = data.url;
+        }
     })
-    .then(response => response.text())
-    .then(data => alert(data))
     .catch((error) => {
-        console.error('Error:', error);
+        console.error('Error:', error); 
     });
-});
+};
+
+
+    

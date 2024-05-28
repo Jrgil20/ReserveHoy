@@ -4,6 +4,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const idDeLaReserva = urlParams.get('reserva');
 // obtenemos el valor de la url
 
+
 buscarReserva(idDeLaReserva);
 //llamamos a la funcion buscarReserva con el valor de la url
 
