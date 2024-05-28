@@ -103,60 +103,36 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Reserva tu mesa</h5>
-                <form action="/agregarReserva" method="post" id="restauranteForm" class="form">      
+
+                <form  id="restauranteForm" class="form">      
+                  
                   <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Tu nombre">
                   </div>
+
                   <div class="form-group">
                     <label for="email">Correo Electrónico:</label>
                     <input type="email" class="form-control" id="email" name="email" required>
                   </div>
+
                   <div class="form-group">
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" class="form-control" name="fecha" id="fecha">
+                    <label for="FechayhoradelaReserva" >Fecha y hora:</label>
+                    <input type="datetime-local" class="form-control" name="FechayhoradelaReserva" id="FechayhoradelaReserva" placeholder="Seleccione una fecha y hora">
+                    <p id="error"></p>
+                    <script src="./assets/js/Horarios.js"></script>
                   </div>
+
                   <div class="form-group">
                     <label for="personas">Número de personas:</label>
                     <input type="number" class="form-control" name="personas" id="personas" placeholder="1">
                   </div>
-                  
-                  
+                                   
                   <div class="form-group" hidden>
                     <label for="CorreoDelRestaurante">Correo del Restaurante:</label>
                     <input type="hidden" class="form-control" name="CorreoDelRestaurante" id="CorreoDelRestaurante">
                   </div>
-  
-                
-                  <style>
-                    .selected {
-                      background-color: #337ab7;
-                      color: #fff;
-                      border-color: #337ab7;
-                    }
-                  </style>
-                
-                  <div class="form-group">
-                    <label for="hora">Horas Disponibles:</label><br>
-                    <button type="button" class="btn btn-outline-primary" value="12:00">12:00</button>
-                    <button type="button" class="btn btn-outline-primary" value="14:00">14:00</button>
-                    <button type="button" class="btn btn-outline-primary" value="16:00">16:00</button>
-                    <button type="button" class="btn btn-outline-primary" value="18:00">18:00</button>
-                    <button type="button" class="btn btn-outline-primary" value="20:00">20:00</button>
 
-                    <!-- Asegúrate de agregar más botones según sea necesario -->
-                  </div><br>
-                  
-                  <script>
-                    const buttons = document.querySelectorAll('.form-group button');
-                  
-                    buttons.forEach(button => {
-                      button.addEventListener('click', () => {
-                        buttons.forEach(btn => btn.classList.remove('selected'));
-                        button.classList.add('selected');
-                      });
-                    });
-                  </script>
                   
                   <button type="submit" class="btn btn-success">Reservar</button>
                 </form>

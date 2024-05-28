@@ -1,15 +1,4 @@
-
-// Get the current date and time
-let now = new Date();
-
-// Format the date and time in the 'YYYY-MM-DDThh:mm' format
-let dateTime = now.toISOString().substring(0, 16);
-
-// Set the min attribute of the FechayhoradelaReserva input field to the current date and time
-document.getElementById('FechayhoradelaReserva').min = dateTime;
-
-const datetimeInput = document.getElementById('FechayhoradelaReserva');
-const errorElement = document.getElementById('error');
+document.getElementById('CorreoDelRestaurante').value = urlParams.get('restaurante');
 
 document.getElementById('restauranteForm').addEventListener('submit', function(event){
   handleFormSubmit(event, '/registerRestaurant');
@@ -44,7 +33,7 @@ function handleFormSubmit(event, url) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Success:', data);
+    alert('Success: ' + JSON.stringify(data));
   })
   .catch((error) => {
     console.error('Error:', error);
