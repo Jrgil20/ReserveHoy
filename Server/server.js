@@ -33,40 +33,9 @@ const port = 3000;
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
-
-
-// Ruta POST para el registro de clientes 
-app.post("/registerClient", (req, res) => {
-  const datos = req.body;
-  
-  let {name,email,phone,password} = datos;
-  
-  //busca si el correo ya esta registrado
-  let buscar = "SELECT * FROM cliente WHERE correo = '"+email+"'";
-  //se hace la consulta
-  conexion.query(buscar,function(err,row){
-     if(err){
-      throw err;
-    }else{
-      //verifica en la tablas si el correo ya esta registrado
-      if (row.length > 0){
-        res.status(409).json({ message: "El correo ya está registrado", url: "/register.html"  });
-      }else{
-        let register = "INSERT INTO cliente (NombreApellido, correo, password, telefono) VALUES ('"+name+"','"+email+"','"+password+"','"+phone+"')"
-  
-        conexion.query(register,function(err,result){
-          if(err){
-            console.log(err);
-          }else{
-            res.status(200).json({ message: "Cliente registrado con éxito", url: "/register.html" });
-          }
-        
-        });
-      }
-    }
-  })
-
-});
+const clienteRoutes = require('./routes/clienteRoutes');
+// Usa las rutas de clientes
+app.use(clienteRoutes);
 
 //Ruta POST registrar restaurante
 app.post("/registerRestaurant", (req, res) => {
@@ -82,7 +51,6 @@ app.post("/registerRestaurant", (req, res) => {
           if (row.length > 0) {
               res.status(409).json({ message: "El correo ya está registrado", url: "/register.html" });
           } else {
-              // Usar la función de inserción general para registrar el restaurante
               insertarEnTabla('restaurante', { nombre: name, telefono: phone, clave: password, correoRes: email }, (err, result) => {
                   if (err) {
                       console.log(err);
@@ -296,7 +264,8 @@ app.post("/agregarPlato", (req,res)=>{
                   }
                 }while(bandera === 0);
                 let registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
-                conexion.query(registrarPlato,function(mistake,result){
+                conexion.query(registrarPlato,function(mistake,result)
+                {
                   if(mistake){
                     res.status(500).json({ error: 'An error occurred' });
                   }else{
