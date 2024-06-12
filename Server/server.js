@@ -33,35 +33,15 @@ const port = 3000;
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
+
+
 const clienteRoutes = require('./routes/clienteRoutes');
+const restauranteRoutes = require('./routes/restauranteRoutes');
 // Usa las rutas de clientes
 app.use(clienteRoutes);
+app.use(restauranteRoutes);
 
-//Ruta POST registrar restaurante
-app.post("/registerRestaurant", (req, res) => {
-  const datos = req.body;
-  const { name, email, phone, password } = datos;
 
-  // Primero, verifica si el correo ya está registrado
-  const buscar = "SELECT * FROM restaurante WHERE correoRes = ?";
-  conexion.query(buscar, [email], function(err, row) {
-      if (err) {
-          throw err;
-      } else {
-          if (row.length > 0) {
-              res.status(409).json({ message: "El correo ya está registrado", url: "/register.html" });
-          } else {
-              insertarEnTabla('restaurante', { nombre: name, telefono: phone, clave: password, correoRes: email }, (err, result) => {
-                  if (err) {
-                      console.log(err);
-                  } else {
-                      res.status(200).json({ message: "Restaurante registrado con éxito", url: "/perfil.html?restaurante=" + email });
-                  }
-              });
-          }
-      }
-  });
-});
 
 // Ruta POST para el inicio de sesión (restaurante)
 app.post("/loginRestaurant", (req, res) => {
