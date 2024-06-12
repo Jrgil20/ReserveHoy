@@ -4,16 +4,12 @@ const bodyParser = require('body-parser');
 // Importa el módulo fs. Esto te permite usar la funcionalidad de fs en tu archivo.
 const fs = require('fs');
 
-const mysql = require('mysql');
+// Actualiza la ruta de importación de la conexión
+const conexion = require('./db/conexion');
+
 const { error } = require('console');
 const { url } = require('inspector');
 
-const conexion = mysql.createConnection({
-    host: "localhost",
-    database: "reservehoy",
-    user:"root",
-    password: ""
-}); 
 
 const app = express();
 
