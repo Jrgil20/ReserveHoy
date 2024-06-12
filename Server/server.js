@@ -10,6 +10,9 @@ const conexion = require('./db/conexion');
 const { error } = require('console');
 const { url } = require('inspector');
 
+const { insertarEnTabla } = require('./db/dbOperations');
+
+// Usar insertarRestaurante donde sea necesario
 const app = express();
 
 // Middleware para parsear el cuerpo de las solicitudes POST
@@ -66,33 +69,30 @@ app.post("/registerClient", (req, res) => {
 });
 
 //Ruta POST registrar restaurante
-app.post("/registerRestaurant", (req,res) => {
+app.post("/registerRestaurant", (req, res) => {
   const datos = req.body;
-  
-  let {name,email,phone,password} = datos;
-  
-  //busca si el correo ya esta registrado
-  let buscar = "SELECT * FROM restaurante WHERE correoRes = '"+email+"'";
-  conexion.query(buscar,function(err,row){
-     if(err){
-      throw err;
-    }else{
-      //verifica en la tablas si el correo ya esta registrado, si esta es mayor a 0
-      if (row.length > 0){
-        res.status(409).json({ message: "El correo ya está registrado", url: "/register.html"  });
-      }else{
-        let register = "INSERT INTO restaurante (nombre, telefono, clave, correoRes) VALUES ('"+name+"','"+phone+"','"+password+"','"+email+"')"
-        conexion.query(register,function(err,result){
-          if(err){
-            console.log(err);
-          }else{
-            let email = datos.email;
-            res.status(200).json({ message: "Restaurante registrado con éxito", url: "/perfil.html?restaurante=" + email }); 
+  const { name, email, phone, password } = datos;
+
+  // Primero, verifica si el correo ya está registrado
+  const buscar = "SELECT * FROM restaurante WHERE correoRes = ?";
+  conexion.query(buscar, [email], function(err, row) {
+      if (err) {
+          throw err;
+      } else {
+          if (row.length > 0) {
+              res.status(409).json({ message: "El correo ya está registrado", url: "/register.html" });
+          } else {
+              // Usar la función de inserción general para registrar el restaurante
+              insertarEnTabla('restaurante', { nombre: name, telefono: phone, clave: password, correoRes: email }, (err, result) => {
+                  if (err) {
+                      console.log(err);
+                  } else {
+                      res.status(200).json({ message: "Restaurante registrado con éxito", url: "/perfil.html?restaurante=" + email });
+                  }
+              });
           }
-        });
       }
-    }
-  })
+  });
 });
 
 // Ruta POST para el inicio de sesión (restaurante)
