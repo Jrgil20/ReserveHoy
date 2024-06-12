@@ -10,8 +10,6 @@ const conexion = require('./db/conexion');
 const { error } = require('console');
 const { url } = require('inspector');
 
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('./db/dbOperations');
-
 // Usar insertarRestaurante donde sea necesario
 const app = express();
 
