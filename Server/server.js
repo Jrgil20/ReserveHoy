@@ -10,7 +10,6 @@ const conexion = require('./db/conexion');
 const { error } = require('console');
 const { url } = require('inspector');
 
-
 const app = express();
 
 // Middleware para parsear el cuerpo de las solicitudes POST
@@ -18,7 +17,6 @@ app.use(bodyParser.json());
 
 // Middleware para servir archivos estáticos
 app.use(express.static('public'));
-
 
 //para reconocer los datos que ingrese el usuario
 app.use(express.urlencoded({ extended: false }));
@@ -622,7 +620,6 @@ app.get("/traerClientes",(req,res)=>{
   }
   })
 })
-
 
 
 // Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
