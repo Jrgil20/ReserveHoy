@@ -41,36 +41,6 @@ app.use(restauranteRoutes);
 
 
 
-// Ruta POST para el inicio de sesión (restaurante)
-app.post("/loginRestaurant", (req, res) => {
-  const datos = req.body;
-  let email = datos.email;
-  let password = datos.password;
-  let buscarUsuario = "SELECT * FROM restaurante";
-  conexion.query(buscarUsuario,(err,lista)=>{
-        if(err){
-          throw err;
-        }else{
-           let bandera = 0;
-           for(i=0;i<lista.length;i++){
-             if((lista[i].correoRes === email)&&(lista[i].clave === password)){
-                bandera += 1;
-                break;
-             }
-           }
-           if(bandera != 1){
-            res.status(400).json({ message: "Usuario o clave invalidada" });
-          }else{
-            let email = datos.email;
-            res.status(200).json({ message: "Inicio de sesión exitoso",url: "/perfil.html?restaurante=" + email });     
-          }
-
-        }
-  })
-  
-});
-
-
 //RUTA POST para actualizar la informacion de un restaurante
 app.post("/actualizarInformacionRestaurante",(req,res)=>{
   const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
