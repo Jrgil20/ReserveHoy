@@ -4,8 +4,8 @@ const router = express.Router();
 const conexion = require('../db/conexion'); 
 const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../db/dbOperations');
 
-//Ruta POST registrar restaurante
-router.post("/registerRestaurant", (req, res) => {
+  //Ruta POST registrar restaurante
+  router.post("/registerRestaurant", (req, res) => {
     const datos = req.body;
     const { name, email, phone, password } = datos;
   
@@ -58,5 +58,111 @@ router.post("/registerRestaurant", (req, res) => {
     })
     
   });
+
+  //RUTA POST para actualizar la informacion de un restaurante
+  router.post("/actualizarInformacionRestaurante",(req,res)=>{
+    const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
+    let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
+    const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";
+    //Se declara el query
+    conexion.query(actuMesa,(err,result)=>{//Se hace el query
+     if(err){
+       res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
+     }else {
+       res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
+       //Si todo sale bien, se envia la notificacion de éxito
+     }
+    })
+  })
+
+  //Ruta GET que trae un restaurante por correo
+  router.get("/traeRest/:correoRes",(req,res)=>{
+    const correoRest = req.params.correoRes;
+      let traeReservas = "SELECT * FROM restaurante WHERE correoRes = '"+correoRest+"'";
+      conexion.query(traeReservas,(err,result)=>{
+         if(err){
+           res.status(500).json({ error: 'An error occurred' });
+         }else{
+           if(result.length > 0){
+             res.status(200).json(result[0]);
+           }else{
+            res.status(404).json({ message: 'No hay un restaurante con este correo' });
+           }
+         }
+      })
+  })
+
+  //RUTA GET para traer Horarios de un restaurante dado su clave forranea (correo)
+  router.get("/traeHorarios/:correoRes",(req,res)=>{
+    const correoRest = req.params.correoRes;
+    let traeHorarios = "SELECT horFinDe, horLunVier FROM restaurante WHERE correoRes = '"+correoRest+"'";
+    conexion.query(traeHorarios,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+         if(result.length > 0){
+           res.status(200).json(result[0]);
+         }else{
+          res.status(404).json({ message: 'No hay un restaurante con este correo' });
+         }
+       }
+    })
+  })
+
+  //Ruta GET que trae todos los Restaurantes
+  router.get("/traeRestaurantes",(req,res)=>{
+    let traeRes= "SELECT * FROM restaurante";
+    conexion.query(traeRes,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+           if(result.length > 0){
+             res.status(200).json(result);
+           }else{
+             res.status(404).json({ message: 'No hay restaurantes' });
+           }
+         
+       }
+    })
+  })
+
+
+  //Ruta GET que trae todas las mesas de un restaurante
+  router.get("/buscarMesasRest/:correoRest",(req,res)=>{
+
+    const correoRest = req.params.correoRest;//Obtiene el correo de la ruta
+    let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";//Declaramos el query
+    conexion.query(traeMesas,(err,result)=>{//Hacemos el query
+
+    if(err){
+      res.status(500).json({ error: 'An error occurred' });//Si hay error, manda la notifiacion
+    }else{
+      if(result.length > 0){
+        res.status(200).json(result);//Si hay mesas, devuelve la lista
+      }else{
+       res.status(404).json({ message: 'No hay mesas para este restaurante' });//Si no hay, devuelve error 404 not found
+      }
+    }
+    })
+  })
+
+  //Ruta GET que trae todos las reservas de un restaurante
+  router.get("/buscarReservasRest/:correoRes",(req,res)=>{
+   const correoRest = req.params.correoRes;
+   console.log(correoRest);
+   let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
+   conexion.query(traeReservas,(err,result)=>{
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });
+      }else{
+        if(result.length > 0){
+          res.status(200).json(result);
+        }else{
+         res.status(404).json({ message: 'No hay reservas para este restaurante' });
+        }
+      }
+   })
+  })
+
 
 module.exports = router;

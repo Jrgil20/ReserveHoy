@@ -4,8 +4,8 @@ const router = express.Router();
 const conexion = require('../db/conexion');
 const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../db/dbOperations');
 
-// Ruta POST para el registro de clientes 
-router.post("/registerClient", (req, res) => {
+  // Ruta POST para el registro de clientes 
+  router.post("/registerClient", (req, res) => {
     const datos = req.body;
     
     let {name,email,phone,password} = datos;
@@ -33,6 +33,36 @@ router.post("/registerClient", (req, res) => {
       }
     })
   
+  });
+
+  // Ruta POST para el inicio de sesión (cliente)
+  router.post('/loginCliente', (req, res) => {
+    const datos = req.body;
+  
+    let email = datos.email;
+    let password = datos.password;
+    
+    const buscarUsuario = "SELECT * FROM cliente";
+    conexion.query(buscarUsuario,(err,lista)=>{
+          if(err){
+            throw err;
+          }else{
+            let bandera = 0;
+             for(i=0;i<lista.length;i++){
+               if((lista[i].correo === email)&&(lista[i].password === password)){
+                  bandera += 1;
+                  break;
+               }
+             }
+             if(bandera != 1){
+              res.status(400).json({ message: "Usuario o clave invalidada" });
+             }else{
+              // se redireciona al perfil del usuario
+              res.status(200).json({ message: "Inicio de sesión exitoso" });
+             }
+          }
+    })
+      
   });
 
 module.exports = router;
