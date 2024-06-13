@@ -146,23 +146,5 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
     })
   })
 
-  //Ruta GET que trae todos las reservas de un restaurante
-  router.get("/buscarReservasRest/:correoRes",(req,res)=>{
-   const correoRest = req.params.correoRes;
-   console.log(correoRest);
-   let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
-   conexion.query(traeReservas,(err,result)=>{
-      if(err){
-        res.status(500).json({ error: 'An error occurred' });
-      }else{
-        if(result.length > 0){
-          res.status(200).json(result);
-        }else{
-         res.status(404).json({ message: 'No hay reservas para este restaurante' });
-        }
-      }
-   })
-  })
-
 
 module.exports = router;

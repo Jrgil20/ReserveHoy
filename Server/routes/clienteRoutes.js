@@ -65,4 +65,40 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
       
   });
 
+  // Ruta GET para buscar una persona por correo
+  router.get("/buscarCliente/:correo", (req, res) => {
+    const correo = req.params.correo; // Obtiene el correo de los parámetros de la ruta
+  
+    let buscarCliente = "SELECT * FROM cliente WHERE correo = '" + correo + "'";
+    conexion.query(buscarCliente, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ error: 'An error occurred' });
+      } else {
+        if (result.length > 0) {
+          res.status(200).json(result[0]);
+        } else {
+          res.status(404).json({ message: 'No se encontró ninguna persona con ese correo' });
+        }
+      }
+    });
+  });
+  
+  //Ruta GET que manda todos los clientes
+  router.get("/traerClientes",(req,res)=>{
+    let traeClientes = "SELECT * FROM cliente";
+    conexion.query(traeClientes,(err,result)=>{
+       if(err){
+         res.status(500).json({ error: 'An error occurred' });
+       }else{
+        if(result.length > 0){
+          res.status(200).json(result);
+        }else{
+          res.status(404).json({ message: 'No hay clientes' });
+        }
+      
+    }
+    })
+  })
+
 module.exports = router;
