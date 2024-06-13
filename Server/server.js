@@ -22,6 +22,7 @@ app.use(express.static('public'));
 //para reconocer los datos que ingrese el usuario
 app.use(express.urlencoded({ extended: false }));
 
+// Middleware para parsear el cuerpo de las solicitudes POST
 app.use(express.json());
 
 // Define el puerto en el que se ejecutará tu servidor.
@@ -44,115 +45,11 @@ app.use(reservaRoutes);
 app.use(mesaRoutes);
 
 
-
-// Ruta POST para agregar plato
-app.post("/agregarPlato", (req,res)=>{
-  const datos = req.body;
-  let {correoRestaurante,nombrePlato,tipo,precio,descripcion} = datos;
-  let idPlato = Math.random()*100;
-
-  //busca si ya existe un plato con el mismo nombre en un restaurante
-  let buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+correoRestaurante+"' AND nombrePlato = '"+nombrePlato+"'";
-
-  //se hace la consulta
-  conexion.query(buscarPlatoRest,function(err,row){
-    if (err){
-      throw err;
-    }else{
-      //verifica en las tablas si ya existe un plato con el mismo nombre, si esta es mayor a 0
-      if(row.length>0){
-        res.status(304).send(`<script>alert("Este plato ya existe en el menu");</script>`);
-      }else{
-         let confirmarPlato = "SELECT * FROM plato WHERE idPlato = '"+idPlato+"' AND correoRes = '"+correoRestaurante+"'";
-         conexion.query(confirmarPlato,function(error,lista){
-            if(error){
-               throw error;
-            }else{
-              if(lista.length > 0){
-                let bandera = 0;
-                do{
-                  idPlato = Math.random()*100;
-                  for(let i=0;i<lista.length;i++){
-                    if(idPlato === lista[i].idPlato){
-                      bandera = 1;
-                      break;
-                    }
-                  }
-                }while(bandera === 0);
-                let registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
-                conexion.query(registrarPlato,function(mistake,result)
-                {
-                  if(mistake){
-                    res.status(500).json({ error: 'An error occurred' });
-                  }else{
-                    res.status(200).send(`<script>alert("Plato agregado"); window.location.href = "/";</script>`);
-                  }
-                })
-              }else{
-                let registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
-                conexion.query(registrarPlato,function(mistake,result){
-                  if(mistake){
-                    res.status(500).json({ error: 'An error occurred' });
-                  }else{
-                    res.status(200).send(`Plato agregado con exito`);
-                  }
-                })
-              }
-            }
-         })
-      }
-    }
-  })
-})
-
-// Ruta POST para consultar todos los platos de un restaurante
-app.post("/consultarPlatos",(req,res)=>{
-  //consulta para traer todos los platos
-  let restaurante = req.body.restaurante;
-  console.log(restaurante);
-  const platos = "SELECT * FROM plato WHERE correoRes = '"+restaurante+"'";
-  //hace la consulta
-  conexion.query(platos,(err,list)=>{
-    if(err){
-      console.log(err);
-      res.status(500).json({ error: 'An error occurred' });
-    }else{
-       if(list.length > 0){
-        res.status(200).json(list);
-       }else{
-        res.status(404).json({ message: 'No hay platos registrados para ese restaurante' });
-       }
-    }
-  })
-});
-
-
-//Ruta GET para consulta un plato en especifico
-app.get("./consultarPlato",(req,res)=>{
-  let plato = req.body.plato;
-  const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
-  //hace la consulta
-  conexion.query(platos,(err,element)=>{
-    if(err){
-      console.log(err);
-    }else{
-      console.log(element.nombrePlato);
-      console.log(element.tipo);
-      console.log(element.descripcion);
-      console.log(element.precio);
-    }
-  })
-});
-
-
-
-// Define una ruta GET para la ruta raíz ("/"). Cuando alguien visita esta ruta, la función de devolución de llamada se ejecuta.
-// La función de devolución de llamada toma dos argumentos: un objeto de solicitud (que contiene información sobre la solicitud) y un objeto de respuesta (que se utiliza para enviar la respuesta).
+// Define una ruta GET para la ruta raíz ("/"). 
 app.get('/', (req, res) => {
   res.send('Esta es la raiz de la aplicación.');
 });
 
-// Inicia el servidor en el puerto especificado. Una vez que el servidor está en marcha, se ejecuta la función de devolución de llamada.
 app.listen(port, () => {
   // Imprime un mensaje en la consola para que sepas que el servidor está en marcha.
   console.log(`Servidor corriendo en http://localhost:${port}`);
