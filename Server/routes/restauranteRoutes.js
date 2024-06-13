@@ -127,24 +127,4 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
   })
 
 
-  //Ruta GET que trae todas las mesas de un restaurante
-  router.get("/buscarMesasRest/:correoRest",(req,res)=>{
-
-    const correoRest = req.params.correoRest;//Obtiene el correo de la ruta
-    let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";//Declaramos el query
-    conexion.query(traeMesas,(err,result)=>{//Hacemos el query
-
-    if(err){
-      res.status(500).json({ error: 'An error occurred' });//Si hay error, manda la notifiacion
-    }else{
-      if(result.length > 0){
-        res.status(200).json(result);//Si hay mesas, devuelve la lista
-      }else{
-       res.status(404).json({ message: 'No hay mesas para este restaurante' });//Si no hay, devuelve error 404 not found
-      }
-    }
-    })
-  })
-
-
 module.exports = router;
