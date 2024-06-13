@@ -4,9 +4,6 @@ const bodyParser = require('body-parser');
 // Importa el módulo fs. Esto te permite usar la funcionalidad de fs en tu archivo.
 const fs = require('fs');
 
-// Actualiza la ruta de importación de la conexión
-const conexion = require('./db/conexion');
-
 const { error } = require('console');
 const { url } = require('inspector');
 
@@ -33,17 +30,14 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-
 const clienteRoutes = require('./routes/clienteRoutes');
 const restauranteRoutes = require('./routes/restauranteRoutes');
 const reservaRoutes = require('./routes/reservaRoutes');
 const mesaRoutes = require('./routes/mesaRoutes');
-// Usa las rutas de clientes
 app.use(clienteRoutes);
 app.use(restauranteRoutes);
 app.use(reservaRoutes);
 app.use(mesaRoutes);
-
 
 // Define una ruta GET para la ruta raíz ("/"). 
 app.get('/', (req, res) => {
