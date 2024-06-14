@@ -29,13 +29,13 @@ const port = 3000;
 
 // Ruta para servir index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'view', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', '..', 'public', 'view', 'index.html'));
 });
 
-const clienteRoutes = require('./routes/clienteRoutes');
-const restauranteRoutes = require('./routes/restauranteRoutes');
-const reservaRoutes = require('./routes/reservaRoutes');
-const mesaRoutes = require('./routes/mesaRoutes');
+const clienteRoutes = require('../routes/clienteRoutes');
+const restauranteRoutes = require('../routes/restauranteRoutes');
+const reservaRoutes = require('../routes/reservaRoutes');
+const mesaRoutes = require('../routes/mesaRoutes');
 app.use(clienteRoutes);
 app.use(restauranteRoutes);
 app.use(reservaRoutes);
