@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 // Importa el módulo fs. Esto te permite usar la funcionalidad de fs en tu archivo.
 const fs = require('fs');
 
+const path = require('path');
+
 const { error } = require('console');
 const { url } = require('inspector');
 
@@ -27,7 +29,7 @@ const port = 3000;
 
 // Ruta para servir index.html
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(path.join(__dirname, '..', 'public', 'view', 'index.html'));
 });
 
 const clienteRoutes = require('./routes/clienteRoutes');

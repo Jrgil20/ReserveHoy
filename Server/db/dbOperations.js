@@ -1,4 +1,4 @@
-const conexion = require('./conexion'); // Asegúrate de tener este módulo para la conexión a la base de datos
+const conexion = require('./conexion');
 
 function seleccionarDeTabla(tabla, columnas, callback) {
     // Verificar si columnas es un array y convertirlo a cadena separada por comas, o usar * si es necesario
