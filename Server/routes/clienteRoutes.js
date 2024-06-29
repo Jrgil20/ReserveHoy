@@ -19,13 +19,13 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
       }else{
         //verifica en la tablas si el correo ya esta registrado
         if (row.length > 0){
-          res.status(409).json({ message: "El correo ya está registrado", url: "/register.html"  });
+          res.status(409).json({ message: "El correo ya está registrado", url: "/view/register.html"  });
         }else{
           insertarEnTabla('cliente', { NombreApellido: name, correo: email, password: password, telefono: phone }, (err, result) =>{
             if(err){
               console.log(err);
             }else{
-              res.status(200).json({ message: "Cliente registrado con éxito", url: "/register.html" });
+              res.status(200).json({ message: "Cliente registrado con éxito", url: "/view/register.html" });
             }
           
           });

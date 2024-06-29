@@ -6,7 +6,7 @@
     <title>ReserveHoy | </title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/img/letra-r.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/img/letra-r.png" type="image/x-icon">
     <!--Bootstrap CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
     rel="stylesheet" 
@@ -14,11 +14,11 @@
     crossorigin="anonymous"/>
 
     <!-- Estilos CSS -->
-    <link rel="stylesheet" href="/assets/css/restaurant.css"/>
+    <link rel="stylesheet" href="../assets/css/restaurant.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     
     <!-- Script-->
-    <script src="./assets/js/GeneraRestaurant.js"></script>
+    <script src="../assets/js/GeneraRestaurant.js"></script>
 
 </head>
 <body>
@@ -39,7 +39,7 @@
                                 <a class="nav-link mx-lg-2 active" aria-current="page" href="/">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="catalogo.html">Catalogo</a>
+                                <a class="nav-link mx-lg-2" href="./catalogo.html">Catalogo</a>
 
                             </li>
                             <li class="nav-item">
@@ -51,7 +51,7 @@
                 </div>
                 <!-- SI YA INICIO SESION LO MANDA A SU PERFIL, SINO DEBE MANDARLO A LOGIN.HTML-->
                 <a id="login-button-nav" class="login-button" title="Login">
-                  <script src="./assets/js/navbar.js"></script>
+                  <script src="../assets/js/navbar.js"></script>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
                     </svg>
@@ -65,7 +65,7 @@
           <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Inicio</a></li>
-              <li class="breadcrumb-item"><a href="catalogo.html">Catálogo</a></li>
+              <li class="breadcrumb-item"><a href="./catalogo.html">Catálogo</a></li>
               <li class="breadcrumb-item active" aria-current="page">Restaurante</li>
             </ol>
           </nav>
@@ -78,7 +78,7 @@
           <!-- Tarjeta de Información del Restaurante -->
           <div class="col-md-8">
             <div class="card">
-              <img src="/assets/img/Restaurant.png" class="card-img-top" alt="Restaurante">
+              <img src="../assets/img/Restaurant.png" class="card-img-top" alt="Restaurante">
               <div class="card-body">
                 <h5 class="card-title"><span id="NombreDelRestaurante"></span></h5>
                 <p class="card-text"> <span id="DescripcionDelRestaurant"></span></p>
@@ -120,7 +120,7 @@
                     <label for="FechayhoradelaReserva" >Fecha y hora:</label>
                     <input type="datetime-local" class="form-control" name="FechayhoradelaReserva" id="FechayhoradelaReserva" placeholder="Seleccione una fecha y hora">
                     <p id="error"></p>
-                    <script src="./assets/js/Horarios.js"></script>
+                    <script src="../assets/js/Horarios.js"></script>
                   </div>
 
                   <div class="form-group">
@@ -136,7 +136,7 @@
                   
                   <button type="submit" class="btn btn-success">Reservar</button>
                 </form>
-                <script src="./assets/js/resevaform.js"></script>
+                <script src="../assets/js/resevaform.js"></script>
                 <br> 
                 <h5 class="card-title">Mesas Disponibles</h5>
                 <p class="card-text">Mesas disponibles para reservar.</p>
@@ -155,7 +155,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
       
-      <scripts src="./assets/js/resevaform.js"></scripts>
+      <scripts src="../assets/js/resevaform.js"></scripts>
 
 
 

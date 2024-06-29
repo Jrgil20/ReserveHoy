@@ -16,13 +16,13 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
             throw err;
         } else {
             if (row.length > 0) {
-                res.status(409).json({ message: "El correo ya está registrado", url: "/register.html" });
+                res.status(409).json({ message: "El correo ya está registrado", url: "/view/register.html" });
             } else {
                 insertarEnTabla('restaurante', { nombre: name, telefono: phone, clave: password, correoRes: email }, (err, result) => {
                     if (err) {
                         console.log(err);
                     } else {
-                        res.status(200).json({ message: "Restaurante registrado con éxito", url: "/perfil.html?restaurante=" + email });
+                        res.status(200).json({ message: "Restaurante registrado con éxito", url: "/view/perfil.html?restaurante=" + email });
                     }
                 });
             }
@@ -51,7 +51,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
               res.status(400).json({ message: "Usuario o clave invalidada" });
             }else{
               let email = datos.email;
-              res.status(200).json({ message: "Inicio de sesión exitoso",url: "/perfil.html?restaurante=" + email });     
+              res.status(200).json({ message: "Inicio de sesión exitoso",url: "/view/perfil.html?restaurante=" + email });     
             }
   
           }
