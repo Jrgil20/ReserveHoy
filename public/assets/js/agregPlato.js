@@ -2,7 +2,11 @@
 document.getElementById('platForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
     
+<<<<<<< Updated upstream
         console.log("El archvio agregPlato fue llamado");
+=======
+        console.log(window.location);
+>>>>>>> Stashed changes
 
         const tipoPlato = document.getElementById('tipoPlato').value;
         const nombrePlato = document.getElementById('nombrePlato').value;

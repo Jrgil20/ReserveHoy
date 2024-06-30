@@ -6,6 +6,7 @@ document.getElementById('mesaForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
 
     const capacidad = document.getElementById('capacidad').value;
+    
     const restaurante = document.getElementById('correoRestaurante').value;
     
     fetch('/agregarMesa',{

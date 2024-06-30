@@ -44,4 +44,16 @@ function actualizarEnTabla(tabla, datos, condiciones, callback) {
     });
 }
 
-module.exports = { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla };
+function eliminarEnTabla(tabla,datos,callback){
+    //Construir la parte del WHERE de la consulta SQL
+    const whereSQL = Object.keys(datos).map(key => `${key} = ?`).join(' AND ');
+
+    //Combinar todo en una consulta SQL completa
+    const sql = `DELETE FROM ${tabla} WHERE ${whereSQL}` ;
+
+    conexion.query(sql, Object.values(datos) ,(err,result) => {
+        callback(err,result);
+    })
+}
+
+module.exports = { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla };

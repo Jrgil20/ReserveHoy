@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../db/dbOperations');
+const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla  } = require('../db/dbOperations');
 
   // Ruta POST para agregar plato
   router.post("/agregarPlato", (req,res)=>{
     const datos = req.body;
+
     let {correoRestaurante,nombrePlato,tipo,precio,descripcion} = datos;
-    let idPlato = Math.random()*100;
+
+    let idPlato = Math.floor(Math.random()*100);
   
     //busca si ya existe un plato con el mismo nombre en un restaurante
     let buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+correoRestaurante+"' AND nombrePlato = '"+nombrePlato+"'";
@@ -30,7 +32,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
                 if(lista.length > 0){
                   let bandera = 0;
                   do{
-                    idPlato = Math.random()*100;
+                    idPlato = Math.floor(Math.random()*100);
                     for(let i=0;i<lista.length;i++){
                       if(idPlato === lista[i].idPlato){
                         bandera = 1;
@@ -102,6 +104,18 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
     })
   });
   
+router.delete('eliminarPlato', (req,res) => {
+  const datos = req.body;
 
+  const {idAEliminar,correoRes} = datos;
+
+  eliminarEnTabla('plato',{idPlato:idAEliminar, correoRes: correoRes},(err,result) => {
+     if(err){
+       throw err;
+     }else{
+      res.status(200).send('Plato eliminado con éxito');
+     }
+  })
+})
 
 module.exports = router;

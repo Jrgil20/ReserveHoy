@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../db/dbOperations');
+const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla  } = require('../db/dbOperations');
 
   // Ruta POST para el registro de clientes 
   router.post("/registerClient", (req, res) => {
@@ -36,10 +36,11 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
   });
 
   // Ruta POST para el inicio de sesión (cliente)
-  router.post('/loginCliente', (req, res) => {
+  router.post("/loginCliente", (req, res) => {
     const datos = req.body;
   
     let email = datos.email;
+
     let password = datos.password;
     
     seleccionarDeTabla('cliente','*',(err,lista)=>{
@@ -60,7 +61,11 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
           res.status(200).json({ message: "Inicio de sesión exitoso" });
          }
       }
+<<<<<<< Updated upstream
 })
+=======
+});
+>>>>>>> Stashed changes
       
   });
 
@@ -97,7 +102,11 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
   
   //Ruta GET que manda todos los clientes
   router.get("/traerClientes",(req,res)=>{
+<<<<<<< Updated upstream
      seleccionarDeTabla('cliente','*',(err,result)=>{
+=======
+    seleccionarDeTabla('cliente','*',(err,result)=>{
+>>>>>>> Stashed changes
       if(err){
         res.status(500).json({ error: 'An error occurred' });
       }else{
@@ -106,9 +115,27 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
        }else{
          res.status(404).json({ message: 'No hay clientes' });
        }
+<<<<<<< Updated upstream
      
    }
+=======
+    }
+>>>>>>> Stashed changes
    })
   })
+
+router.delete("/eliminarCliente", (req,res) => {
+  const datos = req.body;
+
+  const cliente = datos;
+
+  eliminarEnTabla('cliente',{correo:cliente},(err,result) => {
+     if(err){
+       throw err;
+     }else{
+      res.status(200).send('Perfil eliminado con éxito');
+     }
+  })
+})
 
 module.exports = router;

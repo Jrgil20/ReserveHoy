@@ -2,15 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../db/dbOperations');
+const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla  } = require('../db/dbOperations');
 
 
   // Ruta POST para agregar mesa
   router.post ("/agregarMesa", (req,res)=>{
+    let prueba = req.baseUrl;
+    console.log(prueba);
     const datos = req.body;//Vaciamos el cuerpo de la petición HTTP en la variable body
     const status = 0;
-    const numMesa = Math.random()*100;//Creacion de un nuevo número de mesa
-    const id_Mesa = Math.random()*100;//Creacion de un nuevo ID
+    const numMesa = Math.floor(Math.random()*100);//Creacion de un nuevo número de mesa
+    const id_Mesa = Math.floor(Math.random()*100);//Creacion de un nuevo ID
     let {restaurante, capacidad} = datos; //Mediante destructuracion se asigna el contenido de datos en las variables
 
     //busca si ya existe una mesa con el mismo id en un restaurante
@@ -25,7 +27,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
            let bandera = 0;
            do{
                //Si existe el mismo id, se generara uno hasta que no coincida
-               id_Mesa = Math.random()*100;
+               id_Mesa = Math.floor(Math.random()*100);
                if(id_Mesa != row[0].id_Mesa){
                  bandera = 1;
               }
@@ -76,6 +78,18 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
     })
   })
 
+router.delete('/eliminarMesa',(req,res) => {
+    const datos = req.body;
 
+    const {idAEliminar,correoRes} = datos;
+
+    eliminarEnTabla('mesa',{id_Mesa:idAEliminar, correoRes: correoRes},(err,result) => {
+       if(err){
+         throw err;
+       }else{
+        res.status(200).send('Mesa eliminada con éxito');
+       }
+    })
+})
 
 module.exports = router;
