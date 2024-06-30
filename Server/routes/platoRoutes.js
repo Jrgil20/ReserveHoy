@@ -86,7 +86,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
   });
   
   //Ruta GET para consulta un plato en especifico
-  router.get("./consultarPlato",(req,res)=>{
+  router.get("/consultarPlato",(req,res)=>{
     let plato = req.body.plato;
     const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
     //hace la consulta

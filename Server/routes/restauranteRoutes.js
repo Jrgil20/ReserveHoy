@@ -35,27 +35,26 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
     const datos = req.body;
     let email = datos.email;
     let password = datos.password;
-    let buscarUsuario = "SELECT * FROM restaurante";
-    conexion.query(buscarUsuario,(err,lista)=>{
-          if(err){
-            throw err;
-          }else{
-             let bandera = 0;
-             for(i=0;i<lista.length;i++){
-               if((lista[i].correoRes === email)&&(lista[i].clave === password)){
-                  bandera += 1;
-                  break;
-               }
-             }
-             if(bandera != 1){
-              res.status(400).json({ message: "Usuario o clave invalidada" });
-            }else{
-              let email = datos.email;
-              res.status(200).json({ message: "Inicio de sesión exitoso",url: "/view/perfil.html?restaurante=" + email });     
-            }
-  
-          }
-    })
+    seleccionarDeTabla('cliente','*',(err,lista)=>{
+      if(err){
+        throw err;
+      }else{
+         let bandera = 0;
+         for(i=0;i<lista.length;i++){
+           if((lista[i].correoRes === email)&&(lista[i].clave === password)){
+              bandera += 1;
+              break;
+           }
+         }
+         if(bandera != 1){
+          res.status(400).json({ message: "Usuario o clave invalidada" });
+        }else{
+          let email = datos.email;
+          res.status(200).json({ message: "Inicio de sesión exitoso",url: "/view/perfil.html?restaurante=" + email });     
+        }
+
+      }
+})
     
   });
 
@@ -111,19 +110,18 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../
 
   //Ruta GET que trae todos los Restaurantes
   router.get("/traeRestaurantes",(req,res)=>{
-    let traeRes= "SELECT * FROM restaurante";
-    conexion.query(traeRes,(err,result)=>{
-       if(err){
-         res.status(500).json({ error: 'An error occurred' });
-       }else{
-           if(result.length > 0){
-             res.status(200).json(result);
-           }else{
-             res.status(404).json({ message: 'No hay restaurantes' });
-           }
-         
-       }
-    })
+     seleccionarDeTabla('restaurante','*',(err,result)=>{
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });
+      }else{
+          if(result.length > 0){
+            res.status(200).json(result);
+          }else{
+            res.status(404).json({ message: 'No hay restaurantes' });
+          }
+        
+      }
+   })
   })
 
 
