@@ -37,29 +37,6 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
     let email = datos.email;
 
     let password = datos.password;
-<<<<<<< Updated upstream
-    seleccionarDeTabla('cliente','*',(err,lista)=>{
-      if(err){
-        throw err;
-      }else{
-         let bandera = 0;
-         for(i=0;i<lista.length;i++){
-           if((lista[i].correoRes === email)&&(lista[i].clave === password)){
-              bandera += 1;
-              break;
-           }
-         }
-         if(bandera != 1){
-          res.status(400).json({ message: "Usuario o clave invalidada" });
-        }else{
-          let email = datos.email;
-          res.status(200).json({ message: "Inicio de sesión exitoso",url: "/view/perfil.html?restaurante=" + email });     
-        }
-
-      }
-})
-=======
->>>>>>> Stashed changes
     
     seleccionarDeTabla('restaurante','*',(err,lista)=>{
       if(err){
@@ -90,14 +67,14 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
     let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables
     const actuMesa = "UPDATE restaurante SET direccion = '"+direccion+"', descripcion = '"+descripcion+"', horLunVier = '"+horario+"', horFinDe='"+horFin+"' WHERE correoRes = '"+claveLocal+"'";
     //Se declara el query
-    conexion.query(actuMesa,(err,result)=>{//Se hace el query
-     if(err){
-       res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
-     }else {
-       res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
-       //Si todo sale bien, se envia la notificacion de éxito
-     }
-    })
+    actualizarEnTabla('restaurante',{direccion:direccion, descripcion: descripcion, horLunVier: horario, horFinDe: horFin},{correoRes: claveLocal},(err,result)=>{//Se hace el query
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
+      }else {
+        res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
+        //Si todo sale bien, se envia la notificacion de éxito
+      }
+     })
   })
 
   //Ruta GET que trae un restaurante por correo

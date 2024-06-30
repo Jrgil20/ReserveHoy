@@ -60,13 +60,8 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
           // se redireciona al perfil del usuario
           res.status(200).json({ message: "Inicio de sesión exitoso" });
          }
-      }
-<<<<<<< Updated upstream
-})
-=======
-});
->>>>>>> Stashed changes
-      
+      } 
+   });      
   });
 
   // Ruta GET para buscar una persona por correo
@@ -102,11 +97,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
   
   //Ruta GET que manda todos los clientes
   router.get("/traerClientes",(req,res)=>{
-<<<<<<< Updated upstream
      seleccionarDeTabla('cliente','*',(err,result)=>{
-=======
-    seleccionarDeTabla('cliente','*',(err,result)=>{
->>>>>>> Stashed changes
       if(err){
         res.status(500).json({ error: 'An error occurred' });
       }else{
@@ -115,12 +106,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
        }else{
          res.status(404).json({ message: 'No hay clientes' });
        }
-<<<<<<< Updated upstream
-     
-   }
-=======
     }
->>>>>>> Stashed changes
    })
   })
 
@@ -129,7 +115,13 @@ router.delete("/eliminarCliente", (req,res) => {
 
   const cliente = datos;
 
-  eliminarEnTabla('cliente',{correo:cliente},(err,result) => {
+  eliminarEnTabla('reserva',{correoCli:cliente.correo}, (err,result) => {
+    if(err){
+      throw err;
+    }
+  })
+
+  eliminarEnTabla('cliente',cliente,(err,result) => {
      if(err){
        throw err;
      }else{

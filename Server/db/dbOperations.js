@@ -45,6 +45,7 @@ function actualizarEnTabla(tabla, datos, condiciones, callback) {
 }
 
 function eliminarEnTabla(tabla,datos,callback){
+
     //Construir la parte del WHERE de la consulta SQL
     const whereSQL = Object.keys(datos).map(key => `${key} = ?`).join(' AND ');
 
