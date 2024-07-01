@@ -38,7 +38,7 @@ async function traeRestaurantes(){
             p.textContent = restaurante.correoRes;
 
             let a = document.createElement('a');
-            a.href = 'restaurant.html?restaurante=' + restaurante.correoRes;
+            a.href = '/view/restaurant.html?restaurante=' + restaurante.correoRes;
             a.className = 'btn btn-primary';
             a.textContent = 'Ver más';
 
