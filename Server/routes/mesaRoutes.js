@@ -78,6 +78,8 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
     })
   })
 
+
+ //Ruta DELETE para eliminar una mesa 
 router.delete('/eliminarMesa',(req,res) => {
     const datos = req.body;
 
@@ -91,5 +93,20 @@ router.delete('/eliminarMesa',(req,res) => {
        }
     })
 })
+
+//Ruta PUT para modificar una mesa
+router.put('/modificarMesa', (req,res)=>{
+    const datos = req.body;
+
+    const {id_Mesa, correoRes,capacidad,status} = datos;
+
+    actualizarEnTabla('mesa',{capacidad:capacidad, status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,res) => {
+      if(err){
+        throw err;
+      }else{
+        res.status(200).send('Mesa modificada con éxito');
+      }
+    })
+  })
 
 module.exports = router;

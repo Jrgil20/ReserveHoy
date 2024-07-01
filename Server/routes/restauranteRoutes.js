@@ -71,7 +71,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
       if(err){
         res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
       }else {
-        res.status(200).send('<script>alert("Informacion actualizada con exito"); window.location.href = "/";</script>');
+        res.status(200).send('<script>alert("Informacion agregada con con exito"); window.location.href = "/";</script>');
         //Si todo sale bien, se envia la notificacion de éxito
       }
      })
@@ -127,5 +127,18 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
    })
   })
 
+  //Ruta PUT para modificar un restaurante
+  router.put("/modificarInfoRestaurante",(req,res)=>{
+    const datos = req.body;
+     const {nombre,direccion,telefono,clave,correoRes,descripcion,horLunVier,horFinDe} = datos;
+
+      actualizarEnTabla('restaurante',{nombre:nombre, direccion:direccion, telefono:telefono, clave:clave, descripcion:descripcion, horLunVier:horLunVier, horFinDe:horFinDe},{correoRes:correoRes},(err,result)=>{
+        if(err){
+          res.status(500).json({ error: 'An error occurred' });
+        }else{
+          res.status(200).json({ message: 'Restaurante modificado con éxito' });
+        }
+      })
+  })
 
 module.exports = router;
