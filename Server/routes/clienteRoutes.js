@@ -110,6 +110,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
    })
   })
 
+  //Ruta DELETE que elimina un cliente
 router.delete("/eliminarCliente", (req,res) => {
   const datos = req.body;
 
@@ -127,6 +128,21 @@ router.delete("/eliminarCliente", (req,res) => {
      }else{
       res.status(200).send('Perfil eliminado con éxito');
      }
+  })
+})
+
+//Ruta PUT para modificar un cliente
+router.put("/modificarCliente", (req,res) => {
+  const datos = req.body;
+
+  const {nombre, password, correo, telefono} = datos;
+
+  actualizarEnTabla('cliente',{NombreApellido:nombre, password:password, telefono:telefono},{correo:correo},(err,res) => {
+    if(err){
+      throw err;
+    }else{
+      res.status(200).send('Perfil modificado con éxito');
+    }
   })
 })
 

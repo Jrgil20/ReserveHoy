@@ -8,12 +8,12 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
   router.post("/agregarPlato", (req,res)=>{
     const datos = req.body;
 
-    let {correoRestaurante,nombrePlato,tipo,precio,descripcion} = datos;
+    const {correoRestaurante,nombrePlato,tipo,precio,descripcion} = datos;
 
-    let idPlato = Math.floor(Math.random()*100);
+    const idPlato = Math.floor(Math.random()*100);
   
     //busca si ya existe un plato con el mismo nombre en un restaurante
-    let buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+correoRestaurante+"' AND nombrePlato = '"+nombrePlato+"'";
+    const buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+correoRestaurante+"' AND nombrePlato = '"+nombrePlato+"'";
   
     //se hace la consulta
     conexion.query(buscarPlatoRest,function(err,row){
@@ -24,23 +24,23 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
         if(row.length>0){
           res.status(304).send(`<script>alert("Este plato ya existe en el menu");</script>`);
         }else{
-           let confirmarPlato = "SELECT * FROM plato WHERE idPlato = '"+idPlato+"' AND correoRes = '"+correoRestaurante+"'";
+           const confirmarPlato = "SELECT * FROM plato WHERE idPlato = '"+idPlato+"' AND correoRes = '"+correoRestaurante+"'";
            conexion.query(confirmarPlato,function(error,lista){
               if(error){
                  throw error;
               }else{
                 if(lista.length > 0){
-                  let bandera = 0;
+                  const bandera = 0;
                   do{
                     idPlato = Math.floor(Math.random()*100);
-                    for(let i=0;i<lista.length;i++){
+                    for(const i=0;i<lista.length;i++){
                       if(idPlato === lista[i].idPlato){
                         bandera = 1;
                         break;
                       }
                     }
                   }while(bandera === 0);
-                  let registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
+                  const registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
                   conexion.query(registrarPlato,function(mistake,result)
                   {
                     if(mistake){
@@ -50,7 +50,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
                     }
                   })
                 }else{
-                  let registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
+                  const registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
                   conexion.query(registrarPlato,function(mistake,result){
                     if(mistake){
                       res.status(500).json({ error: 'An error occurred' });
@@ -69,7 +69,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
   // Ruta POST para consultar todos los platos de un restaurante
   router.post("/consultarPlatos",(req,res)=>{
     //consulta para traer todos los platos
-    let restaurante = req.body.restaurante;
+    const restaurante = req.body.restaurante;
     console.log(restaurante);
     const platos = "SELECT * FROM plato WHERE correoRes = '"+restaurante+"'";
     //hace la consulta
@@ -89,7 +89,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
   
   //Ruta GET para consulta un plato en especifico
   router.get("/consultarPlato",(req,res)=>{
-    let plato = req.body.plato;
+    const plato = req.body.plato;
     const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
     //hace la consulta
     conexion.query(platos,(err,element)=>{
@@ -104,17 +104,33 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
     })
   });
   
+  //Ruta DELETE para eliminar un plato
 router.delete('eliminarPlato', (req,res) => {
   const datos = req.body;
 
   const {idAEliminar,correoRes} = datos;
 
-  eliminarEnTabla('plato',{idPlato:idAEliminar, correoRes: correoRes},(err,result) => {
+  eliminarEnTabla('plato',{idPlato:idAEliminar, correoRes: correoRes},(err,res) => {
      if(err){
        throw err;
      }else{
       res.status(200).send('Plato eliminado con éxito');
      }
+  })
+})
+
+//Ruta GET para modificar un plato
+router.put('/modificarPlato', (req,res)=>{
+  const datos = req.body;
+
+  const {idPlato, correoRes,nombrePlato,tipo,precio,descripcion} = datos;
+
+  actualizarEnTabla('plato',{nombrePlato:nombrePlato, tipo:tipo, precio:precio, descripcion:descripcion},{idPlato:idPlato, correoRes:correoRes},(err,res) => {
+    if(err){
+      throw err;
+    }else{
+      res.status(200).send('Plato modificado con éxito');
+    }
   })
 })
 
