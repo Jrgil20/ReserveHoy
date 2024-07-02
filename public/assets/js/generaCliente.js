@@ -4,9 +4,9 @@ const Correo = urlParams.get('cliente');
 // obtenemos el valor de la url
 
 
-generaPerfilcliente(correo);
+generaPerfilcliente(Correo);
 
-async function generaPerfilcliente(correo){
+async function generaPerfilcliente(Correo){
     try {
         const response = await fetch('/buscarCliente/' + Correo);
 
@@ -21,4 +21,5 @@ async function generaPerfilcliente(correo){
 }
 
 // Guardar correo del cliente en sessionStorage
-sessionStorage.setItem('correoCliente', correo);
+console.log(Correo);
+sessionStorage.setItem('correoCliente', Correo);
