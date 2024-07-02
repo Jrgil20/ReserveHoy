@@ -78,18 +78,18 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   //Ruta GET que trae un restaurante por correo
   router.get("/traeRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
-      let traeReservas = "SELECT * FROM restaurante WHERE correoRes = '"+correoRest+"'";
-      conexion.query(traeReservas,(err,result)=>{
-         if(err){
-           res.status(500).json({ error: 'An error occurred' });
-         }else{
-           if(result.length > 0){
-             res.status(200).json(result[0]);
-           }else{
-            res.status(404).json({ message: 'No hay un restaurante con este correo' });
-           }
-         }
-      })
+
+    seleccionarDeTablaConWHere('restaurante','*',{correoRes:correoRest}, (err,result)=>{
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });
+      }else{
+        if(result.length > 0){
+          res.status(200).json(result[0]);
+        }else{
+         res.status(404).json({ message: 'No hay un restaurante con este correo' });
+        }
+      }
+   })
   })
 
   //RUTA GET para traer Horarios de un restaurante dado su clave forranea (correo)

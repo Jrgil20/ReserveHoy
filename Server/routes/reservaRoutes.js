@@ -159,27 +159,25 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   //Ruta GET que trae todos las reservas de un restaurante
   router.get("/buscarReservasRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
-    console.log(correoRest);
-    let traeReservas = "SELECT * FROM reserva WHERE correoRes = '"+correoRest+"'";
-    conexion.query(traeReservas,(err,result)=>{
-       if(err){
-         res.status(500).json({ error: 'An error occurred' });
-       }else{
-         if(result.length > 0){
-           res.status(200).json(result);
-         }else{
-          res.status(404).json({ message: 'No hay reservas para este restaurante' });
-         }
-       }
-    })
+
+    seleccionarDeTablacConWhere('reserva','*',{correoRes:correoRest}, (err,result)=>{
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });
+      }else{
+        if(result.length > 0){
+          res.status(200).json(result);
+        }else{
+         res.status(404).json({ message: 'No hay reservas para este restaurante' });
+        }
+      }
+   })
    })
 
   // Ruta GET para consultar una reserva de un cliente
   router.get("/buscarReserva/:idReserva", (req, res) => {
     const idReserva = req.params.idReserva; // Obtiene el ID de la reserva de los parámetros de la ruta
   
-    let buscarReserva = "SELECT * FROM reserva WHERE idReserva = '" + idReserva + "'";
-    conexion.query(buscarReserva, (err, result) => {
+    seleccionarDeTablacConWhere('reserva','*',{idReserva:idReserva}, (err, result) => {
       if (err) {
         console.log(err);
         res.status(500).json({ error: 'An error occurred' });
@@ -190,7 +188,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
           res.status(404).json({ message: 'No se encontró ninguna reserva con ese ID' });
         }
       }
-    });
+    })
   });
 
 

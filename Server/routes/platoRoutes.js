@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla  } = require('../db/dbOperations');
+const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere  } = require('../db/dbOperations');
 
   // Ruta POST para agregar plato
   router.post("/agregarPlato", (req,res)=>{
@@ -71,9 +71,8 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
     //consulta para traer todos los platos
     const restaurante = req.params.correoRest;
 
-    const platos = "SELECT * FROM plato WHERE correoRes = '"+restaurante+"'";
     //hace la consulta
-    conexion.query(platos,(err,list)=>{
+    seleccionarDeTablaConWHere('plato','*',{correoRes:restaurante}, (err,list)=>{
       if(err){
         console.log(err);
         res.status(500).json({ error: 'An error occurred' });
@@ -90,9 +89,9 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
   //Ruta GET para consulta un plato en especifico
   router.get("/consultarPlato",(req,res)=>{
     const plato = req.body.plato;
-    const platos = "SELECT * FROM plato WHERE nombrePlato = '"+plato+"'";
+
     //hace la consulta
-    conexion.query(platos,(err,element)=>{
+    seleccionarDeTablaConWHere('plato','*',{nombrePlato:plato}, (err,element)=>{
       if(err){
         console.log(err);
       }else{
