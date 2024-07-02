@@ -1,6 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 //creamos una variable que obtenga el valor de la url
-const correoRes = urlParams.get('cliente');
+const Correo = urlParams.get('cliente');
 // obtenemos el valor de la url
 
 
@@ -8,7 +8,7 @@ generaPerfilcliente(correo);
 
 async function generaPerfilcliente(correo){
     try {
-        const response = await fetch('/buscarCliente/' + correo);
+        const response = await fetch('/buscarCliente/' + Correo);
 
         const data = await response.json();
 

@@ -23,7 +23,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
            if(err){
              console.log(err);
            }else{
-             res.status(200).json({ message: "Cliente registrado con éxito", url: "/view/perfilCliente.html?cliente=" + correo });
+             res.status(200).json({ message: "Cliente registrado con éxito", url: "/view/perfilCliente.html?cliente=" + email });
            }
          
          });
@@ -49,6 +49,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
          for(i=0;i<lista.length;i++){
            if((lista[i].correo === email)&&(lista[i].password === password)){
               bandera += 1;
+
               break;
            }
          }
@@ -56,7 +57,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
           res.status(400).json({ message: "Usuario o clave invalidada" });
          }else{
           // se redireciona al perfil del usuario
-          res.status(200).json({ message: "Inicio de sesión exitoso", url: "/view/perfilCliente.html?cliente=" + correo });
+          res.status(200).json({ message: "Inicio de sesión exitoso", url: "/view/perfilCliente.html?cliente=" + email });
          }
       } 
    });      
