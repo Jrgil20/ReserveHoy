@@ -72,7 +72,34 @@
                 </div>
                 <hr>
                 <div class="text-center" style="display: block;"> <!-- SE DESPLEGARÁ SI ES EL MISMO USUARIO, SI ES EL RESTAURANTE QUE VE LOS DATOS DEL CLIENTE, SE MANTIENE ASI.-->
+                  
                   <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#editarPerfil">Editar Perfil</button>
+  
+                  <!-- Botón Eliminar Perfil -->
+                  <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#eliminarPerfilModal">Eliminar Perfil</button>
+                  
+                  <!-- Modal para eliminar perfil -->
+                  <div class="modal fade" id="eliminarPerfilModal" tabindex="-1" role="dialog" aria-labelledby="eliminarPerfilModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="eliminarPerfilModalLabel">Eliminar Perfil</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>¿Estás seguro de que deseas eliminar tu perfil?</p>
+                          <p>Ingresa tu contraseña para confirmar:</p>
+                          <input type="password" class="form-control" id="contraseñaEliminar" placeholder="Contraseña" required>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                          <button type="button" class="btn btn-danger" id="eliminarPerfilBtn">Eliminar Perfil</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div id="editarPerfil" class="collapse mt-3">
                     <!-- Formulario para editar perfil del cliente -->
                     <form id="editarPerfilForm">
