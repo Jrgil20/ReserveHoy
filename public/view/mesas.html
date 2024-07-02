@@ -58,7 +58,7 @@
     
         
     <div class="container">
-        <div class="card">
+        <div class="card mb-0">
           <div class="card-body">
             <h5 class="card-title">Lista de Mesas</h5>
             <table class="table table-fixed">
@@ -75,27 +75,74 @@
             </table>
           </div>
         </div> 
-          <!-- Tarjeta de Formulario de Plato -->
-          <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-4 float-left">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-text">Nueva Mesa</h5>
-                        
-                        <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#platoForm">Agregar Mesa</button>
-                        <div id="platoForm" class="collapse mt-3">
-                            <!-- Contenido del formulario para agregar mesas -->
-                            <div class="form-group">
-                              <form id="mesaForm">
-                                <label for="capacidad">Numero de Asientos:</label>
-                                <input name = "capacidad" type="text" class="form-control" id="capacidad" min="1">
-                                <input type="hidden" name="correoRestaurante" id="correoRestaurante">
-                                <button type="submit" class="btn btn-success">Agregar</button>
-                              </form>
-                            <script src="../assets/js/modifMesa.js"></script>
-                            </div>
-                        </div>
+              <div class="card-body">
+                <h5 class="card-text">Nueva Mesa</h5>
+                <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#platoForm">Agregar Mesa</button>
+                <div id="platoForm" class="collapse mt-3">
+                  <!-- Contenido del formulario para agregar mesas -->
+                  <div class="form-group">
+                    <form id="mesaForm">
+                      <label for="capacidad">Numero de Asientos:</label>
+                      <input name="capacidad" type="text" class="form-control" id="capacidad" min="1">
+                      <input type="hidden" name="correoRestaurante" id="correoRestaurante">
+                      <button type="submit" class="btn btn-success">Agregar</button>
+                    </form>
+                  <script src="../assets/js/modifMesa.js"></script>
+                  </div>
                 </div>
+              </div>
+            </div>
           </div>
+          <div class="col-md-4 float-left">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-text">Eliminar Mesa</h5>
+                <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#eliminarForm">Eliminar Mesa</button>
+                <div id="eliminarForm" class="collapse mt-3">
+                  <form id="eliminarMesaForm">
+                    <div class="form-group">
+                      <label for="id-eliminar">ID de la mesa a eliminar:</label>
+                      <input type="number" class="form-control" id="id-eliminar" name="id-eliminar" min="1">
+                    </div>
+                    <button type="submit" class="btn btn-danger">Eliminar Mesa</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 float-left">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-text">Modificar Mesa</h5>
+                <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#modificarForm">Modificar Mesa</button>
+                <div id="modificarForm" class="collapse mt-3">
+                  <form id="modificarMesaForm">
+                    <div class="form-group">
+                      <label for="id-modificar">ID de la mesa a modificar:</label>
+                      <input type="number" class="form-control" id="id-modificar" name="id-modificar" min="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="asientos-modificar">Número de asientos:</label>
+                      <input type="number" class="form-control" id="asientos-modificar" name="asientos-modificar" min="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="estatus-modificar">Estatus de la mesa:</label>
+                      <select class="form-control" id="estatus-modificar" name="estatus-modificar">
+                        <option value="Disponible">Disponible</option>
+                        <option value="Ocupada">Ocupada</option>
+                        <option value="Reservada">Reservada</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar Mesa</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
     </div>
     </div>
