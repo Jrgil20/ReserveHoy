@@ -62,10 +62,10 @@
 
     <div class="container mt-5">
         <div class="row" style="flex-wrap: nowrap;
-        justify-content: center;">
+        justify-content: center; ">
           <!-- Tarjeta de Información del Restaurante -->
           <div class="col-md-20">
-            <div class="card" style="margin-bottom: 100px;">
+            <div class="card" style="margin-bottom: 100px; margin-left: 600px;">
               <div class="card-body">
                 <h1 class="card-title"><span id="NombreDelRestaurante"></span></h1>
                 <p class="card-text">Descripción: <span id="DescripcionDelRestaurant"></span></p>
@@ -120,49 +120,79 @@
           <!-- Tarjeta de Formulario de Plato -->
           <div class="col-md-20">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-text">Menú</h5>
-                        <ul>
-                            <li>Entradas: </li>
-                            <li>Platos principales: </li>
-                            <li>Postres: </li>
-                        </ul>
-                        <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#platoForm">Agregar Plato</button>
-                        <div id="platoForm" class="collapse mt-3">
-                            <!-- Contenido del formulario para agregar platos -->
-                           <form id="platForm">
-                            <div class="form-group">
-                                <label for="nombrePlato">Tipo de Plato:</label>
-                                <input type="text" class="form-control" name="tipoPlato" id="tipoPlato" placeholder="Tipo de plato" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombrePlato">Nombre del Plato:</label>
-                                <input type="text" class="form-control" name="nombrePlato" id="nombrePlato" placeholder="Nombre del plato" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombrePlato">Precio</label>
-                                <input type="text" class="form-control" name="precioPlato" id="precioPlato" placeholder="Precio del plato" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombrePlato">Descripcion:</label>
-                                <input type="text" class="form-control" name="descripPlato" id="descripPlato" placeholder="Descripcion del plato" required>
-                            </div>
-                            <div class="form-group">
-                              <input type="hidden" name="correoResPlat" id="correoResPlat">
-                            </div>
-                            <button type="submit" class="btn btn-success">Guardar</button>
-                            </form>
-                        </div>
-                    <h5 class="card-text">Mesas</h5>
-
-                           <script src="../assets/js/agregPlato.js"></script>
-                           <form id="BuscaMesa">
-                            <button type="submit" class="btn btn-outline-primary">Ver Mesas</button>
-                           </form>
-                           <script src ="../assets/js/BuscarMesa.js"></script>
+              <div class="card-body">
+                <h5 class="card-text">Menú</h5>
+                <ul>
+                  <li>Entradas: </li>
+                  <li>Platos principales: </li>
+                  <li>Postres: </li>
+                </ul>
+                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#platoForm">Agregar Plato</button>
+                <div id="platoForm" class="collapse mt-3">
+                  <!-- Contenido del formulario para agregar platos -->
+                  <form id="platForm">
+                    <div class="form-group">
+                      <label for="nombrePlato">Tipo de Plato:</label>
+                      <input type="text" class="form-control" name="tipoPlato" id="tipoPlato" placeholder="Tipo de plato" required>
                     </div>
-
+                    <div class="form-group">
+                      <label for="nombrePlato">Nombre del Plato:</label>
+                      <input type="text" class="form-control" name="nombrePlato" id="nombrePlato" placeholder="Nombre del plato" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="nombrePlato">Precio</label>
+                      <input type="text" class="form-control" name="precioPlato" id="precioPlato" placeholder="Precio del plato" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="nombrePlato">Descripcion:</label>
+                      <input type="text" class="form-control" name="descripPlato" id="descripPlato" placeholder="Descripcion del plato" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="hidden" name="correoResPlat" id="correoResPlat">
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3">Guardar</button>
+                  </form>
                 </div>
+                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#modificarForm">Modificar Plato</button>
+                <div id="modificarForm" class="collapse mt-3">
+                  <form id="modificarPlatoForm">
+                    <div class="form-group">
+                      <label for="nombrePlatoModificar">Nombre del Plato a modificar:</label>
+                      <input type="text" class="form-control" name="nombrePlatoModificar" id="nombrePlatoModificar" placeholder="Nombre del plato a modificar" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="tipoPlatoModificar">Tipo de Plato:</label>
+                      <input type="text" class="form-control" name="tipoPlatoModificar" id="tipoPlatoModificar" placeholder="Tipo de plato" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="precioPlatoModificar">Precio:</label>
+                      <input type="text" class="form-control" name="precioPlatoModificar" id="precioPlatoModificar" placeholder="Precio del plato" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="descripPlatoModificar">Descripcion:</label>
+                      <input type="text" class="form-control" name="descripPlatoModificar" id="descripPlatoModificar" placeholder="Descripcion del plato" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Modificar</button>
+                  </form>
+                </div>
+                <button type="button" class="btn btn-outline-danger mt-3" data-toggle="collapse" data-target="#eliminarForm">Eliminar Plato</button>
+                <div id="eliminarForm" class="collapse mt-3">
+                  <form id="eliminarPlatoForm">
+                    <div class="form-group">
+                      <label for="nombrePlatoEliminar">Nombre del Plato a eliminar:</label>
+                      <input type="text" class="form-control" name="nombrePlatoEliminar" id="nombrePlatoEliminar" placeholder="Nombre del plato a eliminar" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
+                  </form>
+                </div>
+                <h5 class="card-text mt-3">Mesas</h5>
+                <form id="BuscaMesa">
+                  <button type="submit" class="btn btn-outline-primary">Ver Mesas</button>
+                </form>
+                <script src="../assets/js/BuscarMesa.js"></script>
+              </div>
+            </div>
+            </div>
           </div>
     </div>
     </div>
