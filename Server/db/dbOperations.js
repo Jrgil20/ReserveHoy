@@ -13,6 +13,22 @@ function seleccionarDeTabla(tabla, columnas, callback) {
     });
 }
 
+function seleccionarDeTablaConWHere(tabla,columnas,condiciones,callback){
+    // Verificar si columnas es un array y convertirlo a cadena separada por comas, o usar * si es necesario
+    const columnasSQL = Array.isArray(columnas) ? columnas.join(', ') : columnas;
+
+    // Construir la parte WHERE de la consulta SQL
+    const whereSQL = Object.keys(condiciones).map(key => `${key} = ?`).join(' AND ');
+
+    // Construir la consulta SQL dinámicamente
+    const sql = `SELECT ${columnasSQL} FROM ${tabla} WHERE ${whereSQL}`;
+
+    conexion.query(sql, Object.values(condiciones), (err,result) => {
+        callback(err,result);
+    })
+
+}
+
 function insertarEnTabla(tabla, datos, callback) {
     // Construir la consulta SQL dinámicamente
     const columnas = Object.keys(datos).join(', ');
@@ -57,4 +73,4 @@ function eliminarEnTabla(tabla,datos,callback){
     })
 }
 
-module.exports = { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla };
+module.exports = { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere };

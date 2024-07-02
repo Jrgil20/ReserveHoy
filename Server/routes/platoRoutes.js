@@ -67,10 +67,10 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
   })
   
   // Ruta POST para consultar todos los platos de un restaurante
-  router.post("/consultarPlatos",(req,res)=>{
+  router.get("/consultarPlatos/:correoRest",(req,res)=>{
     //consulta para traer todos los platos
-    const restaurante = req.body.restaurante;
-    console.log(restaurante);
+    const restaurante = req.params.correoRest;
+
     const platos = "SELECT * FROM plato WHERE correoRes = '"+restaurante+"'";
     //hace la consulta
     conexion.query(platos,(err,list)=>{

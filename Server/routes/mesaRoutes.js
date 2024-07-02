@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla  } = require('../db/dbOperations');
+const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere  } = require('../db/dbOperations');
 
 
   // Ruta POST para agregar mesa
@@ -63,19 +63,19 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla 
   router.get("/buscarMesasRest/:correoRest",(req,res)=>{
 
     const correoRest = req.params.correoRest;//Obtiene el correo de la ruta
-    let traeMesas= "SELECT * FROM mesa WHERE correoRes = '"+correoRest+"'";//Declaramos el query
-    conexion.query(traeMesas,(err,result)=>{//Hacemos el query
 
-    if(err){
-      res.status(500).json({ error: 'An error occurred' });//Si hay error, manda la notifiacion
-    }else{
-      if(result.length > 0){
-        res.status(200).json(result);//Si hay mesas, devuelve la lista
+    seleccionarDeTablaConWHere('mesa','*',{correoRes:correoRest}, (err,result)=>{//Hacemos el query
+
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });//Si hay error, manda la notifiacion
       }else{
-       res.status(404).json({ message: 'No hay mesas para este restaurante' });//Si no hay, devuelve error 404 not found
+        if(result.length > 0){
+          res.status(200).json(result);//Si hay mesas, devuelve la lista
+        }else{
+         res.status(404).json({ message: 'No hay mesas para este restaurante' });//Si no hay, devuelve error 404 not found
+        }
       }
-    }
-    })
+      })
   })
 
 

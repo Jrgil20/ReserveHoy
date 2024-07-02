@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla  } = require('../db/dbOperations');
+const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablacConWhere } = require('../db/dbOperations');
 
     // Ruta POST para agregar reserva
   router.post("/agregarReserva", (req,res)=>{
