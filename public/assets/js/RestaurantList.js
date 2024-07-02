@@ -1,61 +1,65 @@
-async function traeRestaurantes(){
-    try {
-        const response = await fetch('/traeRestaurantes/');
-        //hacemos una peticion a la ruta /traeRestaurantes
-        //la palabra reservada await hace que la funcion se espere a que la promesa se resuelva
-        const data = await response.json();
-        //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
-        //la funcion json() convierte la respuesta del servidor en un objeto json
+async function traeRestaurantes() {
+  try {
+    const response = await fetch('/traeRestaurantes/');
+    const data = await response.json();
 
-        // Obtén el elemento padre donde quieres añadir los nuevos elementos
-        let padre = document.getElementById('ListaDeRestaurantes');
+    let padre = document.getElementById('ListaDeRestaurantes');
+    displayRestaurantes(data, padre); // Muestra inicialmente todos los restaurantes
 
-        // Recorre la lista de restaurantes aliados
-        for (let restaurante of data) {
-          // Crea los nuevos elementos
-          let col = document.createElement('div');
-          col.className = 'col-md-12';
+    // Evento de entrada para el campo de búsqueda
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+      const textoFiltrado = searchInput.value.toLowerCase();
+      const datosFiltrados = data.filter(restaurante => restaurante.nombre.toLowerCase().includes(textoFiltrado));
+      displayRestaurantes(datosFiltrados, padre); // Muestra los restaurantes filtrados
+    });
 
-          let card = document.createElement('div');
-          card.className = 'card';
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
-          let img = document.createElement('img');
-          img.src = '/assets/img/Restaurant.png';
-          img.className = 'card-img-top';
-          img.alt = 'Imagen del producto';
+function displayRestaurantes(data, padre) {
+  padre.innerHTML = ''; // Limpia el contenedor antes de mostrar los resultados filtrados
+  for (let restaurante of data) {
+    let col = document.createElement('div');
+    col.className = 'col-md-12';
 
-          let cardBody = document.createElement('div');
-          cardBody.className = 'card-body';
+    let card = document.createElement('div');
+    card.className = 'card';
 
-          let h5 = document.createElement('h5');
-          h5.className = 'card-title';
-          h5.textContent = restaurante.nombre;
+    let img = document.createElement('img');
+    img.src = '/assets/img/Restaurant.png';
+    img.className = 'card-img-top';
+    img.alt = 'Imagen del producto';
 
-          let p = document.createElement('p');
-          p.className = 'card-text';
-          p.textContent = restaurante.correoRes;
+    let cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
 
-          let a = document.createElement('a');
-          a.href = 'restaurant.html?restaurante=' + restaurante.correoRes;
-          a.className = 'btn btn-primary';
-          a.textContent = 'Ver más';
+    let h5 = document.createElement('h5');
+    h5.className = 'card-title';
+    h5.textContent = restaurante.nombre;
 
-          // Añade los nuevos elementos al DOM
-          cardBody.appendChild(h5);
-          cardBody.appendChild(p);
-          cardBody.appendChild(a);
+    let p = document.createElement('p');
+    p.className = 'card-text';
+    p.textContent = restaurante.correoRes;
 
-          card.appendChild(img);
-          card.appendChild(cardBody);
+    let a = document.createElement('a');
+    a.href = 'restaurant.html?restaurante=' + restaurante.correoRes;
+    a.className = 'btn btn-primary';
+    a.textContent = 'Ver más';
 
-          col.appendChild(card);
+    cardBody.appendChild(h5);
+    cardBody.appendChild(p);
+    cardBody.appendChild(a);
 
-          padre.appendChild(col);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
+    card.appendChild(img);
+    card.appendChild(cardBody);
+
+    col.appendChild(card);
+
+    padre.appendChild(col);
+  }
 }
 
 traeRestaurantes();
-
