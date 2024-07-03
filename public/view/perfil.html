@@ -140,6 +140,8 @@
                       </br>
                       <button type="submit" class="btn btn-success mb-3">Guardar Modificación</button>
                     </form>
+
+                    <script src="../assets/js/modifInfoRestaurante.js"></script>
                 </div>
                 <h5>Imagenes</h5>
                 <div class="text-center">
@@ -164,6 +166,7 @@
                       <p>¿Estás seguro de que deseas eliminar el restaurante?</p>
                       <p>Ingresa tu contraseña para confirmar:</p>
                       <input type="password" class="form-control" id="contraseñaEliminar" placeholder="Contraseña" required>
+                      <input type="hidden" name="claveActual" id="claveActual">
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -171,6 +174,7 @@
                     </div>
                   </div>
                 </div>
+                <script src="../assets/js/eliminRestaurante.js"></script>
               </div>
             </div>
           </div>
@@ -244,6 +248,7 @@
                     </div>
                     <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
                   </form>
+                  <script src="../assets/js/eliminPlato.js"></script>
                 </div>
                 <h5 class="card-text mt-3">Mesas</h5>
                 <form id="BuscaMesa">

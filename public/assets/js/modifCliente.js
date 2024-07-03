@@ -1,5 +1,3 @@
-console.log('El archivo modificar cliente ha sido llamado');
-
 document.getElementById('editarPerfilForm').addEventListener('submit', function(event) {
       event.preventDefault();
 

@@ -129,13 +129,13 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   router.put("/modificarInfoRestaurante",(req,res)=>{
     const datos = req.body;
 
-    const {nombre,direccion,telefono,clave,correoRes,descripcion,horLunVier,horFinDe} = datos;
+    const {claveLocal,direccion,descripcion,horario,horFin} = datos;
 
-    actualizarEnTabla('restaurante',{nombre:nombre, direccion:direccion, telefono:telefono, clave:clave, descripcion:descripcion, horLunVier:horLunVier, horFinDe:horFinDe},{correoRes:correoRes},(err,result)=>{
+    actualizarEnTabla('restaurante',{direccion:direccion, descripcion:descripcion, horLunVier:horario, horFinDe:horFin},{correoRes:claveLocal},(err,result)=>{
       if(err){
           res.status(500).json({ error: 'An error occurred' });
        }else{
-          res.status(200).json({ message: 'Restaurante modificado con éxito' });
+          res.status(200).send('Restaurante modificado con éxito');
         }
     })
   })
@@ -167,7 +167,7 @@ eliminarEnTabla('restaurante',restaurante, (err,result) => {
   if(err){
     throw err;
   }else{
-    res.status(200).send('Perfil eliminado con éxito');
+    res.status(200).json({ message: "Perfil eliminado con exitoso", url: "/" });
   }
 })
 

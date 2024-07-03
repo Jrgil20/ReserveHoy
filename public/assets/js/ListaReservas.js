@@ -67,9 +67,7 @@ async function traeReservas(correoRes){
 
           // Añade el elemento <tr> al elemento padre
           padre.appendChild(tr);
-        
         }
-
       } catch (error) {
         console.error('Error:', error);
       }

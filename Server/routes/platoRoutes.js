@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere  } = require('../db/dbOperations');
+const { insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere  } = require('../db/dbOperations');
 
   // Ruta POST para agregar plato
   router.post("/agregarPlato", (req,res)=>{
@@ -104,12 +104,12 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   });
   
   //Ruta DELETE para eliminar un plato
-router.delete('eliminarPlato', (req,res) => {
+router.delete('/eliminarPlato', (req,res) => {
   const datos = req.body;
 
-  const {idAEliminar,correoRes} = datos;
+  const {nombrePlato,correoRes} = datos;
 
-  eliminarEnTabla('plato',{idPlato:idAEliminar, correoRes: correoRes},(err,result) => {
+  eliminarEnTabla('plato',{nombrePlato:nombrePlato, correoRes: correoRes},(err,result) => {
      if(err){
        throw err;
      }else{

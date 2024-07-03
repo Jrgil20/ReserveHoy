@@ -155,6 +155,16 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
     })
     })
   
+   //Ruta GET que trae todas las reservas
+   router.get("/traerReservas", (req,res) => {
+      seleccionarDeTabla('reserva','*', (err,result) => {
+         if(err){
+           res.status(500).json({error: 'Ha ocurrido un eror'})
+         }else{
+           res.status(200).json(result);
+         }
+      })
+   })
 
   //Ruta GET que trae todos las reservas de un restaurante
   router.get("/buscarReservasRest/:correoRes",(req,res)=>{

@@ -3,7 +3,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const Correo = urlParams.get('cliente');
 // obtenemos el valor de la url
 
-
 generaPerfilcliente(Correo);
 
 async function generaPerfilcliente(Correo){
@@ -13,7 +12,9 @@ async function generaPerfilcliente(Correo){
         const data = await response.json();
 
         document.getElementById('nombreCliente').textContent = data.NombreApellido;
+        
         document.getElementById('correoCliente').textContent = data.correo;
+
         document.getElementById('telefonoCliente').textContent = data.telefono;
       } catch (error) {
         console.error('Error:', error);
@@ -21,5 +22,4 @@ async function generaPerfilcliente(Correo){
 }
 
 // Guardar correo del cliente en sessionStorage
-console.log(Correo);
 sessionStorage.setItem('correoCliente', Correo);
