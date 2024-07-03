@@ -34,10 +34,41 @@ fetch(`/consultarPlatos/${correoResPlat}`)
         botonPlato.className = 'btn btn-secondary'; // Agrega la clase btn y btn-secondary
 
         botonPlato.addEventListener('click', (e) => {
-          let platoId = e.target.dataset.platoId;
-          let platoDetallado = data.find(plato => plato.id === platoId);
-          mostrarInformacionDetallada(platoDetallado);
-        });
+            let platoId = e.target.dataset.platoId;
+            let platoDetallado = data.find(plato => plato.id === platoId);
+          
+            // Crear el collapse para mostrar la información del plato
+            let collapseTemplate = document.getElementById('plato-info-template');
+            let collapseHtml = collapseTemplate.innerHTML.replace(/{{platoId}}/g, platoId);
+            collapseHtml = collapseHtml.replace('{{platoNombre}}', platoDetallado.nombrePlato);
+            collapseHtml = collapseHtml.replace('{{platoTipo}}', platoDetallado.tipo);
+            collapseHtml = collapseHtml.replace('{{platoDescripcion}}', platoDetallado.descripcion);
+            collapseHtml = collapseHtml.replace('{{platoPrecio}}', platoDetallado.precio);
+          
+            let collapseElement = document.createElement('div');
+            collapseElement.innerHTML = collapseHtml;
+            document.getElementById('platos').appendChild(collapseElement);
+          
+            // Mostrar el collapse
+            let collapseId = `plato-info-${platoId}`;
+            let collapseElementToShow = document.getElementById(collapseId);
+            collapseElementToShow.classList.add('show');
+          });
+
+          document.querySelectorAll('#platos button[id^="eliminar-plato-"]').forEach(boton => {
+            boton.addEventListener('click', () => {
+              let platoId = boton.id.replace('eliminar-plato-', '');
+              // Lógica para eliminar el plato
+              console.log(`Eliminar plato ${platoId}`);
+            });
+          });
+          document.querySelectorAll('#platos button[id^="modificar-plato-"]').forEach(boton => {
+            boton.addEventListener('click', () => {
+              let platoId = boton.id.replace('modificar-plato-', '');
+              // Lógica para modificar el plato
+              console.log(`Modificar plato ${platoId}`);
+            });
+          });
 
         contenedorBotones.appendChild(botonPlato);
       });
@@ -50,16 +81,3 @@ fetch(`/consultarPlatos/${correoResPlat}`)
     console.error('Error:', error);
   });
 
-function mostrarInformacionDetallada(plato) {
-  let modalBody = document.getElementById('modal-body');
-  modalBody.innerHTML = `
-    <h2>${plato.nombrePlato}</h2>
-    <p>Tipo de Plato: ${plato.tipo}</p>
-    <p>Descripción: ${plato.descripcion}</p>
-    <p>Precio: ${plato.precio}</p>
-    <!-- Agrega más información según sea necesario -->
-  `;
-
-  let modal = new bootstrap.Modal(document.getElementById('modalPlatoDetallado'));
-  modal.show();
-}
