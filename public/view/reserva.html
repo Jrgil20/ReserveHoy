@@ -21,6 +21,11 @@
 
    <!-- Script-->
    <script src="../assets/js/generaReserva.js"></script>
+
+   <!-- Enlace a JS de Bootstrap -->
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <header id="navbar-Container">
@@ -57,22 +62,81 @@
         </nav>
     </header>
 
-    <main >
+    <main>
         <div class="card text-center" >
             <div class="card-header">
-            <h4 class="fw-light">Reserva <span id="NumeroDeReserva"></span></h4>
+              <h4 class="fw-light">Reserva <span id="NumeroDeReserva"></span></h4>
             </div>
             <div class="card-body">
-
-              <h5 class="card-title">Reserva a nombre de <span id="PersonaQueReserva">#</span> en restaurante <span id="RestauranteDondeReserva"></span></h5>
-              <p class="card-text">  Estimado <span id="PersonaCualReserva"></span>, usted hizo una Reserva para <span id="NPersonas"></span> personas en el restaurant <span ></span> a la fecha <span id="FechaQueSeReserva" ></span> y hora de <span id="HoraDeReserva" ></span> con el correo <span id="CorreoDeQuienReserva"></span></p>
-              <a href="#" class="btn btn-primary">modificar</a>
+                <h5 class="card-title">Reserva a nombre de <span id="PersonaQueReserva">#</span> en restaurante <span id="RestauranteDondeReserva"></span></h5>
+                <p class="card-text">  Estimado <span id="PersonaCualReserva"></span>, usted hizo una Reserva para <span id="NPersonas"></span> personas en el restaurant <span ></span> a la fecha <span id="FechaQueSeReserva" ></span> y hora de <span id="HoraDeReserva" ></span> con el correo <span id="CorreoDeQuienReserva"></span></p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificarReservaModal">Modificar Reserva</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarReservaModal">Eliminar Reserva</button>
+              </div>
+              <div class="card-footer text-body-secondary">
+                <h6 class="fw-light"> <span id="TiempoDesdeReserva"></span> days ago</h6>
+              </div>
+          
+              <!-- Modal para eliminar reserva -->
+              <div class="modal fade" id="eliminarReservaModal" tabindex="-1" role="dialog" aria-labelledby="eliminarReservaModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="eliminarReservaModalLabel">Eliminar Reserva</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>¿Estás seguro de que deseas eliminar tu Reserva?</p>
+                      <p>Ingresa tu contraseña para confirmar:</p>
+                      <input type="password" class="form-control" id="contraseñaEliminar" placeholder="Contraseña" required>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-danger" id="eliminarPerfilBtn">Eliminar Reserva</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- Modal para modificar reserva -->
+            <div class="modal fade" id="modificarReservaModal" tabindex="-1" role="dialog" aria-labelledby="modificarReservaModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="modificarReservaModalLabel">Modificar Reserva</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Formulario de modificación de reserva -->
+                    <form  id="modificarReservaForm" class="form">      
+            
+                        <div class="form-group">
+                        <label for="FechayhoradelaReserva" >Fecha y hora:</label>
+                        <input type="datetime-local" class="form-control" name="FechayhoradelaReserva" id="FechayhoradelaReserva" placeholder="Seleccione una fecha y hora">
+                        <p id="error"></p>
+                        <script src="../assets/js/Horarios.js"></script>
+                        </div>
+            
+                        <div class="form-group">
+                        <label for="personas">Número de personas:</label>
+                        <input type="number" class="form-control" name="personas" id="personas" placeholder="1" min="1">
+                        </div>
+                        
+                        <div class="form-group" hidden>
+                        <label for="CorreoDelRestaurante">Correo del Restaurante:</label>
+                        <input type="hidden" class="form-control" name="CorreoDelRestaurante" id="CorreoDelRestaurante">
+                        </div>
+            
+                        <button type="submit" class="btn btn-success mt-3">Modificar Reserva</button>
+                    </form>
+                    </div>
+                </div>
+                </div>
             </div>
-            <div class="card-footer text-body-secondary">
-              <h6 class="fw-light"> <span id="TiempoDesdeReserva"></span> days ago</h6>
-            </div>
-          </div>
-
+        </div>
     </main>
 
     <!-- Seccion de pie de pagina-->
