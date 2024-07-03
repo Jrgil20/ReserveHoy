@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../assets/css/perfil.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <script src="../assets/js/GeneraPerfil.js"></script>
+
 
 </head>
 <body>
@@ -77,8 +77,8 @@
                 <h5>Contacto</h5>
                 <p>Teléfono: <span id="TelefonoDelRestaurant"></span></p>
                 <p>Dirección: <span id="DireccionDelRestaurant" ></span> </p>
-                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" data-target="#infoForm">Agregar Informacion Basica</button>
-                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" data-target="#modificarInfoForm">Modificar Informacion Basica</button>
+                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" id="botoninformacionRestaurante" data-target="#infoForm">Agregar Informacion Basica</button>
+                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" id="botonModificarInfo" data-target="#modificarInfoForm">Modificar Informacion Basica</button>
                 <div id="infoForm" class="collapse mt-3">
                 <!-- Contenido del formulario para actualizar informacion del restaurante -->
                  <h3>Agregar Información</h3>
@@ -94,8 +94,8 @@
                         </div>
                         <div class="form-group">
                             <label for="horarioFinde">Horario Fin de Semana:</label>
-                            <input type="time" class="form-control" name="horarioIniciofindesemana" id="horarioIniciofindesemana" placeholder="Hora de inicio finde" required>
-                            <input type="time" class="form-control" name="horarioFinfindesemana" id="horarioFinfindesemana" placeholder="Hora de fin finde" required>
+                            <input type="time" class="form-control" name="horarioIniciofindesemana" id="horarioIniciofindesemana" placeholder="Hora de inicio finde" >
+                            <input type="time" class="form-control" name="horarioFinfindesemana" id="horarioFinfindesemana" placeholder="Hora de fin finde" >
                         </div>
                         <div class="form-group">
                             <label for="direccion">Dirección:</label>
@@ -107,7 +107,6 @@
                         </br>
                         <button type="submit" class="btn btn-success">Guardar Información</button>
                     </form>
-                    
                     <script src="../assets/js/InformacionRestaurante.js"></script>
                 </br>
                 </div>
@@ -143,6 +142,9 @@
 
                     <script src="../assets/js/modifInfoRestaurante.js"></script>
                 </div>
+                
+                <script src="../assets/js/GeneraPerfil.js"></script>
+                
                 <h5>Imagenes</h5>
                 <div class="text-center">
                   <input type="file" id="imageInput" style="display: none;">
