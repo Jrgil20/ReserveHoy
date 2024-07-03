@@ -20,6 +20,8 @@ El sistema de reservas en línea ReserveHoy utiliza una variedad de tecnologías
 
 - **JavaScript**: Como lenguaje de programación principal, JavaScript se utiliza tanto en el lado del cliente como en el lado del servidor. Permite la interacción dinámica con la interfaz de usuario y la implementación de la lógica de negocio de ReserveHoy.
 
+- **Bootstrap 5**: Bootstrap 5 es un framework de diseño web que se utiliza en ReserveHoy para agilizar el desarrollo de la interfaz de usuario. Proporciona componentes y estilos predefinidos que facilitan la creación de una interfaz atractiva y responsive.
+
 Estas son solo algunas de las herramientas utilizadas en el desarrollo de ReserveHoy. El uso de estas tecnologías permite crear una aplicación robusta y escalable que cumple con los requisitos de reserva en línea para restaurantes.
 
 ## Licencia
