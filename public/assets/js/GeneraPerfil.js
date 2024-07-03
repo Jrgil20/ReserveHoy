@@ -18,6 +18,7 @@ async function cargaPerfil(correoRes){
           document.getElementById('DescripcionDelRestaurant').textContent = data.descripcion;
           document.getElementById('botoninformacionRestaurante').style.display = "none";
           document.getElementById('botonModificarInfo').style.display = "block";
+          document.getElementById('modificardescripcion').value = data.descripcion;
         } else {
           document.getElementById('DescripcionDelRestaurant').textContent = "No hay descripción";
           document.getElementById('botoninformacionRestaurante').style.display = "block";
@@ -26,16 +27,23 @@ async function cargaPerfil(correoRes){
         document.getElementById('TelefonoDelRestaurant').textContent = data.telefono;
         if(data.direccion){
           document.getElementById('DireccionDelRestaurant').textContent = data.direccion;
+          document.getElementById('modificardireccion').value = data.direccion;
         } else {
           document.getElementById('DireccionDelRestaurant').textContent = "No hay dirección";
         }
         if(data.horLunVier){
           document.getElementById('HorLunVierDelRestaurant').textContent = data.horLunVier;
+          const horarios = data.horLunVier.split(" - ");
+          document.getElementById('modificarhorarioInicio').value = horarios[0];
+          document.getElementById('modificarhorarioFin').value = horarios[1];
         } else {
           document.getElementById('HorLunVierDelRestaurant').textContent = "No hay horario";
         }
-        if(data.horSabDom){
-          document.getElementById('HorSabDomDelRestaurant').textContent = data.horSabDom;
+        if(data.horFinDe){
+          document.getElementById('HorSabDomDelRestaurant').textContent = data.horFinDe;
+          const horarios = data.horSabDom.split(" - ");
+          document.getElementById('modificarhorarioIniciofindesemana').value = horarios[0];
+          document.getElementById('modificarhorarioFinfindesemana').value = horarios[1];
         } else {
           document.getElementById('HorSabDomDelRestaurant').textContent = "No hay horario";
         }
