@@ -57,3 +57,4 @@ async function cargaPerfil(correoRes){
 
 // Guardar correo del restaurante en sessionStorage
 sessionStorage.setItem('correoRestaurante', correoRes);
+location.reload();
