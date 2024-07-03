@@ -189,6 +189,20 @@
                 <div class="Platos" id="platos" >
                   <script src="../assets/js/buscarPlato.js"></script>
                 </div>
+                <!-- Agrega el modal a tu HTML -->
+                <div class="modal fade" id="modalPlatoDetallado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Plato Detallado</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body" id="modal-body">
+                        <!-- La información detallada del plato se mostrará aquí -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#platoForm">Agregar Plato</button>
                 <div id="platoForm" class="collapse mt-3">
                   <!-- Contenido del formulario para agregar platos -->
