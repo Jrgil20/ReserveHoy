@@ -28,4 +28,5 @@ Estas son solo algunas de las herramientas utilizadas en el desarrollo de Reserv
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](./LICENSE) para obtener más información.
 
-Este es un proyecto hecho para fines académicos.
+## Este es un proyecto hecho para fines académicos.
+ 
