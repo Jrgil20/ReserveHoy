@@ -124,7 +124,7 @@ router.put('/modificarMesa', (req,res)=>{
     const datos = req.body;
     const id_Mesa = datos.id_Mesa;
     const correoRes = datos.correoRes;
-    const status = 0;
+    const status = datos.status;
     actualizarEnTabla('mesa',{status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,result) => {
       if(err){
         throw err;
