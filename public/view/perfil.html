@@ -67,7 +67,7 @@
         justify-content: center; ">
           <!-- Tarjeta de Información del Restaurante -->
           <div class="col-md-20">
-            <div class="card" style="margin-bottom: 100px; margin-left: 600px;">
+            <div class="card" style="margin-bottom: 100px; ">
               <div class="card-body">
                 <h1 class="card-title"><span id="NombreDelRestaurante"></span></h1>
                 <p class="card-text">Descripción: <span id="DescripcionDelRestaurant"></span></p>
@@ -77,9 +77,11 @@
                 <h5>Contacto</h5>
                 <p>Teléfono: <span id="TelefonoDelRestaurant"></span></p>
                 <p>Dirección: <span id="DireccionDelRestaurant" ></span> </p>
-                <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#infoForm">Agregar Informacion Basica</button>
+                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" data-target="#infoForm">Agregar Informacion Basica</button>
+                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" data-target="#modificarInfoForm">Modificar Informacion Basica</button>
                 <div id="infoForm" class="collapse mt-3">
                 <!-- Contenido del formulario para actualizar informacion del restaurante -->
+                 <h3>Agregar Información</h3>
                     <form id="FormInformacionRestaurante" class="form"  >
                         <div class="form-group">
                             <label for="nombre">Descripcion:</label>
@@ -103,10 +105,41 @@
                             <input type="text" class="form-control" name="correoRestaurante" id="correoRestaurante" >
                         </div>
                         </br>
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-success">Guardar Información</button>
                     </form>
+                    
                     <script src="../assets/js/InformacionRestaurante.js"></script>
                 </br>
+                </div>
+                <div id="modificarInfoForm" class="collapse mt-3">
+                  <!-- Contenido del formulario para modificar informacion del restaurante -->
+                    <h3>Modificar Información</h3>
+                    <form id="FormModificarInformacionRestaurante" class="form"  >
+                        <!-- Campos del formulario -->
+                        <div class="form-group">
+                          <label for="nombre">Descripcion:</label>
+                          <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Breve Descripcion" required >
+                      </div>
+                      <div class="form-group">
+                          <label for="horario">Horario Lunes a Viernes:</label>
+                          <input type="time" class="form-control" name="horarioInicio" id="horarioInicio" placeholder="Hora de inicio" required>
+                          <input type="time" class="form-control" name="horarioFin" id="horarioFin" placeholder="Hora de fin" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="horarioFinde">Horario Fin de Semana:</label>
+                          <input type="time" class="form-control" name="horarioIniciofindesemana" id="horarioIniciofindesemana" placeholder="Hora de inicio finde" required>
+                          <input type="time" class="form-control" name="horarioFinfindesemana" id="horarioFinfindesemana" placeholder="Hora de fin finde" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="direccion">Dirección:</label>
+                          <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Dirección del restaurante" >
+                      </div>
+                      <div class="form-group" hidden>
+                          <input type="text" class="form-control" name="correoRestaurante" id="correoRestaurante" >
+                      </div>
+                      </br>
+                      <button type="submit" class="btn btn-success mb-3">Guardar Modificación</button>
+                    </form>
                 </div>
                 <h5>Imagenes</h5>
                 <div class="text-center">
@@ -115,11 +148,35 @@
                     <i class="fas fa-plus-circle"></i>
                     </label>
                 </div>
+                <button type="button" class="btn btn-danger mt-5" data-toggle="modal" data-target="#eliminarRestauranteModal">Eliminar Restaurante</button>
+              </div>
+              <!-- Modal para eliminar restaurante -->
+              <div class="modal fade" id="eliminarRestauranteModal" tabindex="-1" role="dialog" aria-labelledby="eliminarRestauranteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="eliminarRestauranteModalLabel">Eliminar Restaurante</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>¿Estás seguro de que deseas eliminar el restaurante?</p>
+                      <p>Ingresa tu contraseña para confirmar:</p>
+                      <input type="password" class="form-control" id="contraseñaEliminar" placeholder="Contraseña" required>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-danger" id="eliminarRestauranteBtn">Eliminar Restaurante</button>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
+
           <!-- Tarjeta de Formulario de Plato -->
-          <div class="col-md-20">
+          <div class="col-md-5">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-text">Menú</h5>
