@@ -85,6 +85,12 @@ router.delete('/eliminarMesa',(req,res) => {
 
     const {idAEliminar,correoRes} = datos;
 
+    eliminarEnTabla('reserva',{idMesa:idAEliminar}, (err,result) => {
+      if(err){
+        throw err;
+      }
+   })
+
     eliminarEnTabla('mesa',{id_Mesa:idAEliminar, correoRes: correoRes},(err,result) => {
        if(err){
          throw err;

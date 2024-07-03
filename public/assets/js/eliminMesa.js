@@ -1,19 +1,33 @@
-const idAEliminar = 5;
+document.addEventListener("DOMContentLoaded",function(){
+    document.getElementById("eliminarMesaForm").addEventListener("submit", function(event){
+        event.preventDefault();
+        const idAEliminar = document.getElementById("id-eliminar").value;
+        const url = new URLSearchParams(window.location.search);
+        const correoRest = url.get('restaurante');
+        
+        console.log(correoRest);
+        console.log(idAEliminar);
 
-const correoRest = "mcdonalds@gmail.com";
+        if (!idAEliminar || !correoRest){
+            alert("Error: falta informaci[on para eliminar la mesa");
+        }
 
-fetch('/eliminarMesa',{
-    method: 'DELETE',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({idAEliminar:idAEliminar, correoRes: correoRest}),
+        fetch('/eliminarMesa',{
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({idAEliminar:idAEliminar, correoRes: correoRest}),
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    })
+
 })
-.then(response => response.text())
-.then(data => {
-    alert(data);
-    location.reload();
-})
-.catch((error) => {
-    console.error('Error:', error);
-});
+
