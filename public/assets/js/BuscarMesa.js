@@ -1,5 +1,5 @@
 document.getElementById('BuscaMesa').addEventListener('submit', function(event) {
     event.preventDefault();
-    let valor = document.getElementById('correoResPlat').value;
+    let valor = sessionStorage.getItem('correoRestaurante');
     window.location.href = "mesas.html?restaurante=" + valor;
   });
