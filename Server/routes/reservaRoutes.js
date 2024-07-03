@@ -191,6 +191,24 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
     })
   });
 
+  //Ruta PUT para modificar una reserva
+  router.put("/modificarReserva",(req,res)=>{
+    const datos = req.body;
+    const idReserva = datos.idReserva;
+    const fecha = datos.fecha;
+    const hora = datos.hora;
+    const numeroPersona = datos.numeroPersona;
+    console.log(idReserva, fecha, hora, numeroPersona);
+    actualizarEnTabla('reserva',{fecha:fecha,hora:hora,numeroPersona:numeroPersona},{idReserva:idReserva},(err,result)=>{
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });
+      }else{
+        res.status(200).send('Reserva modificada con éxito');
+      }
+    })
+    
+  })
+
 
 
 module.exports = router;

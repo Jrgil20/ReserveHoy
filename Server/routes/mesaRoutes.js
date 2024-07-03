@@ -97,10 +97,13 @@ router.delete('/eliminarMesa',(req,res) => {
 //Ruta PUT para modificar una mesa
 router.put('/modificarMesa', (req,res)=>{
     const datos = req.body;
-
-    const {id_Mesa, correoRes,capacidad,status} = datos;
-
-    actualizarEnTabla('mesa',{capacidad:capacidad, status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,res) => {
+    
+    const id_Mesa = datos.id_Mesa;
+    const capacidad = datos.capacidad;
+    const status = datos.status;
+    const correoRes = datos.correoRes;
+    
+    actualizarEnTabla('mesa',{capacidad:capacidad, status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,result) => {
       if(err){
         throw err;
       }else{
