@@ -1,5 +1,10 @@
 const correoResPlat = sessionStorage.getItem('correoRestaurante');
+ if(correoResPlat){
 
+ } else{
+    const url = new URLSearchParams(window.location.search);
+    correoResPlat = url.get('restaurante');
+ }
 
 fetch(`/consultarPlatos/${correoResPlat}`)
  .then(response => response.json())
