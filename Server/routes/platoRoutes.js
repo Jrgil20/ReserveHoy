@@ -13,54 +13,51 @@ const { insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaC
     const idPlato = Math.floor(Math.random()*100);
   
     //busca si ya existe un plato con el mismo nombre en un restaurante
-    const buscarPlatoRest = "SELECT * FROM plato WHERE correoRes = '"+correoRestaurante+"' AND nombrePlato = '"+nombrePlato+"'";
   
     //se hace la consulta
-    conexion.query(buscarPlatoRest,function(err,row){
+    seleccionarDeTablaConWHere('plato','*',{correoRes:correoRestaurante, nombrePlato:nombrePlato}, (err,row)=> {
       if (err){
         throw err;
       }else{
         //verifica en las tablas si ya existe un plato con el mismo nombre, si esta es mayor a 0
         if(row.length>0){
-          res.status(304).send(`<script>alert("Este plato ya existe en el menu");</script>`);
+          res.status(409).send('Ese plato ya existe en el menu');
         }else{
-           const confirmarPlato = "SELECT * FROM plato WHERE idPlato = '"+idPlato+"' AND correoRes = '"+correoRestaurante+"'";
-           conexion.query(confirmarPlato,function(error,lista){
-              if(error){
-                 throw error;
+           seleccionarDeTablaConWHere('plato','*',{idPlato:idPlato, correoRes:correoRestaurante}, (error,lista) => {
+            if(error){
+               throw error;
+            }else{
+              if(lista.length > 0){
+                const bandera = 0;
+                do{
+                  idPlato = Math.floor(Math.random()*100);
+                  for(const i=0;i<lista.length;i++){
+                    if(idPlato === lista[i].idPlato){
+                      bandera = 1;
+                      break;
+                    }
+                  }
+                }while(bandera === 0);
+                insertarEnTabla('plato',{idPlato:idPlato, nombrePlato:nombrePlato, tipo:tipo, precio:precio,descripcion:descripcion, correoRes: correoRestaurante }, (mistake,result) =>
+                {
+                  if(mistake){
+                    res.status(500).json({ error: mistake });
+                  }else{
+                    res.status(200).send('Plato agregado con éxito');
+                  }
+                })
               }else{
-                if(lista.length > 0){
-                  const bandera = 0;
-                  do{
-                    idPlato = Math.floor(Math.random()*100);
-                    for(const i=0;i<lista.length;i++){
-                      if(idPlato === lista[i].idPlato){
-                        bandera = 1;
-                        break;
-                      }
-                    }
-                  }while(bandera === 0);
-                  const registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
-                  conexion.query(registrarPlato,function(mistake,result)
-                  {
-                    if(mistake){
-                      res.status(500).json({ error: 'An error occurred' });
-                    }else{
-                      res.status(200).send(`<script>alert("Plato agregado"); window.location.href = "/";</script>`);
-                    }
-                  })
-                }else{
-                  const registrarPlato = "INSERT INTO plato (idPlato,nombrePlato,tipo,precio,descripcion,correoRes) VALUES ('"+idPlato+"','"+nombrePlato+"','"+tipo+"','"+precio+"', '"+descripcion+"', '"+correoRestaurante+"')";
-                  conexion.query(registrarPlato,function(mistake,result){
-                    if(mistake){
-                      res.status(500).json({ error: 'An error occurred' });
-                    }else{
-                      res.status(200).send(`Plato agregado con exito`);
-                    }
-                  })
-                }
+                insertarEnTabla('plato',{idPlato:idPlato, nombrePlato:nombrePlato, tipo:tipo, precio:precio,descripcion:descripcion, correoRes: correoRestaurante }, (mistake,result) =>
+                {
+                  if(mistake){
+                    res.status(500).json({ error: mistake });
+                  }else{
+                    res.status(200).send('Plato agregado con éxito');
+                  }
+                })
               }
-           })
+            }
+         })
         }
       }
     })

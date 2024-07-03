@@ -170,7 +170,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   router.get("/buscarReservasRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
 
-    seleccionarDeTablaConWHere('restaurante','*',{correoRes:correoRest},(err,result)=>{
+    seleccionarDeTablaConWHere('reserva','*',{correoRes:correoRest},(err,result)=>{
       if(err){
         res.status(500).json({ error: 'An error occurred' });
       }else{
@@ -178,6 +178,23 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
           res.status(200).json(result);
         }else{
          res.status(404).json({ message: 'No hay reservas para este restaurante' });
+        }
+      }
+   })
+   })
+
+   //Ruta GET que trae todas las reservas de un cliente
+   router.get("/buscarReservasCli/:correoCli", (req,res)=>{
+    const correoCliente = req.params.correoCli;
+
+    seleccionarDeTablaConWHere('reserva','*',{correoCli:correoCliente},(err,result)=>{
+      if(err){
+        res.status(500).json({ error: 'An error occurred' });
+      }else{
+        if(result.length > 0){
+          res.status(200).json(result);
+        }else{
+         res.status(404).json({ message: 'No hay reservas para este cliente' });
         }
       }
    })
