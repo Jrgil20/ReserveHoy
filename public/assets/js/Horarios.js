@@ -1,6 +1,5 @@
 
-const Restaurante = urlParams.get('restaurante');
-// obtenemos el valor de la url
+const Restaurante = document.getElementById('RestauranteDondeReserva').textContent;
 
 // Get the current date and time
 let now = new Date();

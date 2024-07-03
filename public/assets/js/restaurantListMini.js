@@ -10,8 +10,10 @@ async function traeRestaurantes(){
         // Obtén el elemento padre donde quieres añadir los nuevos elementos
         let padre = document.getElementById('ListaDeRestaurantes');
 
+        let i=0;
+
         // Recorre la lista de restaurantes aliados
-        for (let i = 0; i < 9; i++) {
+        while(i<9 && i<data.length){
             let restaurante = data[i];
 
             // Crea los nuevos elementos
@@ -38,7 +40,7 @@ async function traeRestaurantes(){
             p.textContent = restaurante.correoRes;
 
             let a = document.createElement('a');
-            a.href = 'restaurant.html?restaurante=' + restaurante.correoRes;
+            a.href = '/view/restaurant.html?restaurante=' + restaurante.correoRes;
             a.className = 'btn btn-primary';
             a.textContent = 'Ver más';
 
@@ -53,6 +55,8 @@ async function traeRestaurantes(){
             col.appendChild(card);
 
             padre.appendChild(col);
+
+            i++;
         }
       } catch (error) {
         console.error('Error:', error);

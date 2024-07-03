@@ -6,7 +6,7 @@
     <title>ReservaHoy | Reservas</title>
 
      <!-- Favicon -->
-     <link rel="shortcut icon" href="assets/img/letra-r.png" type="image/x-icon"/>
+     <link rel="shortcut icon" href="../assets/img/letra-r.png" type="image/x-icon"/>
     <!-- fontawesome-->
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 
@@ -17,13 +17,13 @@
     crossorigin="anonymous"/>
 
       <!-- Estilos CSS -->
-  <link rel="stylesheet" href="./assets/css/historial.css">
+  <link rel="stylesheet" href="../assets/css/historial.css">
 </head>
 <body>
     <header id="navbar-Container">
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand " href="index.html">ReservaHoy</a>
+                <a class="navbar-brand " href="/">ReservaHoy</a>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
@@ -32,10 +32,10 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="index.html">Inicio</a>
+                                <a class="nav-link mx-lg-2" href="/">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-lg-2 " href="catalogo.html">Catalogo </a>
+                                <a class="nav-link mx-lg-2 " href="./catalogo.html">Catalogo </a>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link mx-lg-2active" aria-current="page" href="#">Consulta</a>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <a id="login-button-nav" class="login-button" title="Login">
-                  <script src="./assets/js/navbar.js"></script>
+                  <script src="../assets/js/navbar.js"></script>
                     Volver
                 </a>
                 <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -52,10 +52,10 @@
                 </button>
             </div>
         </nav>
-        <div class="div-breadcrumb">
+        <div class="div-breadcrumb" style="background-color: #e1e9e5;">
           <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="perfil.html">Perfil</a></li>
+              <li class="breadcrumb-item"><a href="./perfil.html">Perfil</a></li>
               <li class="breadcrumb-item active" aria-current="page">Consulta</li>
             </ol>
           </nav>
@@ -63,7 +63,7 @@
     </header>
 
     <main >
-        <div class="container" style="margin-top: 20vh;">
+        <div class="container">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Historial de Reservas</h5>
@@ -79,7 +79,7 @@
                   </thead>
                   <tbody id="ReservasList">
                     <!-- Filas de datos -->
-                    <script src="./assets/js/ListaReservas.js"></script>
+                    <script src="../assets/js/ListaReservas.js"></script>
                     <!-- Agrega más filas según tus necesidades -->
                   </tbody>
                 </table>

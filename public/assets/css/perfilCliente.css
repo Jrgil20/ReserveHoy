@@ -9,51 +9,38 @@ body {
 }
 
 main{
-    margin-top: 15vh;
+    margin-top: 20vh;
     padding: 0;
     margin-bottom: 100px;
-    min-height: 90vh;
-}
+  }
   
-.container { 
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
   
 .overview { 
     width: 70%; 
     padding: 20px; 
 }
   
-.reservation { 
-    position: fixed;
-    z-index: 1000;
-    max-width: 30vw;
-    top: 10vh;
-    right: 0;
-    display: flex;
-    flex-direction: column;
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Agrega un índice z para que el footer se superponga sobre otros elementos */
 }
 
-.footer{
-    bottom: 0;
-    width: 100%;
-    height: 100px;
-    background-color: #333;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
+  .contenedor-final {
+    margin-bottom: 100px; /* Agrega un margen igual a la altura del footer */
+  }
 /*prueba cards*/
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     margin-top: 70px;
-
   }
   
   .card:hover {
@@ -77,3 +64,4 @@ main{
     }
   }
 
+  
