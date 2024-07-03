@@ -118,4 +118,20 @@ router.put('/modificarMesa', (req,res)=>{
     })
   })
 
+  //Ruta PATCH para habilitar mesa
+  //se utiliza PATCH porque es una actualizacion parcialemente
+  router.patch('/habilitarMesa',(req,res)=>{
+    const datos = req.body;
+    const id_Mesa = datos.id_Mesa;
+    const correoRes = datos.correoRes;
+    const status = 0;
+    actualizarEnTabla('mesa',{status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,result) => {
+      if(err){
+        throw err;
+      }else{
+        res.status(200).send('Mesa habilitada con éxito');
+      }
+    })
+  })
+
 module.exports = router;
