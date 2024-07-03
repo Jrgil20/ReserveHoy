@@ -59,7 +59,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   });
 
   //RUTA POST para actualizar la informacion de un restaurante
-  router.post("/actualizarInformacionRestaurante",(req,res)=>{
+  router.put("/actualizarInformacionRestaurante",(req,res)=>{
     const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
 
     let {claveLocal,direccion,descripcion,horario,horFin} = datos;//Mediante destructuración, asignamos el contenido de datos a las variables

@@ -18,7 +18,7 @@ document.getElementById('FormInformacionRestaurante').addEventListener('submit',
 
     
     fetch('/actualizarInformacionRestaurante',{
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },

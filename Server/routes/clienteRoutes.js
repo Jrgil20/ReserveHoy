@@ -109,7 +109,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
    })
   })
 
-  //Ruta DELETE que elimina un cliente
+//Ruta DELETE que elimina un cliente
 router.delete("/eliminarCliente", (req,res) => {
   const datos = req.body;
 
@@ -125,7 +125,7 @@ router.delete("/eliminarCliente", (req,res) => {
      if(err){
        throw err;
      }else{
-      res.status(200).send('Perfil eliminado con éxito');
+      res.status(200).json({ message: "Perfil eliminado con exitoso", url: "/" });
      }
   })
 })
@@ -134,9 +134,9 @@ router.delete("/eliminarCliente", (req,res) => {
 router.put("/modificarCliente", (req,res) => {
   const datos = req.body;
 
-  const {nombre, password, correo, telefono} = datos;
+  const {NombreApellido, correo, telefono} = datos;
 
-  actualizarEnTabla('cliente',{NombreApellido:nombre, password:password, telefono:telefono},{correo:correo},(err,res) => {
+  actualizarEnTabla('cliente',{NombreApellido:NombreApellido, telefono:telefono},{correo:correo},(err,result) => {
     if(err){
       throw err;
     }else{

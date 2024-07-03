@@ -1,4 +1,5 @@
-const cliente = "ilianaguilarte@gmail.com"
+const cliente = sessionStorage.getItem('correoCliente');
+
 
 fetch('/eliminarCliente',{
     method: 'DELETE',
@@ -7,9 +8,15 @@ fetch('/eliminarCliente',{
     },
     body: JSON.stringify({correo: cliente}),
 })
-.then(response => response.text())
+.then(response => response.json())
 .then(data => {
-    alert(data);
+    if (data.message) {
+        alert(data.message);
+    }
+    sessionStorage.removeItem('correoCliente');
+    if (data.url) {
+        window.location.href = data.url;
+    }
 })
 .catch((error) => {
     console.error('Error:', error);

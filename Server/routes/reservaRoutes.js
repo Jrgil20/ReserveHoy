@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../db/conexion');
-const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablacConWhere } = require('../db/dbOperations');
+const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere} = require('../db/dbOperations');
 
     // Ruta POST para agregar reserva
   router.post("/agregarReserva", (req,res)=>{
@@ -146,7 +146,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
                     }
                   })
                }else{//Si no hay mesas del restaurante con la capacidad requerida, entra aquí
-                res.status(200).json({ message: 'No hay mesa Disponible'});
+                res.status(404).json({ message: 'No hay mesa Disponible'});
                }
              }
           })
@@ -160,7 +160,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   router.get("/buscarReservasRest/:correoRes",(req,res)=>{
     const correoRest = req.params.correoRes;
 
-    seleccionarDeTablacConWhere('reserva','*',{correoRes:correoRest}, (err,result)=>{
+    seleccionarDeTablaConWHere('restaurante','*',{correoRes:correoRest},(err,result)=>{
       if(err){
         res.status(500).json({ error: 'An error occurred' });
       }else{
@@ -177,7 +177,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
   router.get("/buscarReserva/:idReserva", (req, res) => {
     const idReserva = req.params.idReserva; // Obtiene el ID de la reserva de los parámetros de la ruta
   
-    seleccionarDeTablacConWhere('reserva','*',{idReserva:idReserva}, (err, result) => {
+    seleccionarDeTablaConWHere('reserva','*',{idReserva:idReserva}, (err, result) => {
       if (err) {
         console.log(err);
         res.status(500).json({ error: 'An error occurred' });

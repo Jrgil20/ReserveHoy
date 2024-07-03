@@ -1,22 +1,25 @@
 console.log('El archivo modificar cliente ha sido llamado');
 
-document.getElementById('clienteLoginForm').addEventListener('submit', function(event) {
-    const correo = "paola@gmail.com";
-    const nombre = "paolita";
-    const telefono = "12345678";
-    const pass = "1234";
+document.getElementById('editarPerfilForm').addEventListener('submit', function(event) {
+      event.preventDefault();
 
-    
+    const correo = document.getElementById('correoCliente').textContent;
+
+    const nombre = document.getElementById('nombre').value;
+
+    const telefono = document.getElementById('telefono').value;
+
     fetch ('/modificarCliente', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({NombreApellido:nombre, correo:correo, password:pass, telefono:telefono})
+        body: JSON.stringify({NombreApellido:nombre, correo:correo, telefono:telefono})
     })
     .then(response => response.text())
     .then(data => {
-        console.log(data);
+        alert(data);
+        location.reload();
     })
     .catch((error) => {
         console.error('Error:', error);

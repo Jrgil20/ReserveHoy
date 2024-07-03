@@ -109,7 +109,7 @@ router.delete('eliminarPlato', (req,res) => {
 
   const {idAEliminar,correoRes} = datos;
 
-  eliminarEnTabla('plato',{idPlato:idAEliminar, correoRes: correoRes},(err,res) => {
+  eliminarEnTabla('plato',{idPlato:idAEliminar, correoRes: correoRes},(err,result) => {
      if(err){
        throw err;
      }else{
@@ -122,9 +122,9 @@ router.delete('eliminarPlato', (req,res) => {
 router.put('/modificarPlato', (req,res)=>{
   const datos = req.body;
 
-  const {idPlato, correoRes,nombrePlato,tipo,precio,descripcion} = datos;
+  const {correoRes,nombrePlato,tipo,precio,descripcion} = datos;
 
-  actualizarEnTabla('plato',{nombrePlato:nombrePlato, tipo:tipo, precio:precio, descripcion:descripcion},{idPlato:idPlato, correoRes:correoRes},(err,res) => {
+  actualizarEnTabla('plato',{nombrePlato:nombrePlato, tipo:tipo, precio:precio, descripcion:descripcion},{nombrePlato:nombrePlato, correoRes:correoRes},(err,result) => {
     if(err){
       throw err;
     }else{
