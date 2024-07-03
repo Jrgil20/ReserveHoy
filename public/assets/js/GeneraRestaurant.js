@@ -42,10 +42,10 @@ async function traeMesas(correoRes){
         
           // Crea un elemento li para cada mesa
           let li = document.createElement('li');
-          li.textContent = 'mesa #'+mesa.numMesa+' con capacidad para '+mesa.capacidad+' personas, se encuentra '+mesa.status;
-          padre.appendChild(li);
 
-        
+          li.textContent = 'mesa #'+mesa.numMesa+' con capacidad para '+mesa.capacidad+' personas, se encuentra '+mesa.status;
+
+          padre.appendChild(li);
         }
 
       } catch (error) {

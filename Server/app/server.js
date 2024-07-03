@@ -42,7 +42,6 @@ const mesaRoutes = require('../routes/mesaRoutes');
 
 const platosRoutes = require('../routes/platoRoutes');
 
-
 app.use(clienteRoutes);
 
 app.use(restauranteRoutes);
@@ -52,7 +51,6 @@ app.use(reservaRoutes);
 app.use(mesaRoutes);
 
 app.use(platosRoutes);
-
 
 // Define una ruta GET para la ruta raíz ("/"). 
 app.get('/', (req, res) => {

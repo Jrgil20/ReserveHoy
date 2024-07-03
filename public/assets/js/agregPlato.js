@@ -1,6 +1,3 @@
-console.log("El archivo agregPlato fue llamado");
-
-
 document.getElementById('platForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
         

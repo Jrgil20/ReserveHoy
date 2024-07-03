@@ -1,6 +1,5 @@
-console.log('El archivo modificar plato ha sido llamado');
-
 document.getElementById('modificarPlatoForm').addEventListener("submit", function(event) {
+    
 event.preventDefault();
 
 const correoRes = sessionStorage.getItem('correoRestaurante');

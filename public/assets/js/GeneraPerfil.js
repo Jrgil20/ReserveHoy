@@ -3,9 +3,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const correoRes = urlParams.get('restaurante');
 // obtenemos el valor de la url
 
-traeReservas(correoRes);
+cargaPerfil(correoRes);
 
-async function traeReservas(correoRes){
+async function cargaPerfil(correoRes){
     try {
         const response = await fetch('/traeRest/' + correoRes);
         //hacemos una peticion a la ruta /buscarReserva/ + el valor de la url
@@ -20,6 +20,7 @@ async function traeReservas(correoRes){
         document.getElementById('HorLunVierDelRestaurant').textContent = data.horLunVier;
         document.getElementById('HorSabDomDelRestaurant').textContent = data.horFinDe;
         document.getElementById('correoResPlat').value = correoRes;
+        document.getElementById('claveActual').value = data.clave;
       } catch (error) {
         console.error('Error:', error);
       }

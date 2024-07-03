@@ -1,4 +1,4 @@
-const correoRes = "mcdonalds@gmail.com";
+const correoRes = sessionStorage.getItem('correoRestaurante');
 
 traePlatos(correoRes);
 

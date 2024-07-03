@@ -1,5 +1,3 @@
-console.log('El archivo agregarmesa.js ha sido llamado.');
-
 document.getElementById('correoRestaurante').value = sessionStorage.getItem('correoRestaurante');
 
 document.getElementById('mesaForm').addEventListener('submit', function(event) {
