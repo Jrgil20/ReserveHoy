@@ -85,6 +85,12 @@ router.delete('/eliminarMesa',(req,res) => {
 
     const {idAEliminar,correoRes} = datos;
 
+    eliminarEnTabla('reserva',{idMesa:idAEliminar}, (err,result) => {
+      if(err){
+        throw err;
+      }
+   })
+
     eliminarEnTabla('mesa',{id_Mesa:idAEliminar, correoRes: correoRes},(err,result) => {
        if(err){
          throw err;
@@ -108,6 +114,22 @@ router.put('/modificarMesa', (req,res)=>{
         throw err;
       }else{
         res.status(200).send('Mesa modificada con éxito');
+      }
+    })
+  })
+
+  //Ruta PATCH para habilitar mesa
+  //se utiliza PATCH porque es una actualizacion parcialemente
+  router.patch('/habilitarMesa',(req,res)=>{
+    const datos = req.body;
+    const id_Mesa = datos.id_Mesa;
+    const correoRes = datos.correoRes;
+    const status = datos.status;
+    actualizarEnTabla('mesa',{status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,result) => {
+      if(err){
+        throw err;
+      }else{
+        res.status(200).send('Mesa habilitada con éxito');
       }
     })
   })

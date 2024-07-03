@@ -69,7 +69,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
       if(err){
         res.status(500).json({ error: 'An error occurred' });//Si hay error, se envia la notifiacion de fallo
       }else {
-        res.status(200).send('<script>alert("Informacion agregada con con exito"); window.location.href = "/";</script>');
+        res.status(200).json({ message: "Informacion agregada con exito" });
         //Si todo sale bien, se envia la notificacion de éxito
       }
      })

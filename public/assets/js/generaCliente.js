@@ -16,6 +16,8 @@ async function generaPerfilcliente(Correo){
         document.getElementById('correoCliente').textContent = data.correo;
 
         document.getElementById('telefonoCliente').textContent = data.telefono;
+
+        document.getElementById('contraseñaCorrecta').value = data.password;
       } catch (error) {
         console.error('Error:', error);
       }

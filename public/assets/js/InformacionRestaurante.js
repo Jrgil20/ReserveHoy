@@ -22,7 +22,10 @@ document.getElementById('FormInformacionRestaurante').addEventListener('submit',
         body: JSON.stringify({claveLocal:restaurante, direccion:direccion, descripcion:descripcion, horario:horario, horFin:horFin}),
     })
     .then(response => response.text())
-    .then(data => alert(data))
+    .then(data => {
+        alert(data);
+        location.reload();
+    })
     .catch((error) => {
         console.error('Error:', error);
     });

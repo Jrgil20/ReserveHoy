@@ -9,7 +9,7 @@ document.getElementById('platForm').addEventListener('submit', function(event) {
         
         const descrip = document.getElementById('descripPlato').value;
 
-        const correoRest = document.getElementById('correoResPlat').value;
+        const correoRest = sessionStorage.getItem('correoRestaurante');
     
         fetch('/agregarPlato',{
             method: 'POST',

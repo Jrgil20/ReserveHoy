@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="../assets/css/perfil.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <script src="../assets/js/GeneraPerfil.js"></script>
 
 </head>
 <body>
@@ -77,8 +76,8 @@
                 <h5>Contacto</h5>
                 <p>Teléfono: <span id="TelefonoDelRestaurant"></span></p>
                 <p>Dirección: <span id="DireccionDelRestaurant" ></span> </p>
-                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" data-target="#infoForm">Agregar Informacion Basica</button>
-                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" data-target="#modificarInfoForm">Modificar Informacion Basica</button>
+                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" id="botoninformacionRestaurante" data-target="#infoForm">Agregar Informacion Basica</button>
+                <button type="button" class="btn btn-outline-primary mb-3" data-toggle="collapse" id="botonModificarInfo" data-target="#modificarInfoForm">Modificar Informacion Basica</button>
                 <div id="infoForm" class="collapse mt-3">
                 <!-- Contenido del formulario para actualizar informacion del restaurante -->
                  <h3>Agregar Información</h3>
@@ -94,8 +93,8 @@
                         </div>
                         <div class="form-group">
                             <label for="horarioFinde">Horario Fin de Semana:</label>
-                            <input type="time" class="form-control" name="horarioIniciofindesemana" id="horarioIniciofindesemana" placeholder="Hora de inicio finde" required>
-                            <input type="time" class="form-control" name="horarioFinfindesemana" id="horarioFinfindesemana" placeholder="Hora de fin finde" required>
+                            <input type="time" class="form-control" name="horarioIniciofindesemana" id="horarioIniciofindesemana" placeholder="Hora de inicio finde" >
+                            <input type="time" class="form-control" name="horarioFinfindesemana" id="horarioFinfindesemana" placeholder="Hora de fin finde" >
                         </div>
                         <div class="form-group">
                             <label for="direccion">Dirección:</label>
@@ -107,7 +106,6 @@
                         </br>
                         <button type="submit" class="btn btn-success">Guardar Información</button>
                     </form>
-                    
                     <script src="../assets/js/InformacionRestaurante.js"></script>
                 </br>
                 </div>
@@ -143,6 +141,9 @@
 
                     <script src="../assets/js/modifInfoRestaurante.js"></script>
                 </div>
+                
+                <script src="../assets/js/GeneraPerfil.js"></script>
+                
                 <h5>Imagenes</h5>
                 <div class="text-center">
                   <input type="file" id="imageInput" style="display: none;">
@@ -184,12 +185,24 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-text">Menú</h5>
-                <ul>
-                  <li>Entradas: </li>
-                  <li>Platos principales: </li>
-                  <li>Postres: </li>
-                </ul>
-                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#platoForm">Agregar Plato</button>
+                <div class="Platos" id="platos" >
+                  <script src="../assets/js/buscarPlato.js"></script>
+                </div>
+                <!-- Template para el collapse de información de plato -->
+                <div id="plato-info-template" style="display: none;">
+                  <div class="collapse" id="plato-info-{{platoId}}">
+                    <div class="card card-body">
+                      <h2>{{platoNombre}}</h2>
+                      <p>Tipo de Plato: {{platoTipo}}</p>
+                      <p>Descripción: {{platoDescripcion}}</p>
+                      <p>Precio: {{platoPrecio}}</p>
+                      <!-- Botones para eliminar y modificar plato -->
+                      <button class="btn btn-danger" id="eliminar-plato-{{platoId}}">Eliminar</button>
+                      <button class="btn btn-primary" id="modificar-plato-{{platoId}}">Modificar</button>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#platoForm" >Agregar Plato</button>
                 <div id="platoForm" class="collapse mt-3">
                   <!-- Contenido del formulario para agregar platos -->
                   <form id="platForm">
@@ -216,7 +229,7 @@
                   </form>
                   <script src="../assets/js/agregPlato.js"></script>
                 </div>
-                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#modificarForm">Modificar Plato</button>
+                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#modificarForm" style="display: none;">Modificar Plato</button>
                 <div id="modificarForm" class="collapse mt-3">
                   <form id="modificarPlatoForm">
                     <div class="form-group">
@@ -239,7 +252,7 @@
                   </form>
                   <script src="../assets/js/modifPlato.js"></script>
                 </div>
-                <button type="button" class="btn btn-outline-danger mt-3" data-toggle="collapse" data-target="#eliminarForm">Eliminar Plato</button>
+                <button type="button" class="btn btn-outline-danger mt-3" data-toggle="collapse" data-target="#eliminarForm" style="display: none;">Eliminar Plato</button>
                 <div id="eliminarForm" class="collapse mt-3">
                   <form id="eliminarPlatoForm">
                     <div class="form-group">

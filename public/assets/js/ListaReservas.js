@@ -10,7 +10,8 @@ async function traeReservas(correoRes){
         const response = await fetch('/buscarReservasRest/' + correoRes);
         //hacemos una peticion a la ruta /buscarReserva/ + el valor de la url
         //la palabra reservada await hace que la funcion se espere a que la promesa se resuelva
-        const data = await response.json();
+        if(response.status !== 404){//Este se hace para evitar que no itere sobre un objeto vacio
+          const data = await response.json();
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
         // Obtén el elemento padre donde quieres añadir los nuevos elementos
@@ -67,6 +68,7 @@ async function traeReservas(correoRes){
 
           // Añade el elemento <tr> al elemento padre
           padre.appendChild(tr);
+         }
         }
       } catch (error) {
         console.error('Error:', error);
