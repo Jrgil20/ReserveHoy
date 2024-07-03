@@ -69,11 +69,30 @@ main{
     background-color: #28a745;
     border-color: #28a745;
   }
+
+  #platos {
+    overflow-y: auto;
+    max-height: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
   
   /* Ajustes para pantallas pequeñas */
   @media (max-width: 768px) {
     .card {
       margin-bottom: 20px;
+    }
+    #platos {
+      max-height: 200px;
+    }
+  }
+
+
+  
+  /* Media query para pantallas muy pequeñas */
+  @media (max-width: 480px) {
+    #platos {
+      max-height: 150px;
     }
   }
 
