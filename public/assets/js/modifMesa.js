@@ -1,21 +1,23 @@
 console.log('El archivo modificar mesa ha sido llamado');
 document.addEventListener("DOMContentLoaded",function(){
+
     document.getElementById("modificarMesaForm").addEventListener("submit", function(event){
+
         event.preventDefault();
+        
         const id_Mesa = document.getElementById('id-modificar').value;
+
         const capacidad = document.getElementById('asientos-modificar').value;
-        if (capacidad ==="Ocupada" || capacidad == "Reservada"){
-            capacidad = 1;
-        }else if (capacidad === "Disponible"){
-            capacidad =0;
+
+        let status = document.getElementById('estatus-modificar').value;
+
+        if (status ==="Ocupada" || status == "Reservada"){
+            status = 1;
+        }else if (status === "Disponible"){
+            status =0;
         }
     
-        const status = document.getElementById('estatus-modificar').value;
-        const urlParametros = new URLSearchParams(window.location.search);
-        const correoRes = urlParametros.get('restaurante');
-        console.log(correoRes);
-        
-        console.log(id_Mesa);
+        const correoRes = sessionStorage.getItem('correoRestaurante');
         
         fetch ('/modificarMesa', {
             method: 'PUT',
@@ -31,15 +33,11 @@ document.addEventListener("DOMContentLoaded",function(){
         })
         .then(response => response.text())
         .then(data => {
-            console.log(data);
+            alert(data);
+            location.reload()
         })
         .catch((error) => {
             console.error('Error:', error);
         });
     })
 });
-
- 
-    
-
-

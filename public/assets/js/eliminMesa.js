@@ -2,12 +2,11 @@ document.addEventListener("DOMContentLoaded",function(){
     document.getElementById("eliminarMesaForm").addEventListener("submit", function(event){
         event.preventDefault();
         const idAEliminar = document.getElementById("id-eliminar").value;
+
         const url = new URLSearchParams(window.location.search);
+
         const correoRest = url.get('restaurante');
         
-        console.log(correoRest);
-        console.log(idAEliminar);
-
         if (!idAEliminar || !correoRest){
             alert("Error: falta informaci[on para eliminar la mesa");
         }
