@@ -110,7 +110,7 @@ function displayReservas(data, padre) {
 
     // Crea un elemento <td> para la fecha de la reserva
     let tdFecha = document.createElement('td');
-    tdFecha.textContent = reserva.fecha;
+    tdFecha.textContent = reserva.fecha.split('T')[0];
     tr.appendChild(tdFecha);
 
     // Crea un elemento <td> para la hora de la reserva
