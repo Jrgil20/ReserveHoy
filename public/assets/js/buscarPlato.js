@@ -1,4 +1,4 @@
-const correoResPlat = sessionStorage.getItem('correoRestaurante');
+let correoResPlat = sessionStorage.getItem('correoRestaurante');
 if (correoResPlat) {
   // El código para cuando correoResPlat existe
 } else {
