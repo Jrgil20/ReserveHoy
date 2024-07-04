@@ -21,8 +21,6 @@ main{
 
 .table {
     font-size: 14px;
-    overflow-y: auto;
-    max-height: 400px;
     padding: 10px;
     border: 0.5px solid #ccc;
   }
@@ -61,6 +59,11 @@ footer {
   justify-content: center;
   align-items: center;
   clear: both; /* Asegura que el footer se coloque después de todo el contenido */
+}
+
+#ScrollDiv{
+    overflow-y: auto;
+    max-height: 400px;
 }
 
 
