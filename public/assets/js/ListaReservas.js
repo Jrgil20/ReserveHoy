@@ -141,8 +141,9 @@ function displayReservas(data, padre) {
     let tdBotonCancel = document.createElement('td');
     let botonCancel = document.createElement('button');
     botonCancel.textContent = 'Cancelar';
+    botonCancel.setAttribute('id',`botonCance${i}`);
     botonCancel.addEventListener('click', () => {
-      cancelarReserva()
+      cancelarReserva(botonCancel.getAttribute('id'));
     }); // Agrega el evento de clic
 
     // Añade el elemento <tr> al elemento padre
