@@ -46,12 +46,50 @@ fetch(`/consultarPlatos/${correoResPlat}`)
         botonOk.className = 'btn btn-info';
         // Aquí puedes agregar un event listener al botón si necesitas manejar clics
         botonOk.addEventListener('click', () => {
-          console.log(`Botón OK presionado para ${plato.nombre}`);
-          // Aquí puedes agregar lo que suceda cuando se presione el botón
+          console.log(`Botón info presionado para ${plato.nombrePlato}`);
+          
         });
+
         celdaBoton.appendChild(botonOk);
         filaPlato.appendChild(celdaBoton);
-    
+
+        let celdaBotonModificar = document.createElement('td');
+        let botonModificar = document.createElement('button');
+        botonModificar.innerHTML = '<i class="fas fa-edit"></i>';
+        botonModificar.className = 'btn btn-primary';
+        // Aquí puedes agregar un event listener al botón si necesitas manejar clics
+        botonModificar.addEventListener('click', () => {
+          console.log(`Botón modificar presionado para ${plato.nombre}`);
+            let modificarForm = document.getElementById('modificarForm');
+            if (modificarForm.style.display === 'block') {
+              modificarForm.style.display = 'none';
+            } else {
+              modificarForm.style.display = 'block';
+            }
+
+            document.getElementById('nombrePlatoModificar').value =plato.nombrePlato;
+            document.getElementById('nombrePlatoModificar').readOnly = true;
+            document.getElementById('tipoPlatoModificar').value = plato.tipo;
+            document.getElementById('precioPlatoModificar').value =plato.precio;
+            document.getElementById('descripPlatoModificar').value = plato.descripcion;
+        });
+
+        celdaBotonModificar.appendChild(botonModificar);
+        filaPlato.appendChild(celdaBotonModificar);
+        
+        let celdaBotonEliminar = document.createElement('td');
+        let botonEliminar = document.createElement('button');
+        botonEliminar.innerHTML = '<i class="fas fa-trash"></i>';
+        botonEliminar.className = 'btn btn-danger';
+        // Aquí puedes agregar un event listener al botón si necesitas manejar clics
+        botonEliminar.addEventListener('click', () => {
+          console.log(`Botón eliminar presionado para ${plato.nombre}`);
+          // Aquí puedes agregar la lógica para eliminar el plato
+        });
+
+        celdaBotonEliminar.appendChild(botonEliminar);
+        filaPlato.appendChild(celdaBotonEliminar);
+
         tablaPlatos.appendChild(filaPlato);
       });
     
