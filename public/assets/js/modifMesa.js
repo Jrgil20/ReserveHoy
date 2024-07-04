@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded",function(){
 
         let status = document.getElementById('estatus-modificar').value;
 
-        if (status ==="Ocupada" || status == "Reservada"){
+        if (status === "No Disponible"){
             status = 1;
         }else if (status === "Disponible"){
-            status =0;
+            status = 0;
         }
     
         const correoRes = sessionStorage.getItem('correoRestaurante');

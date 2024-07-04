@@ -12,13 +12,13 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
     const datos = req.body;//Vaciamos el cuerpo de la petición HTTP en la variable body
     const status = 0;
     const numMesa = Math.floor(Math.random()*100);//Creacion de un nuevo número de mesa
-    const id_Mesa = Math.floor(Math.random()*100);//Creacion de un nuevo ID
+    let id_Mesa = Math.floor(Math.random()*100);//Creacion de un nuevo ID
     let {restaurante, capacidad} = datos; //Mediante destructuracion se asigna el contenido de datos en las variables
 
     //busca si ya existe una mesa con el mismo id en un restaurante
     let buscarIdMesaRest = "SELECT * FROM mesa WHERE id_Mesa = '"+id_Mesa+"'";
     //se hace la consulta 
-    conexion.query(buscarIdMesaRest,(err,row)=>{
+    seleccionarDeTablaConWHere('mesa','*',{id_Mesa:id_Mesa}, (err,row)=>{
       if (err){
         throw err;
       }else {
@@ -32,9 +32,8 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
                  bandera = 1;
               }
              }while(bandera === 0);
-            let registrarMesa = "INSERT INTO mesa (status, capacidad, numMesa, correoRes, id_Mesa) VALUES ('"+status+"', '"+capacidad+"', '"+numMesa+"', '"+restaurante+"', '"+id_Mesa+"')";
             //hace consulta en mesa
-            conexion.query(registrarMesa,(err,result)=>{
+           insertarEnTabla('mesa',{status:status, capacidad:capacidad, numMesa:numMesa, correoRes:restaurante, id_Mesa:id_Mesa}, (err,result)=>{
             if(err){
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
@@ -44,9 +43,8 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
           })
         }else{
           //Camino si no hay id repetido
-          let registrarMesa = "INSERT INTO mesa (status, capacidad, numMesa, correoRes, id_Mesa) VALUES ('"+status+"', '"+capacidad+"', '"+numMesa+"', '"+restaurante+"', '"+id_Mesa+"')";
           //hace consulta en mesa
-          conexion.query(registrarMesa,(err,result)=>{
+          insertarEnTabla('mesa',{status:status, capacidad:capacidad, numMesa:numMesa, correoRes:restaurante, id_Mesa:id_Mesa}, (err,result)=>{
             if(err){
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
@@ -130,13 +128,13 @@ router.put('/modificarMesa', (req, res) => {
                   // Actualizar la reserva con la nueva mesa disponible
                   const actualizarReserva = "UPDATE reserva SET idMesa = '" + mesasDispo[0].id_Mesa + "' WHERE idMesa = '" + id_Mesa + "'";
                   console.log(mesasDispo[0].id_Mesa);
-                  conexion.query(actualizarReserva, (err, result) => {
+                  actualizarEnTabla('reserva',{id:mesasDispo[0].id_Mesa}, {idMesa:id_Mesa}, (err, result) => {
                     if (err) {
                       throw err;
                     } else {
                       res.status(200).send('Mesa modificada con éxito y reserva actualizada');
                     }
-                  });
+                  })
                 } else {
                   res.status(404).send('No hay mesas disponibles que coincidan con la capacidad solicitada');
                 }
@@ -151,20 +149,4 @@ router.put('/modificarMesa', (req, res) => {
   });
 });
    
-  //Ruta PATCH para habilitar mesa
-  //se utiliza PATCH porque es una actualizacion parcialemente
-  router.patch('/habilitarMesa',(req,res)=>{
-    const datos = req.body;
-    const id_Mesa = datos.id_Mesa;
-    const correoRes = datos.correoRes;
-    const status = datos.status;
-    actualizarEnTabla('mesa',{status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,result) => {
-      if(err){
-        throw err;
-      }else{
-        res.status(200).send('Mesa habilitada con éxito');
-      }
-    })
-  })
-
 module.exports = router;
