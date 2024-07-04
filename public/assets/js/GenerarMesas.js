@@ -35,13 +35,15 @@ async function traeMesas(correoRes){
           let tdBotones = document.createElement('td');
           let botonModificar = document.createElement('button');
           botonModificar.textContent = 'Modificar';
-          botonModificar.className = 'btn btn-primary';
+          botonModificar.className = 'btn btn-primary tooltip';
+          BotonModificar.title = 'Modificar Mesa'; // Agrega el texto del tooltip
           botonModificar.dataset.mesaId = mesa.id_Mesa;
           tdBotones.appendChild(botonModificar);
 
           let botonEliminar = document.createElement('button');
           botonEliminar.textContent = 'Eliminar';
           botonEliminar.className = 'btn btn-danger';
+          BotonEliminar.title = 'Eliminar Mesa'; // Agrega el texto del tooltip
           botonEliminar.dataset.mesaId = mesa.id_Mesa;
           tdBotones.appendChild(botonEliminar);
 
