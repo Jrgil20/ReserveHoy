@@ -2,6 +2,11 @@ const urlParams = new URLSearchParams(window.location.search);
 //creamos una variable que obtenga el valor de la url
 const correoRes = urlParams.get('restaurante');
 // obtenemos el valor de la url
+const parametros = new URLSearchParams(window.location.search);
+//creamos una variable que obtenga el valor de la url
+const correoCli = parametros.get('cliente');
+// obtenemos el valor de la url
+
 
 function confirmarReserva(idActivado){
   const idBoton = idActivado;
@@ -62,8 +67,11 @@ function cancelarReserva(idActivado){
         console.error('Error:', error);
     });
 }
-
-traeReservas(correoRes);
+if (correoCli) {
+  traeReservasCliente(correoCli);
+} else {
+  traeReservas(correoRes);
+}
 
 async function traeReservas(correoRes) {
   try {
@@ -71,17 +79,14 @@ async function traeReservas(correoRes) {
     let data = await response.json(); // Asegúrate de que esta línea esté fuera del if para poder usar 'data' después
 
     let padre = document.getElementById('ReservasList');
-    displayReservas(data, padre); // Muestra inicialmente todas las reservas
-
-    // Muestra inicialmente todas las reservas
-    displayReservas(data, padre);
+    displayReservas(data, padre,true);// Muestra inicialmente todas las reservas
 
     // Evento de entrada para el campo de búsqueda
     const searchInput = document.getElementById('searchReservasInput');
     searchInput.addEventListener('input', () => {
       const textoFiltrado = searchInput.value.toLowerCase();
       const datosFiltrados = textoFiltrado ? data.filter(reserva => reserva.correoCli.toLowerCase().includes(textoFiltrado) || reserva.idReserva.toString().toLowerCase().includes(textoFiltrado)) : data;
-      displayReservas(datosFiltrados, padre); // Muestra las reservas filtradas
+      displayReservas(datosFiltrados, padre,true); // Muestra las reservas filtradas
     });
 
   } catch (error) {
@@ -89,7 +94,29 @@ async function traeReservas(correoRes) {
   }
 }
 
-function displayReservas(data, padre) {
+async function traeReservasCliente(correoCli){
+  try {
+      const response = await fetch('/buscarReservasCli/' + correoCli);
+      const data = await response.json();
+      let padre = document.getElementById('ReservasList');
+
+      // Muestra inicialmente todas las reservas
+      displayReservas(data, padre,false);
+
+      // Evento de entrada para el campo de búsqueda  
+      const searchInput = document.getElementById('searchReservasInput');
+      searchInput.addEventListener('input', () => {
+        const textoFiltrado = searchInput.value.toLowerCase();
+        const datosFiltrados = textoFiltrado ? data.filter(reserva => reserva.correoCli.toLowerCase().includes(textoFiltrado) || reserva.idReserva.toString().toLowerCase().includes(textoFiltrado)) : data;
+        displayReservas(datosFiltrados, padre,false); // Muestra las reservas filtradas
+      });
+      console.log(data);
+    }catch (error) {
+      console.error('Error:', error);
+    }
+}
+
+function displayReservas(data, padre,restaurante) {
   padre.innerHTML = ''; // Limpia el contenedor antes de mostrar los resultados filtrados
   let i=0;
   for (let reserva of data) {
@@ -137,8 +164,6 @@ function displayReservas(data, padre) {
     BotonConfirm.addEventListener('click', () => {
       confirmarReserva(BotonConfirm.getAttribute('id'));
     }); // Agrega el evento de clic
-    tdBotonConfirm.appendChild(BotonConfirm); // Agrega el botón al <td>
-    tr.appendChild(tdBotonConfirm); // Agrega el <td> al <tr>
 
     // Crea un elemento <td> para el botón de cancelar la reserva
     let tdBotonCancel = document.createElement('td');
@@ -149,8 +174,13 @@ function displayReservas(data, padre) {
     botonCancel.addEventListener('click', () => {
       cancelarReserva(botonCancel.getAttribute('id'));
     }); // Agrega el evento de clic
-    tdBotonCancel.appendChild(botonCancel); // Agrega el botón al <td>
-    tr.appendChild(tdBotonCancel);
+    
+    if(restaurante){
+      tdBotonConfirm.appendChild(BotonConfirm); // Agrega el botón al <td>
+      tr.appendChild(tdBotonConfirm); // Agrega el <td> al <tr>
+      tdBotonCancel.appendChild(botonCancel); // Agrega el botón al <td>
+      tr.appendChild(tdBotonCancel);
+    }
 
     // Añade el elemento <tr> al elemento padre
     padre.appendChild(tr);
