@@ -171,7 +171,7 @@ function displayReservas(data, padre,restaurante) {
     let botonCancel = document.createElement('button');
     botonCancel.innerHTML = '<i class="fas fa-trash"></i>';
     botonCancel.className = 'btn btn-danger btn-sm tooltip'; // Agrega la clase btn, btn-danger y btn-sm
-    BotonCancel.title = 'Cancelar reserva'; // Agrega el texto del tooltip
+    botonCancel.title = 'Cancelar reserva'; // Agrega el texto del tooltip
     botonCancel.setAttribute('id', `botonCance${i}`);
     botonCancel.addEventListener('click', () => {
       cancelarReserva(botonCancel.getAttribute('id'));

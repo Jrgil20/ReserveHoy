@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-07-2024 a las 06:26:49
+-- Tiempo de generación: 04-07-2024 a las 12:27:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.1.25
 
@@ -61,8 +61,7 @@ CREATE TABLE `mesa` (
 --
 
 INSERT INTO `mesa` (`status`, `capacidad`, `numMesa`, `correoRes`, `id_Mesa`) VALUES
-(1, 2, 23, 'subway@gmail.com', 2),
-(0, 3, 70, 'subway@gmail.com', 51);
+(0, 4, 10, 'burgerking@gmail.com', 24);
 
 -- --------------------------------------------------------
 
@@ -85,7 +84,6 @@ CREATE TABLE `plato` (
 
 INSERT INTO `plato` (`idPlato`, `nombrePlato`, `tipo`, `precio`, `descripcion`, `correoRes`) VALUES
 (4, 'Frosty', 'Frio', 10, 'Helado jugoso', 'wendys@gmail.com'),
-(19, 'Carne y Queso', 'Caliente', 10, 'Sandwich de 15', 'subway@gmail.com'),
 (25, 'Whooper', 'Caliente', 2, 'Hamburguesa', 'burgerking@gmail.com'),
 (27, 'Alas', 'Caliente', 10, 'Alas de pollo', 'polloarturos@gmail.com'),
 (28, 'Frosty', 'Frio', 10, 'Helado', 'burgerking@gmail.com'),
@@ -103,7 +101,7 @@ INSERT INTO `plato` (`idPlato`, `nombrePlato`, `tipo`, `precio`, `descripcion`, 
 CREATE TABLE `reserva` (
   `idReserva` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `hora` int(11) NOT NULL,
+  `hora` time(4) NOT NULL,
   `numeroPersona` int(11) NOT NULL,
   `correoCli` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `idMesa` int(11) NOT NULL,
@@ -116,9 +114,8 @@ CREATE TABLE `reserva` (
 --
 
 INSERT INTO `reserva` (`idReserva`, `fecha`, `hora`, `numeroPersona`, `correoCli`, `idMesa`, `correoRes`, `estado`) VALUES
-(124, '2024-07-06', 14, 2, 'andresguilartelamuno@gmail.com', 2, 'subway@gmail.com', 1),
-(197, '2024-07-05', 14, 2, 'andresguilartelamuno@gmail.com', 2, 'subway@gmail.com', 1);
-
+(124, '2024-07-05', '07:13:06.0000', 2, 'andresguilartelamuno@gmail.com', 24, 'burgerking@gmail.com', 0),
+(249, '2024-07-05', '15:30:00.0000', 4, 'andresguilartelamuno@gmail.com', 24, 'burgerking@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -144,7 +141,6 @@ CREATE TABLE `restaurante` (
 INSERT INTO `restaurante` (`nombre`, `direccion`, `telefono`, `clave`, `correoRes`, `descripcion`, `horLunVier`, `horFinDe`) VALUES
 ('Burger King', '', '02129908763', '1234', 'burgerking@gmail.com', '', '', ''),
 ('Pollo Arturo´s', 'El Tolon', '021299867432', '1234', 'polloarturos@gmail.com', 'Local de Comida Rapida', '10:00 - 23:00', '12:30 - 22:30'),
-('Subay', 'El Tolon', '02129908767', '1234567', 'subway@gmail.com', 'Local de Comida Rapida', '09:00 - 22:00', '11:00 - 23:00'),
 ('Wendys', '', '02129908765', '1234', 'wendys@gmail.com', '', '', '');
 
 --

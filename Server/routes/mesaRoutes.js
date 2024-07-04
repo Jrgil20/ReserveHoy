@@ -16,8 +16,6 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
     let {restaurante, capacidad} = datos; //Mediante destructuracion se asigna el contenido de datos en las variables
 
     //busca si ya existe una mesa con el mismo id en un restaurante
-    let buscarIdMesaRest = "SELECT * FROM mesa WHERE id_Mesa = '"+id_Mesa+"'";
-    //se hace la consulta 
     seleccionarDeTablaConWHere('mesa','*',{id_Mesa:id_Mesa}, (err,row)=>{
       if (err){
         throw err;
@@ -38,7 +36,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
             }else {
-              res.status(200).send('Mesa registrada con éxito');
+              res.status(201).send('Mesa registrada con éxito');
             }
           })
         }else{
@@ -49,7 +47,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
               console.log(err);
               res.status(500).json({ error: 'An error occurred' });
             }else {
-              res.status(200).send('Mesa registrada con éxito');
+              res.status(201).send('Mesa registrada con éxito');
             }
           })
         }
