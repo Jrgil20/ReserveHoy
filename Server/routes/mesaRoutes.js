@@ -80,25 +80,58 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
 
 
  //Ruta DELETE para eliminar una mesa 
-router.delete('/eliminarMesa',(req,res) => {
-    const datos = req.body;
+ router.delete('/eliminarMesa', (req, res) => {
+  const datos = req.body;
+  const idAEliminar = datos.idAEliminar;
+  const correoRes = datos.correoRes;
 
-    const {idAEliminar,correoRes} = datos;
-
-    eliminarEnTabla('reserva',{idMesa:idAEliminar}, (err,result) => {
-      if(err){
+  eliminarEnTabla('reserva', { idMesa: idAEliminar }, (err, result) => {
+    if (err) {
+      throw err;
+    }
+     // Busca reservaciones asociadas a la mesa que se va a eliminar 
+    const buscarReservas = "SELECT * FROM reserva WHERE idMesa = '" + idAEliminar + "'";
+    conexion.query(buscarReservas, (err, reservas) => {
+      if (err) {
         throw err;
       }
-   })
+      // Por cada reservacion, lo que vamos a hacer es buscar otra mesa que este disponible y que coincida con la cantidad de personas en esa reserva 
+      reservas.forEach((reserva) => {
+        const buscarMesaDispo = "SELECT * FROM mesa WHERE correoRes = '" + correoRes + "' AND capacidad >= '" + reserva.numeroPersona + "' AND status = 0";
+        conexion.query(buscarMesaDispo, (err, mesasDispo) => {
+          if (err) {
+            throw err;
+          }
+          if (mesasDispo.length > 0) {
+            // Actualizamos la reservacion a la nueva mesa
+            const actualizarReserva = "UPDATE reserva SET idMesa = '" + mesasDispo[0].id_Mesa + "' WHERE idReserva = '" + reserva.idReserva + "'";
+            conexion.query(actualizarReserva, (err, result) => {
+              if (err) {
+                throw err;
+              }
+            });
+          } else {
+            // Si no encuentra ninguna mesa disponible y que coincida con la cantidad de personas, se elimna esa reservacion
+            eliminarEnTabla('reserva', { id: reserva.id }, (err, result) => {
+              if (err) {
+                throw err;
+              }
+            });
+          }
+        });
+      });
+    });
+      // Despues de haber eliminado todas las reservas asociadas, se elimina la mesa
+  eliminarEnTabla('mesa', { id_Mesa: idAEliminar, correoRes: correoRes }, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      res.status(200).send('Mesa eliminada con éxito');
+    }
+  });
+  });
 
-    eliminarEnTabla('mesa',{id_Mesa:idAEliminar, correoRes: correoRes},(err,result) => {
-       if(err){
-         throw err;
-       }else{
-        res.status(200).send('Mesa eliminada con éxito');
-       }
-    })
-})
+});
 
 //Ruta PUT para modificar una mesa
 router.put('/modificarMesa', (req, res) => {
@@ -139,6 +172,13 @@ router.put('/modificarMesa', (req, res) => {
                   });
                 } else {
                   res.status(404).send('No hay mesas disponibles que coincidan con la capacidad solicitada');
+                   // Eliminar la reserva que no pudo encontrar una mesa disponible
+                   eliminarEnTabla('reserva', { idMesa: id_Mesa }, (err, result) => {
+                    if (err) {
+                      throw err;
+                    } else {
+                      console.log('Reserva eliminada');
+                    }})
                 }
               }
             });
