@@ -36,11 +36,17 @@ CREATE TABLE `cliente` (
 
 --
 -- Volcado de datos para la tabla `cliente`
---
 
 INSERT INTO `cliente` (`NombreApellido`, `correo`, `password`, `telefono`) VALUES
-('Andrés Guilarte', 'andresguilartelamuno@gmail.com', '1234', '04241298398'),
-('Reinaldo Guilarte', 'reyguilarte@gmail.com', '123', '042432718909');
+('Cliente1', 'cliente1@gmail.com', '1234', '1111111111'),
+('Cliente2', 'cliente2@gmail.com', '1234', '2222222222'),
+('Cliente3', 'cliente3@gmail.com', '1234', '3333333333'),
+('Cliente4', 'cliente4@gmail.com', '1234', '4444444444'),
+('Cliente5', 'cliente5@gmail.com', '1234', '5555555555'),
+('Cliente6', 'cliente6@gmail.com', '1234', '6666666666'),
+('Cliente7', 'cliente7@gmail.com', '1234', '7777777777'),
+('Cliente8', 'cliente8@gmail.com', '1234', '8888888888');
+
 
 -- --------------------------------------------------------
 
@@ -61,8 +67,17 @@ CREATE TABLE `mesa` (
 --
 
 INSERT INTO `mesa` (`status`, `capacidad`, `numMesa`, `correoRes`, `id_Mesa`) VALUES
-(1, 2, 23, 'subway@gmail.com', 2),
-(0, 3, 70, 'subway@gmail.com', 51);
+(1, 4, 1, 'subway@gmail.com', 3),
+(1, 2, 2, 'wendys@gmail.com', 4),
+(1, 6, 3, 'burgerking@gmail.com', 5),
+(1, 3, 4, 'subway@gmail.com', 6),
+(1, 2, 5, 'wendys@gmail.com', 7),
+(1, 4, 6, 'burgerking@gmail.com', 8),
+(1, 3, 7, 'subway@gmail.com', 9),
+(1, 2, 8, 'wendys@gmail.com', 10),
+(1, 4, 9, 'burgerking@gmail.com', 11),
+(1, 3, 10, 'subway@gmail.com', 12);
+
 
 -- --------------------------------------------------------
 
@@ -118,6 +133,16 @@ CREATE TABLE `reserva` (
 INSERT INTO `reserva` (`idReserva`, `fecha`, `hora`, `numeroPersona`, `correoCli`, `idMesa`, `correoRes`, `estado`) VALUES
 (124, '2024-07-06', 14, 2, 'andresguilartelamuno@gmail.com', 2, 'subway@gmail.com', 1),
 (197, '2024-07-05', 14, 2, 'andresguilartelamuno@gmail.com', 2, 'subway@gmail.com', 1);
+(200, '2024-07-07', 12, 4, 'andresguilartelamuno@gmail.com', 3, 'subway@gmail.com', 1),
+(201, '2024-07-08', 18, 3, 'reyguilarte@gmail.com', 4, 'wendys@gmail.com', 1),
+(202, '2024-07-09', 20, 2, 'andresguilartelamuno@gmail.com', 5, 'burgerking@gmail.com', 1),
+(203, '2024-07-10', 14, 5, 'andresguilartelamuno@gmail.com', 6, 'subway@gmail.com', 1),
+(204, '2024-07-11', 16, 2, 'reyguilarte@gmail.com', 7, 'wendys@gmail.com', 1),
+(205, '2024-07-12', 19, 3, 'andresguilartelamuno@gmail.com', 8, 'burgerking@gmail.com', 1),
+(206, '2024-07-13', 13, 4, 'andresguilartelamuno@gmail.com', 9, 'subway@gmail.com', 1),
+(207, '2024-07-14', 15, 2, 'reyguilarte@gmail.com', 10, 'wendys@gmail.com', 1),
+(208, '2024-07-15', 17, 3, 'andresguilartelamuno@gmail.com', 11, 'burgerking@gmail.com', 1),
+(209, '2024-07-16', 21, 2, 'andresguilartelamuno@gmail.com', 12, 'subway@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -145,6 +170,17 @@ INSERT INTO `restaurante` (`nombre`, `direccion`, `telefono`, `clave`, `correoRe
 ('Pollo Arturo´s', 'El Tolon', '021299867432', '1234', 'polloarturos@gmail.com', 'Local de Comida Rapida', '10:00 - 23:00', '12:30 - 22:30'),
 ('Subay', 'El Tolon', '02129908767', '1234567', 'subway@gmail.com', 'Local de Comida Rapida', '09:00 - 22:00', '11:00 - 23:00'),
 ('Wendys', '', '02129908765', '1234', 'wendys@gmail.com', '', '', '');
+('Restaurante1', 'Dirección1', '1111111111', '1234', 'restaurante1@gmail.com', 'Descripción1', '10:00 - 18:00', '10:00 - 16:00'),
+('Restaurante2', 'Dirección2', '2222222222', '1234', 'restaurante2@gmail.com', 'Descripción2', '09:00 - 17:00', '09:00 - 15:00'),
+('Restaurante3', 'Dirección3', '3333333333', '1234', 'restaurante3@gmail.com', 'Descripción3', '08:00 - 16:00', '08:00 - 14:00'),
+('Restaurante4', 'Dirección4', '4444444444', '1234', 'restaurante4@gmail.com', 'Descripción4', '07:00 - 15:00', '07:00 - 13:00'),
+('Restaurante5', 'Dirección5', '5555555555', '1234', 'restaurante5@gmail.com', 'Descripción5', '06:00 - 14:00', '06:00 - 12:00'),
+('Restaurante6', 'Dirección6', '6666666666', '1234', 'restaurante6@gmail.com', 'Descripción6', '10:00 - 18:00', '10:00 - 16:00'),
+('Restaurante7', 'Dirección7', '7777777777', '1234', 'restaurante7@gmail.com', 'Descripción7', '09:00 - 17:00', '09:00 - 15:00'),
+('Restaurante8', 'Dirección8', '8888888888', '1234', 'restaurante8@gmail.com', 'Descripción8', '08:00 - 16:00', '08:00 - 14:00'),
+('Restaurante9', 'Dirección9', '9999999999', '1234', 'restaurante9@gmail.com', 'Descripción9', '07:00 - 15:00', '07:00 - 13:00'),
+('Restaurante10', 'Dirección10', '1010101010', '1234', 'restaurante10@gmail.com', 'Descripción10', '06:00 - 14:00', '06:00 - 12:00');
+
 
 --
 -- Índices para tablas volcadas
