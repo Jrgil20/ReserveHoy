@@ -29,6 +29,26 @@ function seleccionarDeTablaConWHere(tabla,columnas,condiciones,callback){
 
 }
 
+function seleccionarDeTablaConNot(tabla,columnas,condiciones,condicionesNo,callback){
+    // Verificar si columnas es un array y convertirlo a cadena separada por comas, o usar * si es necesario
+    const columnasSQL = Array.isArray(columnas) ? columnas.join(', ') : columnas;
+
+    // Construir la parte WHERE de la consulta SQL
+    const whereSQL = Object.keys(condiciones).map(key => `${key} = ?`).join(' AND ');
+
+    //Construye la parte NOT de la consulta SQL
+    const notSQL = Object.keys(condicionesNo).map(key => `${key} = ?`).join(' AND ');
+
+    // Construir la consulta SQL dinámicamente
+    const sql = `SELECT ${columnasSQL} FROM ${tabla} WHERE ${whereSQL} AND (NOT ${notSQL})`;
+
+    const valores = [...Object.values(condiciones), ...Object.values(condicionesNo)];
+
+    conexion.query(sql, valores,(err,result) => {
+        callback(err,result);
+    })
+}
+
 function insertarEnTabla(tabla, datos, callback) {
     // Construir la consulta SQL dinámicamente
     const columnas = Object.keys(datos).join(', ');
@@ -73,4 +93,4 @@ function eliminarEnTabla(tabla,datos,callback){
     })
 }
 
-module.exports = { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere };
+module.exports = { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaConWHere, seleccionarDeTablaConNot };

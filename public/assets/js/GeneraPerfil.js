@@ -13,7 +13,7 @@ async function cargaPerfil(correoRes){
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
          
-        nombreRes = data.nombre
+        document.getElementById('claveActual').value = data.clave;
 
         document.getElementById('NombreDelRestaurante').textContent = data.nombre;
         if(data.descripcion){
@@ -50,7 +50,6 @@ async function cargaPerfil(correoRes){
           document.getElementById('HorSabDomDelRestaurant').textContent = "No hay horario";
         }
         document.getElementById('correoResPlat').value = correoRes;
-        document.getElementById('claveActual').value = data.clave;
 
       } catch (error) {
         console.error('Error:', error);
