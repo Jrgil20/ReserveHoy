@@ -67,41 +67,37 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Historial de Reservas</h5>
-                <table class="table table-fixed">
-                  <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Fecha de reserva</th>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Cantidad de personas</th>
-                    </tr>
-                  </thead>
-                  <tbody id="ReservasList">
-                    <!-- Filas de datos -->
-                    <script src="../assets/js/ListaReservas.js"></script>
-                    <!-- Agrega más filas según tus necesidades -->
-                  </tbody>
-                </table>
+                <!-- Barra de búsqueda -->
+                <div style="position: absolute; right: 0; top: -40px;">
+                  <input type="text" id="searchReservasInput" placeholder="Buscar reservas...">
+                </div>
+                <div id="ScrollDiv">
+                  <table class="table table-fixed" id="tablaReservas">
+                    <thead>
+                      <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Correo</th>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Hora</th>
+                          <th scope="col">#personas</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ReservasList">
+                      <!-- Filas de datos -->
+                      <script src="../assets/js/ListaReservas.js"></script>
+                      <!-- Agrega más filas según tus necesidades -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-          <section class="container Reserva" style="padding-top: 15px; text-align: center; padding-bottom: 25px;">
-            <div class="row justify-content-center">
-              <div class="col-md-6">
-                <h4 style="font-size: 40px; color: white; align-items: center; margin-bottom: 10px;">Consulta una Reserva</h4>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Coloca el ID de la Reserva" aria-label="Buscar">
-                  <button class="btn btn-outline-success" type="submit">Buscar</button>
-                </form>
-              </div>
-            </div>
-          </section>
+
           
     </main>
 
     <!-- Seccion de pie de pagina-->
-    <footer style="position: absolute;">
+    <footer>
         <p>Reserve Hoy &copy; 2024</p>
     </footer>
     <!-- Fin: Seccion de pie de pagina-->

@@ -9,7 +9,7 @@ if (correoRestaurante) {
 } else 
   if(correoCliente){
     document.getElementById('login-button-nav').href = './perfilCliente.html?cliente=' + correoCliente;
-    document.getElementById('ConsultaLink').href = './historialReservasCliente.html?cliente=' + correoCliente;
+    document.getElementById('ConsultaLink').href = './historialReservas.html?cliente=' + correoCliente;
     console.log(correoCliente);
   } else{
     document.getElementById('login-button-nav').href = './login.html';

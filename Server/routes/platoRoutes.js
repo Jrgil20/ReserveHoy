@@ -10,7 +10,7 @@ const { insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaC
 
     const {correoRestaurante,nombrePlato,tipo,precio,descripcion} = datos;
 
-    const idPlato = Math.floor(Math.random()*100);
+    let idPlato = Math.floor(Math.random()*100);
   
     //busca si ya existe un plato con el mismo nombre en un restaurante
   

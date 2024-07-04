@@ -1,14 +1,14 @@
-const correoResPlat = sessionStorage.getItem('correoRestaurante');
- if(correoResPlat){
-
- } else{
-    const url = new URLSearchParams(window.location.search);
-    correoResPlat = url.get('restaurante');
- }
+let correoResPlat = sessionStorage.getItem('correoRestaurante');
+if (correoResPlat) {
+  // El código para cuando correoResPlat existe
+} else {
+  const url = new URLSearchParams(window.location.search);
+  correoResPlat = url.get('restaurante');
+}
 
 fetch(`/consultarPlatos/${correoResPlat}`)
- .then(response => response.json())
- .then(data => {
+  .then(response => response.json())
+  .then(data => {
     console.log(data);
 
     let contenedorPlatos = document.getElementById('platos'); // Este es el contenedor principal
@@ -21,63 +21,99 @@ fetch(`/consultarPlatos/${correoResPlat}`)
       }
       platosPorTipo[tipo].push(plato);
     });
-
+    
     for (let tipo in platosPorTipo) {
-      let tipoPlato = document.createElement('div');
-      tipoPlato.textContent = tipo;
-
-      let contenedorBotones = document.createElement('div'); // Contenedor para los botones de platos
+      let contenedorTipoPlato = document.createElement('div');
+      contenedorTipoPlato.className = 'tipo-plato-contenedor';
+    
+      let tituloTipoPlato = document.createElement('h3');
+      tituloTipoPlato.textContent = tipo;
+      contenedorTipoPlato.appendChild(tituloTipoPlato);
+    
+      let tablaPlatos = document.createElement('table');
+      tablaPlatos.className = 'plato-contenedor';
+    
       platosPorTipo[tipo].forEach(plato => {
-        let botonPlato = document.createElement('button');
-        botonPlato.textContent = plato.nombrePlato;
-        botonPlato.dataset.platoId = plato.id; // Asignar un dataset para identificar el plato
-        botonPlato.className = 'btn btn-secondary'; // Agrega la clase btn y btn-secondary
+        let filaPlato = document.createElement('tr');
+    
+        let celdaNombrePlato = document.createElement('td');
+        celdaNombrePlato.textContent = plato.nombrePlato; 
+        filaPlato.appendChild(celdaNombrePlato);
+    
+        let celdaBoton = document.createElement('td');
+        let botonOk = document.createElement('button');
+        botonOk.innerHTML = '<i class="fas fa-info"></i>';
+        botonOk.className = 'btn btn-info';
+        // Aquí puedes agregar un event listener al botón si necesitas manejar clics
+        botonOk.addEventListener('click', () => {
+          console.log(`Botón info presionado para ${plato.nombrePlato}`);
+          informacionplato = document.getElementById('informacionPlato');
+          if (informacionplato .style.display === 'block') {
+            informacionplato .style.display = 'none';
+          } else {
+            informacionplato .style.display = 'block';
+          }
+          document.getElementById('informacionPlato').innerHTML = `
+            <h4>${plato.nombrePlato}</h4>
+            <p>Tipo: ${plato.tipo}</p>
+            <p>Precio: ${plato.precio}</p>
+            <p>Descripción: ${plato.descripcion}</p>
+          `;
+        });
 
-        botonPlato.addEventListener('click', (e) => {
-            let platoId = e.target.dataset.platoId;
-            let platoDetallado = data.find(plato => plato.id === platoId);
-          
-            // Crear el collapse para mostrar la información del plato
-            let collapseTemplate = document.getElementById('plato-info-template');
-            let collapseHtml = collapseTemplate.innerHTML.replace(/{{platoId}}/g, platoId);
-            collapseHtml = collapseHtml.replace('{{platoNombre}}', platoDetallado.nombrePlato);
-            collapseHtml = collapseHtml.replace('{{platoTipo}}', platoDetallado.tipo);
-            collapseHtml = collapseHtml.replace('{{platoDescripcion}}', platoDetallado.descripcion);
-            collapseHtml = collapseHtml.replace('{{platoPrecio}}', platoDetallado.precio);
-          
-            let collapseElement = document.createElement('div');
-            collapseElement.innerHTML = collapseHtml;
-            document.getElementById('platos').appendChild(collapseElement);
-          
-            // Mostrar el collapse
-            let collapseId = `plato-info-${platoId}`;
-            let collapseElementToShow = document.getElementById(collapseId);
-            collapseElementToShow.classList.add('show');
-          });
+        celdaBoton.appendChild(botonOk);
+        filaPlato.appendChild(celdaBoton);
 
-          document.querySelectorAll('#platos button[id^="eliminar-plato-"]').forEach(boton => {
-            boton.addEventListener('click', () => {
-              let platoId = boton.id.replace('eliminar-plato-', '');
-              // Lógica para eliminar el plato
-              console.log(`Eliminar plato ${platoId}`);
-            });
-          });
-          document.querySelectorAll('#platos button[id^="modificar-plato-"]').forEach(boton => {
-            boton.addEventListener('click', () => {
-              let platoId = boton.id.replace('modificar-plato-', '');
-              // Lógica para modificar el plato
-              console.log(`Modificar plato ${platoId}`);
-            });
-          });
+        let celdaBotonModificar = document.createElement('td');
+        let botonModificar = document.createElement('button');
+        botonModificar.innerHTML = '<i class="fas fa-edit"></i>';
+        botonModificar.className = 'btn btn-primary';
+        // Aquí puedes agregar un event listener al botón si necesitas manejar clics
+        botonModificar.addEventListener('click', () => {
+          console.log(`Botón modificar presionado para ${plato.nombre}`);
+            let modificarForm = document.getElementById('modificarForm');
+            if (modificarForm.style.display === 'block') {
+              modificarForm.style.display = 'none';
+            } else {
+              modificarForm.style.display = 'block';
+            }
 
-        contenedorBotones.appendChild(botonPlato);
+            document.getElementById('nombrePlatoModificar').value =plato.nombrePlato;
+            document.getElementById('nombrePlatoModificar').readOnly = true;
+            document.getElementById('tipoPlatoModificar').value = plato.tipo;
+            document.getElementById('precioPlatoModificar').value =plato.precio;
+            document.getElementById('descripPlatoModificar').value = plato.descripcion;
+        });
+
+        celdaBotonModificar.appendChild(botonModificar);
+        filaPlato.appendChild(celdaBotonModificar);
+        
+        let celdaBotonEliminar = document.createElement('td');
+        let botonEliminar = document.createElement('button');
+        botonEliminar.innerHTML = '<i class="fas fa-trash"></i>';
+        botonEliminar.className = 'btn btn-danger';
+        // Aquí puedes agregar un event listener al botón si necesitas manejar clics
+        botonEliminar.addEventListener('click', () => {
+          console.log(`Botón eliminar presionado para ${plato.nombrePlato}`);
+          let eliminarForm = document.getElementById('eliminarForm');
+          if (eliminarForm.style.display === 'block') {
+            eliminarForm.style.display = 'none';
+          } else {
+            eliminarForm.style.display = 'block';
+          }
+
+          document.getElementById('nombrePlatoEliminar').value = plato.nombrePlato;
+          document.getElementById('nombrePlatoEliminar').readOnly = true;
+
+        });
+
+        celdaBotonEliminar.appendChild(botonEliminar);
+        filaPlato.appendChild(celdaBotonEliminar);
+
+        tablaPlatos.appendChild(filaPlato);
       });
-
-      tipoPlato.appendChild(contenedorBotones);
-      contenedorPlatos.appendChild(tipoPlato);
+    
+      contenedorTipoPlato.appendChild(tablaPlatos);
+      contenedorPlatos.appendChild(contenedorTipoPlato); // Asegúrate de que 'contenedorPlatos' es tu contenedor principal
     }
-  })
- .catch(error => {
-    console.error('Error:', error);
   });
-

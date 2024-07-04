@@ -47,7 +47,6 @@
                 </div>
                 <!-- SI YA INICIO SESION LO MANDA A SU PERFIL, SINO DEBE MANDARLO A LOGIN.HTML-->
                 <a id="login-button-nav" class="login-button" title="Login">
-                    <script src="../assets/js/navbar.js"></script>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
                     </svg>
@@ -186,22 +185,15 @@
               <div class="card-body">
                 <h5 class="card-text">Menú</h5>
                 <div class="Platos" id="platos" >
+                  
                   <script src="../assets/js/buscarPlato.js"></script>
+                  
                 </div>
-                <!-- Template para el collapse de información de plato -->
-                <div id="plato-info-template" style="display: none;">
-                  <div class="collapse" id="plato-info-{{platoId}}">
-                    <div class="card card-body">
-                      <h2>{{platoNombre}}</h2>
-                      <p>Tipo de Plato: {{platoTipo}}</p>
-                      <p>Descripción: {{platoDescripcion}}</p>
-                      <p>Precio: {{platoPrecio}}</p>
-                      <!-- Botones para eliminar y modificar plato -->
-                      <button class="btn btn-danger" id="eliminar-plato-{{platoId}}">Eliminar</button>
-                      <button class="btn btn-primary" id="modificar-plato-{{platoId}}">Modificar</button>
-                    </div>
-                  </div>
+                
+                <div class="informaciondelPlato" id="informacionPlato" style="display: none;" > 
+
                 </div>
+
                 <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#platoForm" >Agregar Plato</button>
                 <div id="platoForm" class="collapse mt-3">
                   <!-- Contenido del formulario para agregar platos -->
@@ -229,7 +221,7 @@
                   </form>
                   <script src="../assets/js/agregPlato.js"></script>
                 </div>
-                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#modificarForm" style="display: none;">Modificar Plato</button>
+                <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#modificarForm" name="modificar" ><i class="fas fa-edit"></i></button>
                 <div id="modificarForm" class="collapse mt-3">
                   <form id="modificarPlatoForm">
                     <div class="form-group">
@@ -252,7 +244,7 @@
                   </form>
                   <script src="../assets/js/modifPlato.js"></script>
                 </div>
-                <button type="button" class="btn btn-outline-danger mt-3" data-toggle="collapse" data-target="#eliminarForm" style="display: none;">Eliminar Plato</button>
+                <button type="button" class="btn btn-outline-danger mt-3" data-toggle="collapse" data-target="#eliminarForm" name="eliminar" ><i class="fas fa-trash"></i></button>
                 <div id="eliminarForm" class="collapse mt-3">
                   <form id="eliminarPlatoForm">
                     <div class="form-group">
@@ -285,6 +277,8 @@
         <p>Reserve Hoy &copy; 2024</p>
     </footer>
     <!-- Fin: Seccion de pie de pagina-->
+
+    <script src="../assets/js/navbar.js"></script>
     
 </body>
 </html>

@@ -2,7 +2,6 @@ const urlParams = new URLSearchParams(window.location.search);
 //creamos una variable que obtenga el valor de la url
 const correoRes = urlParams.get('restaurante');
 // obtenemos el valor de la url
-
 cargaPerfil(correoRes);
 
 async function cargaPerfil(correoRes){
@@ -13,6 +12,9 @@ async function cargaPerfil(correoRes){
         const data = await response.json();
         //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
         //la funcion json() convierte la respuesta del servidor en un objeto json
+         
+        document.getElementById('claveActual').value = data.clave;
+
         document.getElementById('NombreDelRestaurante').textContent = data.nombre;
         if(data.descripcion){
           document.getElementById('DescripcionDelRestaurant').textContent = data.descripcion;
@@ -48,7 +50,6 @@ async function cargaPerfil(correoRes){
           document.getElementById('HorSabDomDelRestaurant').textContent = "No hay horario";
         }
         document.getElementById('correoResPlat').value = correoRes;
-        document.getElementById('claveActual').value = data.clave;
 
       } catch (error) {
         console.error('Error:', error);

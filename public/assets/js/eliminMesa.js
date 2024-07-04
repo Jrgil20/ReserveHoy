@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",function(){
         const correoRest = url.get('restaurante');
         
         if (!idAEliminar || !correoRest){
-            alert("Error: falta informaci[on para eliminar la mesa");
+            return alert("Error: falta informaci[on para eliminar la mesa");
         }
 
         fetch('/eliminarMesa',{
