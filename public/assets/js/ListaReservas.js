@@ -77,7 +77,7 @@ async function traeReservas(correoRes) {
     const searchInput = document.getElementById('searchReservasInput');
     searchInput.addEventListener('input', () => {
       const textoFiltrado = searchInput.value.toLowerCase();
-      const datosFiltrados = data.filter(reserva => reserva.correoCli.toLowerCase().includes(textoFiltrado) || reserva.idReserva.toString().toLowerCase().includes(textoFiltrado));
+      const datosFiltrados = textoFiltrado ? data.filter(reserva => reserva.correoCli.toLowerCase().includes(textoFiltrado) || reserva.idReserva.toString().toLowerCase().includes(textoFiltrado)) : data;
       displayReservas(datosFiltrados, padre); // Muestra las reservas filtradas
     });
 
