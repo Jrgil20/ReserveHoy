@@ -47,6 +47,8 @@ fetch(`/consultarPlatos/${correoResPlat}`)
           
             let collapseElement = document.createElement('div');
             collapseElement.innerHTML = collapseHtml;
+            collapseElement.className = 'collapse';
+            collapseElement.style.display = 'block';
             document.getElementById('platos').appendChild(collapseElement);
           
             // Mostrar el collapse
