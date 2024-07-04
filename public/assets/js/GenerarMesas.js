@@ -5,11 +5,7 @@ traeMesas(correoRes);
 async function traeMesas(correoRes){
     try {
         const response = await fetch('/buscarMesasRest/' + correoRes);
-        //hacemos una peticion a la ruta /buscarReserva/ + el valor de la url
-        //la palabra reservada await hace que la funcion se espere a que la promesa se resuelva
         const data = await response.json();
-        //esperamos a que la promesa se resuelva y guardamos el resultado en la variable data
-        //la funcion json() convierte la respuesta del servidor en un objeto json
         document.getElementById('correoRestaurante').value = correoRes;
 
         let padre = document.getElementById('mesasList'); 
@@ -35,9 +31,40 @@ async function traeMesas(correoRes){
           tdStatus.textContent = mesa.status;
           tr.appendChild(tdStatus);
 
+          // Crea un elemento <td> para los botones de modificar y eliminar
+          let tdBotones = document.createElement('td');
+          let botonModificar = document.createElement('button');
+          botonModificar.textContent = 'Modificar';
+          botonModificar.className = 'btn btn-primary';
+          botonModificar.dataset.mesaId = mesa.id_Mesa;
+          tdBotones.appendChild(botonModificar);
+
+          let botonEliminar = document.createElement('button');
+          botonEliminar.textContent = 'Eliminar';
+          botonEliminar.className = 'btn btn-danger';
+          botonEliminar.dataset.mesaId = mesa.id_Mesa;
+          tdBotones.appendChild(botonEliminar);
+
+          tr.appendChild(tdBotones);
+
           padre.appendChild(tr)
         }
       } catch (error) {
         console.error('Error:', error);
       }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('#mesasList button[data-mesa-id]').forEach(boton => {
+    boton.addEventListener('click', (e) => {
+      let mesaId = e.target.dataset.mesaId;
+      if (e.target.textContent === 'Modificar') {
+        // Lógica para modificar la mesa
+        console.log(`Modificar mesa ${mesaId}`);
+      } else if (e.target.textContent === 'Eliminar') {
+        // Lógica para eliminar la mesa
+        console.log(`Eliminar mesa ${mesaId}`);
+      }
+    });
+  });
+});
