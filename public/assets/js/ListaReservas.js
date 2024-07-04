@@ -131,7 +131,7 @@ function displayReservas(data, padre) {
     // Crea un elemento <td> para el botón de confirmar la reserva
     let tdBotonConfirm = document.createElement('td');
     let BotonConfirm = document.createElement('button');
-    BotonConfirm.textContent = 'Confirmar';
+    BotonConfirm.innerHTML = '<i class="fas fa-check-circle"></i>';
     BotonConfirm.setAttribute('id',`botonConfi${i}`)
     BotonConfirm.addEventListener('click', () => {
       confirmarReserva(BotonConfirm.getAttribute('id'));
@@ -142,7 +142,7 @@ function displayReservas(data, padre) {
     // Crea un elemento <td> para el botón de cancelar la reserva
     let tdBotonCancel = document.createElement('td');
     let botonCancel = document.createElement('button');
-    botonCancel.textContent = 'Cancelar';
+    botonCancel.innerHTML = '<i class="fas fa-window-close"></i>';
     botonCancel.setAttribute('id',`botonCance${i}`);
     botonCancel.addEventListener('click', () => {
       cancelarReserva(botonCancel.getAttribute('id'));
