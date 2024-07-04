@@ -83,8 +83,17 @@ fetch(`/consultarPlatos/${correoResPlat}`)
         botonEliminar.className = 'btn btn-danger';
         // Aquí puedes agregar un event listener al botón si necesitas manejar clics
         botonEliminar.addEventListener('click', () => {
-          console.log(`Botón eliminar presionado para ${plato.nombre}`);
-          // Aquí puedes agregar la lógica para eliminar el plato
+          console.log(`Botón eliminar presionado para ${plato.nombrePlato}`);
+          let eliminarForm = document.getElementById('eliminarForm');
+          if (eliminarForm.style.display === 'block') {
+            eliminarForm.style.display = 'none';
+          } else {
+            eliminarForm.style.display = 'block';
+          }
+
+          document.getElementById('nombrePlatoEliminar').value = plato.nombrePlato;
+          document.getElementById('nombrePlatoEliminar').readOnly = true;
+
         });
 
         celdaBotonEliminar.appendChild(botonEliminar);
