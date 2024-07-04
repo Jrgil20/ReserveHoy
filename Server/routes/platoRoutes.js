@@ -43,7 +43,7 @@ const { insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaC
                   if(mistake){
                     res.status(500).json({ error: mistake });
                   }else{
-                    res.status(200).send('Plato agregado con éxito');
+                    res.status(201).send('Plato agregado con éxito');
                   }
                 })
               }else{
@@ -52,7 +52,7 @@ const { insertarEnTabla, actualizarEnTabla, eliminarEnTabla, seleccionarDeTablaC
                   if(mistake){
                     res.status(500).json({ error: mistake });
                   }else{
-                    res.status(200).send('Plato agregado con éxito');
+                    res.status(201).send('Plato agregado con éxito');
                   }
                 })
               }

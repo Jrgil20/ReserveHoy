@@ -21,7 +21,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
                   if (err) {
                       console.log(err);
                   } else {
-                      res.status(200).json({ message: "Restaurante registrado con éxito", url: "/view/perfil.html?restaurante=" + email });
+                      res.status(201).json({ message: "Restaurante registrado con éxito", url: "/view/perfil.html?restaurante=" + email });
                   }
               });
           }
@@ -58,7 +58,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
 
   });
 
-  //RUTA POST para actualizar la informacion de un restaurante
+  //RUTA PUT para actualizar la informacion de un restaurante
   router.put("/actualizarInformacionRestaurante",(req,res)=>{
     const datos = req.body;//Vaciamos el cuerpo de la peticion HTTP en la variable datos
 

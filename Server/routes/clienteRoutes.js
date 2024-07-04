@@ -23,7 +23,7 @@ const { seleccionarDeTabla, insertarEnTabla, actualizarEnTabla, eliminarEnTabla,
            if(err){
              console.log(err);
            }else{
-             res.status(200).json({ message: "Cliente registrado con éxito", url: "/view/perfilCliente.html?cliente=" + email });
+             res.status(201).json({ message: "Cliente registrado con éxito", url: "/view/perfilCliente.html?cliente=" + email });
            }
          
          });
