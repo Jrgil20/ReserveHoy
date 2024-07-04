@@ -36,7 +36,7 @@ const nodemailer = require('nodemailer');
               }
           }while(bandera === 0);//Se genera un id hasta que no sea repetido
           //Busca las mesas de ese restaurante que tienen la capacidad requerida
-          seleccionarDeTablaConWHere('mesa','id_Mesa',{capacidad:numeroPersona, correoRes:rest}, (error,resultado)=>{
+          seleccionarDeTablaConWHere('mesa','id_Mesa',{capacidad:numeroPersona, correoRes:rest, status:0}, (error,resultado)=>{
             if(error){
              console.log(error);
               res.status(500).json({ error: 'An error occurred' });
@@ -54,7 +54,7 @@ const nodemailer = require('nodemailer');
                     if(list.length === 0){//Si no hay mesas ocupadas, hace el proceso de insercion con la primera mesa encontrada
                       let idAceptadoPrev = mesasValidas[0];
                       let idAceptado = idAceptadoPrev.id_Mesa;
-                      let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                      let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes, estado) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"','"+0+"')";
                       conexion.query(insercionReserva,(erreur,resultat)=>{
                        if(erreur){
                           console.log(erreur);
@@ -72,7 +72,7 @@ const nodemailer = require('nodemailer');
                           })
                           let idAceptadoPrev = mesasValidas[list.length];
                           let idAceptado = idAceptadoPrev.id_Mesa;
-                          let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                          let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes, estado) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"','"+0+"')";
                           conexion.query(insercionReserva,(erreur,resultat)=>{
                              if(erreur){
                                console.log(erreur);
@@ -92,7 +92,7 @@ const nodemailer = require('nodemailer');
          })
        }else{//Entra aquí si el id creado por primera vez es único
           //Busca las mesas de ese restaurante que tienen la capacidad requerida
-          let traeMesas = "SELECT id_Mesa FROM mesa WHERE capacidad = '"+numeroPersona+"' AND correoRes = '"+rest+"'";
+          let traeMesas = "SELECT id_Mesa FROM mesa WHERE capacidad = '"+numeroPersona+"' AND correoRes = '"+rest+"' AND status = 0" ;
           //Se hace la consulta
           conexion.query(traeMesas,(error,resultado)=>{
              if(error){
@@ -113,7 +113,7 @@ const nodemailer = require('nodemailer');
                       if(list.length === 0){//Si no hay mesas ocupadas, hace el proceso de insercion con la primera mesa encontrada
                         let idAceptadoPrev = mesasValidas[0];
                         let idAceptado = idAceptadoPrev.id_Mesa;
-                        let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                        let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes, estado) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"','"+0+"')";
                         conexion.query(insercionReserva,(erreur,resultat)=>{
                          if(erreur){
                             console.log(erreur);
@@ -131,7 +131,7 @@ const nodemailer = require('nodemailer');
                             })
                             let idAceptadoPrev = mesasValidas[list.length];
                             let idAceptado = idAceptadoPrev.id_Mesa;
-                            let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"')";
+                            let insercionReserva = "INSERT INTO reserva (idReserva, fecha, hora, numeroPersona, correoCli, idMesa, correoRes, estado) VALUES ('"+id+"', '"+fecha+"', '"+hora+"', '"+numeroPersona+"', '"+cliente+"', '"+idAceptado+"','"+rest+"','"+0+"')";
                             conexion.query(insercionReserva,(erreur,resultat)=>{
                                if(erreur){
                                  console.log(erreur);
