@@ -101,23 +101,56 @@ router.delete('/eliminarMesa',(req,res) => {
 })
 
 //Ruta PUT para modificar una mesa
-router.put('/modificarMesa', (req,res)=>{
-    const datos = req.body;
-    
-    const id_Mesa = datos.id_Mesa;
-    const capacidad = datos.capacidad;
-    const status = datos.status;
-    const correoRes = datos.correoRes;
-    
-    actualizarEnTabla('mesa',{capacidad:capacidad, status:status},{id_Mesa:id_Mesa, correoRes:correoRes},(err,result) => {
-      if(err){
-        throw err;
-      }else{
-        res.status(200).send('Mesa modificada con éxito');
-      }
-    })
-  })
+router.put('/modificarMesa', (req, res) => {
+  const datos = req.body;
+  const id_Mesa = datos.id_Mesa;
+  const capacidad = datos.capacidad;
+  const status = datos.status;
+  const correoRes = datos.correoRes;
 
+  // Actualizar la mesa
+  actualizarEnTabla('mesa', { capacidad: capacidad, status: status }, { id_Mesa: id_Mesa, correoRes: correoRes }, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      // Buscar reservas que no coinciden con la nueva capacidad
+      const buscarReservas = "SELECT * FROM reserva WHERE idMesa = '" + id_Mesa + "' AND numeroPersona > '" + capacidad + "'";
+      conexion.query(buscarReservas, (err, reservas) => {
+        if (err) {
+          throw err;
+        } else {
+          if (reservas.length > 0) {
+            // Buscar otra mesa disponible que coincida con la capacidad solicitada en la reserva que posee la mesa a modificar
+            const buscarMesaDispo = "SELECT * FROM mesa WHERE correoRes = '" + correoRes + "' AND capacidad >= '" + reservas[0].numeroPersona + "' AND status = 0";
+            conexion.query(buscarMesaDispo, (err, mesasDispo) => {
+              if (err) {
+                throw err;
+              } else {
+                if (mesasDispo.length > 0) {
+                  // Actualizar la reserva con la nueva mesa disponible
+                  const actualizarReserva = "UPDATE reserva SET idMesa = '" + mesasDispo[0].id_Mesa + "' WHERE idMesa = '" + id_Mesa + "'";
+                  console.log(mesasDispo[0].id_Mesa);
+                  conexion.query(actualizarReserva, (err, result) => {
+                    if (err) {
+                      throw err;
+                    } else {
+                      res.status(200).send('Mesa modificada con éxito y reserva actualizada');
+                    }
+                  });
+                } else {
+                  res.status(404).send('No hay mesas disponibles que coincidan con la capacidad solicitada');
+                }
+              }
+            });
+          } else {
+            res.status(200).send('Mesa modificada con éxito');
+          }
+        }
+      });
+    }
+  });
+});
+   
   //Ruta PATCH para habilitar mesa
   //se utiliza PATCH porque es una actualizacion parcialemente
   router.patch('/habilitarMesa',(req,res)=>{
