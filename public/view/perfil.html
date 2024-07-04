@@ -185,21 +185,9 @@
               <div class="card-body">
                 <h5 class="card-text">Menú</h5>
                 <div class="Platos" id="platos" >
+                  
                   <script src="../assets/js/buscarPlato.js"></script>
-                  <!-- Template para el collapse de información de plato -->
-                  <div id="plato-info-template" style="display: none;">
-                    <div class="collapse" id="plato-info-{{platoId}}">
-                      <div class="card card-body">
-                        <h2>{{platoNombre}}</h2>
-                        <p>Tipo de Plato: {{platoTipo}}</p>
-                        <p>Descripción: {{platoDescripcion}}</p>
-                        <p>Precio: {{platoPrecio}}</p>
-                        <!-- Botones para eliminar y modificar plato -->
-                        <button class="btn btn-danger" title="Eliminar Plato" id="eliminar-plato-{{platoId}}">Eliminar</button>
-                        <button class="btn btn-primary" title="Modificar Plato" id="modificar-plato-{{platoId}}">Modificar</button>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
                 
                 <button type="button" class="btn btn-outline-primary mt-3" data-toggle="collapse" data-target="#platoForm" >Agregar Plato</button>

@@ -1,14 +1,14 @@
 const correoResPlat = sessionStorage.getItem('correoRestaurante');
- if(correoResPlat){
-
- } else{
-    const url = new URLSearchParams(window.location.search);
-    correoResPlat = url.get('restaurante');
- }
+if (correoResPlat) {
+  // El código para cuando correoResPlat existe
+} else {
+  const url = new URLSearchParams(window.location.search);
+  correoResPlat = url.get('restaurante');
+}
 
 fetch(`/consultarPlatos/${correoResPlat}`)
- .then(response => response.json())
- .then(data => {
+  .then(response => response.json())
+  .then(data => {
     console.log(data);
 
     let contenedorPlatos = document.getElementById('platos'); // Este es el contenedor principal
@@ -21,66 +21,41 @@ fetch(`/consultarPlatos/${correoResPlat}`)
       }
       platosPorTipo[tipo].push(plato);
     });
-
+    
     for (let tipo in platosPorTipo) {
-      let tipoPlato = document.createElement('div');
-      tipoPlato.textContent = tipo;
-
-      let contenedorBotones = document.createElement('div'); // Contenedor para los botones de platos
+      let contenedorTipoPlato = document.createElement('div');
+      contenedorTipoPlato.className = 'tipo-plato-contenedor';
+    
+      let tituloTipoPlato = document.createElement('h3');
+      tituloTipoPlato.textContent = tipo;
+      contenedorTipoPlato.appendChild(tituloTipoPlato);
+    
+      let tablaPlatos = document.createElement('table');
+      tablaPlatos.className = 'plato-contenedor';
+    
       platosPorTipo[tipo].forEach(plato => {
-        let botonPlato = document.createElement('button');
-        botonPlato.textContent = plato.nombrePlato;
-        botonPlato.dataset.platoId = plato.id; // Asignar un dataset para identificar el plato
-        botonPlato.className = 'btn btn-secondary tooltip'; // Agrega la clase btn y btn-secondary
-        botonPlato.title = 'Ver Informacion del Plato'; // Agrega el texto del tooltip
-
-        botonPlato.addEventListener('click', (e) => {
-            let platoId = e.target.dataset.platoId;
-            let platoDetallado = data.find(plato => plato.id === platoId);
-          
-            // Crear el collapse para mostrar la información del plato
-            let collapseTemplate = document.getElementById('plato-info-template');
-            let collapseHtml = collapseTemplate.innerHTML.replace(/{{platoId}}/, platoId);
-            collapseHtml = collapseHtml.replace('{{platoNombre}}', platoDetallado.nombrePlato);
-            collapseHtml = collapseHtml.replace('{{platoTipo}}', platoDetallado.tipo);
-            collapseHtml = collapseHtml.replace('{{platoDescripcion}}', platoDetallado.descripcion);
-            collapseHtml = collapseHtml.replace('{{platoPrecio}}', platoDetallado.precio);
-          
-            let collapseElement = document.createElement('div');
-            collapseElement.innerHTML = collapseHtml;
-            collapseElement.className = 'collapse';
-            collapseElement.style.display = 'block';
-            document.getElementById('platos').appendChild(collapseElement);
-          
-            // Mostrar el collapse
-            let collapseId = `plato-info-${platoId}`;
-            let collapseElementToShow = document.getElementById(collapseId);
-            collapseElementToShow.classList.add('show');
-          });
-
-          document.querySelectorAll('#platos button[id^="eliminar-plato-"]').forEach(boton => {
-            boton.addEventListener('click', () => {
-              let platoId = boton.id.replace('eliminar-plato-', '');
-              // Lógica para eliminar el plato
-              console.log(`Eliminar plato ${platoId}`);
-            });
-          });
-          document.querySelectorAll('#platos button[id^="modificar-plato-"]').forEach(boton => {
-            boton.addEventListener('click', () => {
-              let platoId = boton.id.replace('modificar-plato-', '');
-              // Lógica para modificar el plato
-              console.log(`Modificar plato ${platoId}`);
-            });
-          });
-
-        contenedorBotones.appendChild(botonPlato);
+        let filaPlato = document.createElement('tr');
+    
+        let celdaNombrePlato = document.createElement('td');
+        celdaNombrePlato.textContent = plato.nombrePlato; 
+        filaPlato.appendChild(celdaNombrePlato);
+    
+        let celdaBoton = document.createElement('td');
+        let botonOk = document.createElement('button');
+        botonOk.innerHTML = '<i class="fas fa-info"></i>';
+        botonOk.className = 'btn btn-info';
+        // Aquí puedes agregar un event listener al botón si necesitas manejar clics
+        botonOk.addEventListener('click', () => {
+          console.log(`Botón OK presionado para ${plato.nombre}`);
+          // Aquí puedes agregar lo que suceda cuando se presione el botón
+        });
+        celdaBoton.appendChild(botonOk);
+        filaPlato.appendChild(celdaBoton);
+    
+        tablaPlatos.appendChild(filaPlato);
       });
-
-      tipoPlato.appendChild(contenedorBotones);
-      contenedorPlatos.appendChild(tipoPlato);
+    
+      contenedorTipoPlato.appendChild(tablaPlatos);
+      contenedorPlatos.appendChild(contenedorTipoPlato); // Asegúrate de que 'contenedorPlatos' es tu contenedor principal
     }
-  })
- .catch(error => {
-    console.error('Error:', error);
   });
-
