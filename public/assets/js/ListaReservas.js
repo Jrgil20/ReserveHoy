@@ -73,6 +73,9 @@ async function traeReservas(correoRes) {
     let padre = document.getElementById('ReservasList');
     displayReservas(data, padre); // Muestra inicialmente todas las reservas
 
+    // Muestra inicialmente todas las reservas
+    displayReservas(data, padre);
+
     // Evento de entrada para el campo de búsqueda
     const searchInput = document.getElementById('searchReservasInput');
     searchInput.addEventListener('input', () => {
