@@ -3,6 +3,66 @@ const urlParams = new URLSearchParams(window.location.search);
 const correoRes = urlParams.get('restaurante');
 // obtenemos el valor de la url
 
+function confirmarReserva(idActivado){
+  const idBoton = idActivado;
+  
+  const filaSeleccionada = document.getElementById(`fila${idBoton.substring(10,idBoton.length)}`);
+
+  const elementos = filaSeleccionada.getElementsByTagName('td');
+
+  const destinatario = elementos[1].innerHTML;
+
+  const idReserva = elementos[0].innerHTML;
+
+  const restaurante = sessionStorage.getItem('correoRestaurante');
+
+  fetch('/confirmarReserva', {
+      method: 'PATCH',
+         headers: {
+             'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({idReserva:idReserva ,destinatario:destinatario, restaurante:restaurante, estado:1}),
+     })
+     .then(response => response.text())
+     .then(data => {
+        alert(data);
+        location.reload();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+function cancelarReserva(idActivado){
+  const idBoton = idActivado;
+
+  const filaSeleccionada = document.getElementById(`fila${idBoton.substring(10,idBoton.length)}`);
+
+  const elementos = filaSeleccionada.getElementsByTagName('td');
+
+  const destinatario = elementos[1].innerHTML;
+
+  const idReserva = elementos[0].innerHTML;
+
+  const restaurante = sessionStorage.getItem('correoRestaurante');
+
+  fetch('/cancelarReserva', {
+      method: 'DELETE',
+         headers: {
+             'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({idReserva:idReserva ,destinatario:destinatario, restaurante:restaurante}),
+     })
+     .then(response => response.text())
+     .then(data => {
+        alert(data);
+        location.reload();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
 traeReservas(correoRes);
 
 async function traeReservas(correoRes) {
@@ -28,9 +88,11 @@ async function traeReservas(correoRes) {
 
 function displayReservas(data, padre) {
   padre.innerHTML = ''; // Limpia el contenedor antes de mostrar los resultados filtrados
+  let i=0;
   for (let reserva of data) {
     // Crea un elemento <tr> para cada reserva
     let tr = document.createElement('tr');
+    tr.setAttribute('id',`fila${i}`); 
 
     // Crea un elemento <td> para el id
     let tdidReserva= document.createElement('td');
@@ -67,17 +129,22 @@ function displayReservas(data, padre) {
     let tdBotonConfirm = document.createElement('td');
     let BotonConfirm = document.createElement('button');
     BotonConfirm.textContent = 'Confirmar';
-    //BotonConfirm.addEventListener('click', sendConfirmationEmail); // Agrega el evento de clic
+    BotonConfirm.setAttribute('id',`botonConfi${i}`)
+    BotonConfirm.addEventListener('click', () => {
+      confirmarReserva(BotonConfirm.getAttribute('id'));
+    }); // Agrega el evento de clic
 
     // Crea un elemento <td> para el botón de cancelar la reserva
     let tdBotonCancel = document.createElement('td');
     let botonCancel = document.createElement('button');
     botonCancel.textContent = 'Cancelar';
-    //botonCancel.addEventListener('click', sendCancellationEmail); // Agrega el evento de clic
+    botonCancel.addEventListener('click', () => {
+      cancelarReserva()
+    }); // Agrega el evento de clic
 
     // Añade el elemento <tr> al elemento padre
     padre.appendChild(tr);
+    i++;
   }
 }
 
-traeReservas('correo@example.com'); // Asegúrate de llamar a la función con el correo correspondiente
