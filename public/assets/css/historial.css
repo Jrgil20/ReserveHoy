@@ -50,6 +50,21 @@ main{
     width: 60%;
 }
 
+.detalleReserva {
+  position: fixed;
+  display: none;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+
 footer {
   position: relative;
   width: 100%;

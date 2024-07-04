@@ -184,9 +184,32 @@ function displayReservas(data, padre,restaurante) {
       tr.appendChild(tdBotonCancel);
     }
 
+    // Crea un elemento <td> para el botón de ver detalles de la reserva
+    let tdBotonDetalle = document.createElement('td');
+    let botonDetalle = document.createElement('button');
+    botonDetalle.innerHTML = '<i class="fas fa-info-circle"></i>';
+    botonDetalle.className = 'btn btn-info btn-sm tooltip'; // Agrega la clase btn, btn-info y btn-sm
+    botonDetalle.title = 'Ver detalles'; // Agrega el texto del tooltip
+    botonDetalle.setAttribute('id', `botonDeta${i}`);
+    botonDetalle.addEventListener('click', () => {
+      document.getElementById('detalleReserva').style.display = 'block';
+      document.getElementById('infoIdReserva').innerHTML = reserva.idReserva;
+      document.getElementById('infoclienteReserva').innerHTML = reserva.correoCli;
+      document.getElementById('infofechaReserva').innerHTML = reserva.fecha.split('T')[0];
+      document.getElementById('infohoraReserva').innerHTML = reserva.hora;
+      document.getElementById('infopersonasReserva').innerHTML = reserva.numeroPersona;
+      document.getElementById('infoestadoReserva').innerHTML = reserva.estado;
+    }); // Agrega el evento de clic
+
+    tdBotonDetalle.appendChild(botonDetalle); // Agrega el botón al <td>
+    tr.appendChild(tdBotonDetalle); // Agrega el <td> al <tr>
+
     // Añade el elemento <tr> al elemento padre
     padre.appendChild(tr);
     i++;
   }
 }
 
+function closeDetalle() {
+  document.getElementById('detalleReserva').style.display = 'none';
+}
