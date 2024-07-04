@@ -54,3 +54,7 @@ main{
     background-color: #f8f9fa;
   }
 
+#ScrollTable{
+    overflow-y: auto;
+    max-height: 400px;
+}

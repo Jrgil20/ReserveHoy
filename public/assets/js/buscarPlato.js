@@ -39,7 +39,7 @@ fetch(`/consultarPlatos/${correoResPlat}`)
           
             // Crear el collapse para mostrar la información del plato
             let collapseTemplate = document.getElementById('plato-info-template');
-            let collapseHtml = collapseTemplate.innerHTML.replace(/{{platoId}}/g, platoId);
+            let collapseHtml = collapseTemplate.innerHTML.replace(/{{platoId}}/, platoId);
             collapseHtml = collapseHtml.replace('{{platoNombre}}', platoDetallado.nombrePlato);
             collapseHtml = collapseHtml.replace('{{platoTipo}}', platoDetallado.tipo);
             collapseHtml = collapseHtml.replace('{{platoDescripcion}}', platoDetallado.descripcion);
@@ -47,6 +47,8 @@ fetch(`/consultarPlatos/${correoResPlat}`)
           
             let collapseElement = document.createElement('div');
             collapseElement.innerHTML = collapseHtml;
+            collapseElement.className = 'collapse';
+            collapseElement.style.display = 'block';
             document.getElementById('platos').appendChild(collapseElement);
           
             // Mostrar el collapse
