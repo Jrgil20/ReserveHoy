@@ -83,11 +83,52 @@ router.delete('/eliminarMesa',(req,res) => {
 
     const {idAEliminar,correoRes} = datos;
 
-    eliminarEnTabla('reserva',{idMesa:idAEliminar}, (err,result) => {
-      if(err){
-        throw err;
-      }
-   })
+    seleccionarDeTablaConWHere('reserva','*',{idMesa:idAEliminar, correoRes:correoRes}, (err,reservas) => {
+     if(err){
+       res.status(500).send('Error del servidor : '+err);
+     }else{
+       if(reservas.length > 0){
+          reservas.forEach((reserva) => {// Por cada reservacion, lo que vamos a hacer es buscar otra mesa que este disponible y que coincida con la cantidad de personas en esa reserva 
+          seleccionarDeTablaConWHere('mesa','*',{correoRes:correoRes, capacidad:reserva.numeroPersona, status:0}, (err, mesasDispo) => {
+            if (err) {
+              throw err;
+            }
+            if (mesasDispo.length > 0) {
+              // Actualizamos la reservacion a la nueva mesa
+              actualizarEnTabla('reserva',{idMesa: mesasDispo[0].id_Mesa},{idReserva:reserva.idReserva}, (err, result) => {
+                if (err) {
+                  throw err;
+                }
+              })
+            } else {
+              // Si no encuentra ninguna mesa disponible y que coincida con la cantidad de personas, se elimna esa reservacion
+              eliminarEnTabla('reserva', { id: reserva.id }, (err, result) => {
+                if (err) {
+                  throw err;
+                }
+              });
+            }
+          })
+        });
+        // Despues de haber eliminado todas las reservas asociadas, se elimina la mesa
+        eliminarEnTabla('mesa', { id_Mesa: idAEliminar, correoRes: correoRes }, (err, result) => {
+          if (err) {
+            throw err;
+          } else {
+             res.status(200).send('Mesa eliminada con éxito');
+           }
+         });
+       }else{
+        eliminarEnTabla('mesa', { id_Mesa: idAEliminar, correoRes: correoRes }, (err, result) => {
+          if (err) {
+            throw err;
+          } else {
+             res.status(200).send('Mesa eliminada con éxito');
+           }
+         });
+       }
+     }
+  })
 
     eliminarEnTabla('mesa',{id_Mesa:idAEliminar, correoRes: correoRes},(err,result) => {
        if(err){
