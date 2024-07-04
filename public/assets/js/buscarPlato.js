@@ -31,7 +31,8 @@ fetch(`/consultarPlatos/${correoResPlat}`)
         let botonPlato = document.createElement('button');
         botonPlato.textContent = plato.nombrePlato;
         botonPlato.dataset.platoId = plato.id; // Asignar un dataset para identificar el plato
-        botonPlato.className = 'btn btn-secondary'; // Agrega la clase btn y btn-secondary
+        botonPlato.className = 'btn btn-secondary tooltip'; // Agrega la clase btn y btn-secondary
+        botonPlato.title = 'Ver Informacion del Plato'; // Agrega el texto del tooltip
 
         botonPlato.addEventListener('click', (e) => {
             let platoId = e.target.dataset.platoId;
