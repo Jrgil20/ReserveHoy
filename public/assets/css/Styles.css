@@ -1,7 +1,9 @@
-
-@import url(/assets/css/footer.css);
-@import url(/assets/css/navbar.css);
-@import url(/assets/css/hero.css);
+@import url('https://fonts.googleapis.com/css?family=Prata&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Tangerine&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url(footer.css);
+@import url(navbar.css);
+@import url(hero.css);
 
 body {
 /* Estilos del cuerpo */
@@ -130,4 +132,53 @@ img {
     background-color: #004225;
     color: black;
     /* color de fondo rgb(19, 111, 47)*/
+}
+
+/* Contador de restaurantes */
+.counter {
+    background-color:#f5f5f5;
+    padding: 20px 0;
+    border-radius: 5px;
+}
+
+.count-title {
+    font-size: 60px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.count-text {
+    font-size: 13px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fa-3x {
+    margin: 0 auto;
+    float: none;
+    display: table;
+    color: #004225;
+}
+
+.container .row h2{
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.container .row p{
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.Reserva{
+    background-color: #004225;
+    padding: 40px;
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    border-radius: 25px;
 }

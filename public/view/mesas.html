@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es-Ve">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReservaHoy | Mesas</title>
+
+     <!-- Favicon -->
+     <link rel="shortcut icon" href="../assets/img/letra-r.png" type="image/x-icon"/>
+    <!-- fontawesome-->
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+    <!--Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+    crossorigin="anonymous"/>
+
+      <!-- Estilos CSS -->
+  <link rel="stylesheet" href="../assets/css/mesas.css">
+  <script src='../assets/js/GenerarMesas.js'></script>
+</head>
+<body>
+    <header id="navbar-Container">
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand " href="/">ReservaHoy</a>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="#">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2 active" href="catalogo.html">Catalogo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" id="ConsultaLink">Consulta</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <a id="login-button-nav" class="login-button" title="Login">
+                  <script src="../assets/js/navbar.js"></script>
+                    Volver
+                </a>
+                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    
+        
+    <div class="container">
+        <div class="card mb-0">
+          <div class="card-body">
+            <h5 class="card-title">Lista de Mesas</h5>
+            <div id="ScrollTable">
+              <table class="table table-fixed">
+                <thead>
+                  <tr>
+                      <th scope="col">ID Mesa</th>
+                      <th scope="col">Puestos</th>
+                      <th scope="col">Estatus</th>
+                  </tr>
+                </thead>
+                <tbody id="mesasList">
+                  <!-- Filas de datos -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-md-4 float-left">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-text">Nueva Mesa</h5>
+                <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#platoForm">Agregar Mesa</button>
+                <div id="platoForm" class="collapse mt-3">
+                  <!-- Contenido del formulario para agregar mesas -->
+                  <div class="form-group">
+                    <form id="mesaForm">
+                      <label for="capacidad">Numero de Asientos:</label>
+                      <input name="capacidad" type="text" class="form-control" id="capacidad" min="1">
+                      <input type="hidden" name="correoRestaurante" id="correoRestaurante">
+                      <button type="submit" class="btn btn-success">Agregar</button>
+                    </form>
+                  <script src="../assets/js/agregaMesa.js"></script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--
+          <div class="col-md-4 float-left">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-text">Eliminar Mesa</h5>
+                <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#eliminarForm">Eliminar Mesa</button>
+                <div id="eliminarForm" class="collapse mt-3">
+                  <form id="eliminarMesaForm">
+                    <div class="form-group">
+                      <label for="id-eliminar">ID de la mesa a eliminar:</label>
+                      <input type="number" class="form-control" id="id-eliminar" name="id-eliminar" min="1">
+                    </div>
+                    <button type="submit" class="btn btn-danger">Eliminar Mesa</button>
+                  </form>
+                  <script src="../assets/js/eliminMesa.js"></script>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+          <!--
+          <div class="col-md-4 float-left">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-text">Modificar Mesa</h5>
+                <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#modificarForm">Modificar Mesa</button>
+                <div id="modificarForm" class="collapse mt-3">
+                  <form id="modificarMesaForm">
+                    <div class="form-group">
+                      <label for="id-modificar">ID de la mesa a modificar:</label>
+                      <input type="number" class="form-control" id="id-modificar" name="id-modificar" min="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="asientos-modificar">Número de asientos:</label>
+                      <input type="number" class="form-control" id="asientos-modificar" name="asientos-modificar" min="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="estatus-modificar">Estatus de la mesa:</label>
+                      <select class="form-control" id="estatus-modificar" name="estatus-modificar">
+                        <option value="Disponible">Disponible</option>
+                        <option value="No Disponible">No Disponible</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar Mesa</button>
+                  </form>
+                  <script src="../assets/js/modifMesa.js"></script>
+                </div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+        </div>
+    </div>
+    </div>
+      <!-- Enlace a JS de Bootstrap -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+          
+          
+    
+
+    <!-- Seccion de pie de pagina-->
+    <footer>
+        <p>Reserve Hoy &copy; 2024</p>
+    </footer>
+    <!-- Fin: Seccion de pie de pagina-->
+</body>
+</html>
+

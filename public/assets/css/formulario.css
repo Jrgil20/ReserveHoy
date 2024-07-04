@@ -40,22 +40,37 @@
     width: 50%;
   }
   
-  .login_register a.login {
+  .login_register a.restauranteRegister-btn {
     border-radius: 15px;
     background: linear-gradient(90deg, #004225, #057c48);
     color: white;
   }
   
-  .login_register a.register {
+  .login_register a.clienteRegister-btn {
     border-radius: 15px;
     background: none;
     color: black;
+  }
+
+  .login_register a.restauranteLogin-btn {
+    border-radius: 15px;
+    background: linear-gradient(90deg, #004225, #057c48);
+    color: white;
+    transition: color 0.5s ease, background 0.5s ease;
+  }
+  
+  .login_register a.clienteLogin-btn {
+    border-radius: 15px;
+    background: none;
+    color: black;
+    transition: color 0.5s ease, background 0.5s ease;
   }
   
   .form {
     display: flex;
     flex-direction: column;
     width: 100%;
+    transition: all 0.5s ease;
   }
   
   .form input {

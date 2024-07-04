@@ -1,0 +1,60 @@
+@import url("../css/navbar.css");
+@import url("../css/footer.css");
+
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+  
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  z-index: -1; /* Agrega un índice z para que el footer se superponga sobre otros elementos */
+}
+
+main{
+    background-color: #f5f5f5;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-top: 150px;
+    margin-bottom: 10px;
+  }
+
+.table {
+    font-size: 14px;
+  }
+.table-fixed thead {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;}
+
+  .table th,
+  .table td {
+    vertical-align: middle;
+  }
+  .table th {
+    background-color: #f8f9fa;
+    border-top: none;
+  }
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+  }
+
+#ScrollTable{
+    overflow-y: auto;
+    max-height: 400px;
+}

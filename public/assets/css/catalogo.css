@@ -9,7 +9,7 @@ body {
 }
 
 main{
-    margin-top: 15vh;
+    margin-top: 20vh;
     padding: 0;
     margin-bottom: 15px;
 }
@@ -18,6 +18,14 @@ main{
     background-color: aqua;
     width: 100%;
     display: flex;
+    margin-left: 50px;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 50px;
+    margin-bottom: 50px;
 }
 
 .Restaurantes-aliados {
@@ -33,24 +41,25 @@ main{
 
 .barra-lateral{
     position: fixed;
+    z-index: 1000;
     max-width: 30vw;
-    top: 15vh;
+    top: 20vh;
     right: 0;
     display: flex;
     flex-direction: column;
-    align-items: right;
-    justify-content: right;
+    
 }
 
 .searchbar{
     margin-bottom: auto;
     margin-top: auto;
     margin-right: 40px;
-    height: 60px;
+    height: 40px;
     background-color: #004225;
     border-radius: 30px;
-    padding: 10px;
-    transition: width 0.4s linear;
+    padding: 0 10px;
+    width: 400px;
+    caret-color: white;
 }
 
 .search_input{
@@ -58,43 +67,11 @@ main{
     border: 0;
     outline: 0;
     background: none;
-    width: 0;
-    caret-color:transparent;
+    width: 100%;
+    caret-color: white;
     line-height: 40px;
-    transition: width 0.4s linear;
 }
 
-.searchbar:hover > .search_input{
-    padding: 0 10px;
-    width: 300px;
-    caret-color:red;
-}
 
-.searchbar:hover > .search_icon{
-    display: none;
-}
 
-.search_icon{
-    height: 40px;
-    width: 40px;
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    color:white;
-    text-decoration:none;
-}
 
-@media (min-width: 991px){
-    .searchbar{
-        margin-bottom: auto;
-        margin-top: auto;
-        margin-right: 60px;
-        height: 60px;
-        background-color: #004225;
-        border-radius: 30px;
-        padding: 10px;
-        transition: width 0.4s linear;
-    }
-}

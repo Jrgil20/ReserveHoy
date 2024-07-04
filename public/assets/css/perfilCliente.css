@@ -1,0 +1,67 @@
+@import url("../css/navbar.css");
+@import url("../css/footer.css");
+
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #004225;
+    margin: 0;
+    padding: 0;
+}
+
+main{
+    margin-top: 20vh;
+    padding: 0;
+    margin-bottom: 100px;
+  }
+  
+  
+.overview { 
+    width: 70%; 
+    padding: 20px; 
+}
+  
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Agrega un índice z para que el footer se superponga sobre otros elementos */
+}
+
+  .contenedor-final {
+    margin-bottom: 100px; /* Agrega un margen igual a la altura del footer */
+  }
+/*prueba cards*/
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-top: 70px;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  /* Ajustes para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 20px;
+    }
+  }
+
+  
