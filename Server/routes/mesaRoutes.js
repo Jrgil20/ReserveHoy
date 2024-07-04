@@ -129,14 +129,6 @@ router.delete('/eliminarMesa',(req,res) => {
        }
      }
   })
-
-    eliminarEnTabla('mesa',{id_Mesa:idAEliminar, correoRes: correoRes},(err,result) => {
-       if(err){
-         throw err;
-       }else{
-        res.status(200).send('Mesa eliminada con éxito');
-       }
-    })
 })
 
 //Ruta PUT para modificar una mesa
