@@ -75,6 +75,13 @@ main{
     background-color: #28a745;
     border-color: #28a745;
   }
+
+  #platos {
+    overflow-y: auto;
+    max-height: 300px;
+    padding: 10px;
+    border: 0.5px solid #ccc;
+  }
   
   /* Ajustes para pantallas pequeñas */
   @media (max-width: 768px) {
