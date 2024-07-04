@@ -47,7 +47,18 @@ fetch(`/consultarPlatos/${correoResPlat}`)
         // Aquí puedes agregar un event listener al botón si necesitas manejar clics
         botonOk.addEventListener('click', () => {
           console.log(`Botón info presionado para ${plato.nombrePlato}`);
-          
+          informacionplato = document.getElementById('informacionPlato');
+          if (informacionplato .style.display === 'block') {
+            informacionplato .style.display = 'none';
+          } else {
+            informacionplato .style.display = 'block';
+          }
+          document.getElementById('informacionPlato').innerHTML = `
+            <h4>${plato.nombrePlato}</h4>
+            <p>Tipo: ${plato.tipo}</p>
+            <p>Precio: ${plato.precio}</p>
+            <p>Descripción: ${plato.descripcion}</p>
+          `;
         });
 
         celdaBoton.appendChild(botonOk);
