@@ -67,7 +67,7 @@ Inicia sesión para un cliente existente.
 - **Respuesta de Error (400):** Usuario o contraseña inválida.
   ```json
   {
-    "message": "Usuario o clave invalidada"
+    "message": "Usuario o clave inválida"
   }
   ```
 - **Respuesta de Error (500):** Error interno del servidor.
