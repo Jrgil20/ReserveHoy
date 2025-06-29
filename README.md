@@ -47,7 +47,7 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 ### Instalación
 1. **Clona el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/ReserveHoy.git
+   git clone https://github.com/YOUR_GITHUB_ORG_OR_USERNAME/ReserveHoy.git
    cd ReserveHoy
    ```
 2. **Instala las dependencias del servidor:**
