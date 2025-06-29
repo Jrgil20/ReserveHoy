@@ -53,7 +53,7 @@ const nodemailer = require('nodemailer');
                     if(list.length === 0){//Si no hay mesas ocupadas, hace el proceso de insercion con la primera mesa encontrada
                       let idAceptadoPrev = mesasValidas[0];
                       let idAceptado = idAceptadoPrev.id_Mesa;
-                      insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,id_Mesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
+                      insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,idMesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
                         if(erreur){
                            console.log(erreur);
                            res.status(500).json({ error: 'An error occurred' });
@@ -70,7 +70,7 @@ const nodemailer = require('nodemailer');
                           })
                           let idAceptadoPrev = mesasValidas[list.length];
                           let idAceptado = idAceptadoPrev.id_Mesa;
-                          insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,id_Mesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
+                          insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,idMesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
                             if(erreur){
                                console.log(erreur);
                                res.status(500).json({ error: 'An error occurred' });
@@ -107,7 +107,7 @@ const nodemailer = require('nodemailer');
                     if(list.length === 0){//Si no hay mesas ocupadas, hace el proceso de insercion con la primera mesa encontrada
                       let idAceptadoPrev = mesasValidas[0];
                       let idAceptado = idAceptadoPrev.id_Mesa;
-                      insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,id_Mesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
+                      insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,idMesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
                         if(erreur){
                            console.log(erreur);
                            res.status(500).json({ error: 'An error occurred' });
@@ -124,7 +124,7 @@ const nodemailer = require('nodemailer');
                           })
                           let idAceptadoPrev = mesasValidas[list.length];
                           let idAceptado = idAceptadoPrev.id_Mesa;
-                          insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,id_Mesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
+                          insertarEnTabla('reserva',{idReserva:id,fecha:fecha,hora:hora,numeroPersona:numeroPersona,correoCli:cliente,idMesa:idAceptado,correoRes:rest, estado:0}, (erreur,resultat)=>{
                             if(erreur){
                                console.log(erreur);
                                res.status(500).json({ error: 'An error occurred' });
