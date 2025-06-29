@@ -30,7 +30,7 @@ Si no encuentras un issue abierto que trate el problema, ábrelo tú mismo. Aseg
 
 ### Sugiriendo Mejoras o Nuevas Funcionalidades
 Las sugerencias son bienvenidas. Puedes proponer nuevas funcionalidades o mejoras a las existentes:
-1. Busca en los [Issues de GitHub](https://github.com/tu-usuario/ReserveHoy/issues) para ver si ya existe una sugerencia similar.
+1. Busca en los [Issues de GitHub](https://github.com/YOUR_GITHUB_ORG_OR_USERNAME/ReserveHoy/issues) para ver si ya existe una sugerencia similar.
 2. Si no es así, abre un nuevo issue. Describe claramente:
    - La **funcionalidad o mejora** propuesta.
    - El **problema que resuelve** o el **valor que añade**.
